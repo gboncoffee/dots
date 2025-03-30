@@ -1,0 +1,46 @@
+{
+    "*.[ex,exs]": {
+        "tabsize": 2,
+        "tabstospaces": true
+    },
+    "*.c": {
+        "commenttype": "/* %s */",
+        "tabsize": 4,
+        "tabstospaces": true
+    },
+    "*.cpp": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
+    "*.erl": {
+        "tabsize": 2,
+        "tabstospaces": true
+    },
+    "*.go": {
+        "tabsize": 4
+    },
+    "*.hs": {
+        "tabsize": 2,
+        "tabstospaces": true
+    },
+    "*.lua": {
+        "tabsize": 2,
+        "tabstospaces": true
+    },
+    "*.py": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
+    "autosave": 3,
+    "autosu": true,
+    "colorcolumn": 80,
+    "cursorline": false,
+    "diffgutter": true,
+    "hlsearch": true,
+    "hltaberrors": true,
+    "hltrailingws": true,
+    "indentchar": "|",
+    "matchbraceleft": true,
+    "parsecursor": true,
+    "tabsize": 8
+}
