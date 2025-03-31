@@ -134,9 +134,10 @@
 (defun c-configs ()
   (eglot-ensure)
   (setq tab-width 4)
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  (local-set-key (kbd "C-c C-c") #'compile))
 (add-hook 'c-mode-hook #'c-configs)
-(add-hook 'cpp-mode-hook #'c-configs)
+(add-hook 'c++-mode-hook #'c-configs)
 
 (use-package web-mode
   :ensure t
