@@ -103,7 +103,7 @@
   (global-set-key (kbd "C->") #'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") #'mc/mark-previous-like-this))
 
-(use-package editorconfig-mode
+(use-package editorconfig
   :ensure t
   :init
   (editorconfig-mode t))
@@ -146,7 +146,7 @@
 (use-package markdown-mode
   :ensure t)
 
-(use-package erlang-mode
+(use-package erlang
   :ensure t)
 
 (use-package elixir-mode
