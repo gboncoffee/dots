@@ -79,11 +79,18 @@
   :init
   (global-diff-hl-mode))
 
+(defun shell-below ()
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (shell))
+
 (global-set-key (kbd "C-c C-c") #'compile)
 (global-set-key (kbd "C-c C-d") #'xref-find-definitions)
 (global-set-key (kbd "C-c C-r") #'eglot-rename)
 (global-set-key (kbd "C-c C-?") #'xref-find-references)
 (global-set-key (kbd "C-c C-b") #'flymake-show-buffer-diagnostics)
+(global-set-key (kbd "C-c C-t") #'shell-below)
 
 (add-hook 'find-file-hook
 	  (lambda () (setq default-directory command-line-default-directory)))
