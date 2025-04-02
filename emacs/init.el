@@ -145,7 +145,10 @@
   (eglot-ensure)
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-  (local-set-key (kbd "C-c C-c") #'compile))
+  ;; I hate c-mode for using C-c.
+  (local-set-key (kbd "C-c C-c") #'compile)
+  (local-set-key (kbd "C-c C-d") #'xref-find-definitions)
+  (local-set-key (kbd "C-c C-?") #'xref-find-references))
 (add-hook 'c-mode-hook #'c-configs)
 (add-hook 'c++-mode-hook #'c-configs)
 
