@@ -36,7 +36,13 @@
 (use-package rainbow-delimiters
   :ensure t
   :init
-  (rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+(use-package ido-vertical-mode
+  :ensure t
+  :init
+  (setq ido-vertical-show-count t)
+  (ido-vertical-mode t))
 
 ;;
 ;; Interface.
@@ -45,6 +51,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setopt use-short-anwsers t)
 (windmove-default-keybindings 'meta)
+(setq-default fill-column 80)
 
 (use-package ido-completing-read+
   :ensure t
@@ -85,6 +92,20 @@
   (windmove-down)
   (shell))
 
+(defun window-half-height ()
+  (max 1 (/ (1- (window-height (selected-window))) 2)))
+
+(defun scroll-up-half ()
+  (interactive)
+  (scroll-up (window-half-height)))
+
+(defun scroll-down-half ()         
+  (interactive)                    
+  (scroll-down (window-half-height)))
+
+(global-set-key (kbd "C-v") 'scroll-up-half)
+(global-set-key (kbd "M-v") 'scroll-down-half)
+
 (global-set-key (kbd "C-c C-c") #'compile)
 (global-set-key (kbd "C-c C-d") #'xref-find-definitions)
 (global-set-key (kbd "C-c C-r") #'eglot-rename)
@@ -94,6 +115,15 @@
 
 (add-hook 'find-file-hook
 	  (lambda () (setq default-directory command-line-default-directory)))
+
+(use-package dap-mode
+  :ensure t
+  :init
+  (dap-auto-configure-mode t)
+  (require 'dap-lldb)
+  (setq dap-lldb-debug-program
+	(shell-command-to-string "/usr/bin/lldb-dap-18"))
+  (require 'dap-dlv-go))
 
 ;;
 ;; Editing.
@@ -125,19 +155,26 @@
 (add-hook 'eglot-managed-mode-hook
 	  (lambda ()
 	    (eglot-inlay-hints-mode -1)
-	    (eldoc-box-hover-at-point-mode t)
+	    (eldoc-box-hover-mode t)
 	    (add-hook 'after-save-hook #'eglot-format nil t)))
 
 (add-hook 'emacs-lisp-mode-hook
 	  (lambda ()
 	    (prettify-symbols-mode t)))
 
+(use-package company
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook #'company-mode))
+
 (use-package go-mode
   :ensure t
   :init
-  (add-hook 'go-mode-hook #'eglot-ensure)
-  (setq tab-width 4)
-  (setq indent-tabs-mode t))
+  (add-hook 'go-mode-hook
+	    (lambda ()
+	      (eglot-ensure)
+	      (setq tab-width 4)
+	      (setq indent-tabs-mode t))))
 
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
@@ -152,6 +189,13 @@
 (add-hook 'c-mode-hook #'c-configs)
 (add-hook 'c++-mode-hook #'c-configs)
 
+(setq-default pascal-indent-level 4)
+(add-hook 'pascal-mode-hook
+	  (lambda ()
+	    (setq tab-width 4)
+	    (setq indent-tabs-mode nil)
+	    (local-set-key (kbd "C-c C-c") #'compile)))
+
 (use-package web-mode
   :ensure t
   :init
@@ -164,7 +208,13 @@
   :ensure t)
 
 (use-package elixir-mode
-  :ensure t)
+  :ensure t
+  :init
+  (add-hook 'elixir-mode-hook #'eglot-ensure)
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+		 '(elixir-mode
+		   "/home/gabriel/opt/elixirls/language_server.sh"))))
 
 (use-package haskell-mode
   :ensure t)
@@ -176,7 +226,7 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(eldoc-box multiple-cursors rainbow-delimiters rainbow-mode color-theme-sanityinc-tomorrow)))
+   '(amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode color-theme-sanityinc-tomorrow)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
