@@ -116,6 +116,9 @@
 (add-hook 'find-file-hook
 	  (lambda () (setq default-directory command-line-default-directory)))
 
+(add-hook 'shell-mode-hook
+	  (lambda () (company-mode -1)))
+
 (use-package dap-mode
   :ensure t
   :init
@@ -193,6 +196,8 @@
 (add-hook 'pascal-mode-hook
 	  (lambda ()
 	    (setq tab-width 4)
+	    (setq pascal-indent-level 4)
+	    (setq pascal-auto-lineup '())
 	    (setq indent-tabs-mode nil)
 	    (local-set-key (kbd "C-c C-c") #'compile)))
 
