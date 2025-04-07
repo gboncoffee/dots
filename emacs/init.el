@@ -119,6 +119,17 @@
 (add-hook 'shell-mode-hook
 	  (lambda () (company-mode -1)))
 
+;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
+(require 'ansi-color)
+(defun colorize-compilation ()
+  "Colorize from `compilation-filter-start' to `point'."
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region
+     compilation-filter-start (point))))
+
+(add-hook 'compilation-filter-hook
+          #'colorize-compilation)
+
 (use-package dap-mode
   :ensure t
   :init
@@ -207,21 +218,6 @@
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
 
 (use-package markdown-mode
-  :ensure t)
-
-(use-package erlang
-  :ensure t)
-
-(use-package elixir-mode
-  :ensure t
-  :init
-  (add-hook 'elixir-mode-hook #'eglot-ensure)
-  (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-		 '(elixir-mode
-		   "/home/gabriel/opt/elixirls/language_server.sh"))))
-
-(use-package haskell-mode
   :ensure t)
 
 (custom-set-variables
