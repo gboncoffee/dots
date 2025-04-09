@@ -81,11 +81,6 @@
   :ensure t
   :after magit)
 
-(use-package diff-hl
-  :ensure t
-  :init
-  (global-diff-hl-mode))
-
 (defun shell-below ()
   (interactive)
   (split-window-below)
