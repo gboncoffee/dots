@@ -31,7 +31,7 @@
 (use-package rainbow-mode
   :ensure t
   :init
-  (rainbow-mode t))
+  (add-hook 'prog-mode-hook 'rainbow-mode))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -98,8 +98,8 @@
   (interactive)                    
   (scroll-down (window-half-height)))
 
-(global-set-key (kbd "C-v") 'scroll-up-half)
-(global-set-key (kbd "M-v") 'scroll-down-half)
+(global-set-key (kbd "C-v") #'scroll-up-half)
+(global-set-key (kbd "M-v") #'scroll-down-half)
 
 (global-set-key (kbd "C-c C-c") #'compile)
 (global-set-key (kbd "C-c C-d") #'xref-find-definitions)
@@ -133,6 +133,9 @@
   (setq dap-lldb-debug-program
 	(shell-command-to-string "/usr/bin/lldb-dap-18"))
   (require 'dap-dlv-go))
+
+(use-package lice
+  :ensure t)
 
 ;;
 ;; Editing.
@@ -215,6 +218,12 @@
 (use-package markdown-mode
   :ensure t)
 
+(use-package nasm-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
+  (add-to-list 'auto-mode-alist '("\\.s\\'" . nasm-mode)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -222,7 +231,7 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode color-theme-sanityinc-tomorrow)))
+   '(lice nasm-mode fasm-mode company amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode color-theme-sanityinc-tomorrow)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
