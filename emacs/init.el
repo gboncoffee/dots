@@ -16,8 +16,8 @@
 	    (display-line-numbers-mode t)
 	    (display-fill-column-indicator-mode t)))
 
-(set-face-attribute 'default nil :font "Geist Mono-12")
-(set-frame-font "Geist Mono-12" nil t)
+(set-face-attribute 'default nil :font "Geist Mono-13")
+(set-frame-font "Geist Mono-13" nil t)
 
 (setq scroll-step 1)
 (setq scroll-conservatively 100000)
