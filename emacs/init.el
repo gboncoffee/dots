@@ -23,10 +23,12 @@
 (setq scroll-conservatively 100000)
 (setq-default show-trailing-whitespace t)
 
-(use-package sublime-themes
+(use-package doom-themes
   :ensure t
   :init
-  (load-theme 'spolsky t))
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme 'doom-tomorrow-night t))
 
 (use-package rainbow-mode
   :ensure t
