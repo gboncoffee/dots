@@ -16,17 +16,17 @@
 	    (display-line-numbers-mode t)
 	    (display-fill-column-indicator-mode t)))
 
-(set-face-attribute 'default nil :font "Geist Mono-13")
-(set-frame-font "Geist Mono-13" nil t)
+(set-face-attribute 'default nil :font "Cascadia Code-12")
+(set-frame-font "Cascadia Code-12" nil t)
 
 (setq scroll-step 1)
 (setq scroll-conservatively 100000)
 (setq-default show-trailing-whitespace t)
 
-(use-package color-theme-sanityinc-tomorrow
+(use-package sublime-themes
   :ensure t
   :init
-  (load-theme 'sanityinc-tomorrow-night t))
+  (load-theme 'spolsky t))
 
 (use-package rainbow-mode
   :ensure t
@@ -229,12 +229,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("04aa1c3ccaee1cc2b93b246c6fbcd597f7e6832a97aaeac7e5891e6863236f9f" "b11edd2e0f97a0a7d5e66a9b82091b44431401ac394478beb44389cf54e6db28" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" "76ddb2e196c6ba8f380c23d169cf2c8f561fd2013ad54b987c516d3cabc00216" default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(lice nasm-mode fasm-mode company amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode color-theme-sanityinc-tomorrow)))
+   '(sublime-themes lice nasm-mode fasm-mode company amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
