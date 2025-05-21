@@ -11,10 +11,6 @@ size = 12
 [selection]
 save_to_clipboard = true
 
-[shell]
-program = "/usr/bin/bash"
-args = [ "-c", "tmux" ]
-
 [keyboard]
 bindings = [
 { key = "F11", mods = "Control|Shift", action = "ToggleFullscreen" },
