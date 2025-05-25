@@ -5,5 +5,16 @@
     "Alt-k": "command:hover",
     "Alt-r": "command:references",
     "CtrlSpace": "command:lspcompletion",
-    "CtrlUnderscore": "lua:comment.comment"
+    "CtrlUnderscore": "lua:comment.comment",
+    "Ctrl-p": "command:fzf",
+    "Ctrl-Down": "SpawnMultiCursorDown",
+    "Ctrl-Up": "SpawnMultiCursorUp",
+    "Esc": "RemoveAllMultiCursors",
+    "F5": "ToggleMacro",
+    "F6": "PlayMacro",
+    "F2": "command:toggleBookmark",
+    "F3": "command:nextBookmark",
+    "Shift-F3": "command:prevBookmark",
+    "Ctrl-Left": "PreviousTab",
+    "Ctrl-Right": "NextTab"
 }

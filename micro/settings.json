@@ -31,10 +31,13 @@
         "tabsize": 4,
         "tabstospaces": true
     },
-    "autosave": 3,
+    "*.yaml": {
+    	"tabsize": 2,
+    	"tabstospaces": true
+    },
     "autosu": true,
     "colorcolumn": 80,
-    "colorscheme": "simple",
+    "colorscheme": "solarized-tc",
     "cursorline": false,
     "diffgutter": true,
     "hlsearch": true,
