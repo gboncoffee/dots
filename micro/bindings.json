@@ -15,6 +15,4 @@
     "F2": "command:toggleBookmark",
     "F3": "command:nextBookmark",
     "Shift-F3": "command:prevBookmark",
-    "Ctrl-Left": "PreviousTab",
-    "Ctrl-Right": "NextTab"
 }
