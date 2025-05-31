@@ -1,0 +1,32 @@
+[user]
+	email = gabrielgbrito@icloud.com
+	name = Gabriel G. de Brito
+[core]
+	whitespace = error
+[advice]
+	addEmptyPathspec = false
+[init]
+	defaultBranch = main
+[status]
+	showStash = true
+[diff]
+	renames = copies
+	interHunkContext = 10
+[commit]
+	verbose = true
+[push]
+	autoSetupRemote = true
+	followTags = true
+[pull]
+	rebase = true
+[rebase]
+	autoStash = true
+	missingCommitsCheck = warn
+[log]
+	abbrevCommit = true
+[format]
+	pretty = medium
+[receive]
+	denyCurrentBranch = warn
+[github]
+	user = gboncoffee
