@@ -74,15 +74,6 @@
 
 (setq-default compile-command "")
 
-(use-package magit
-  :ensure t
-  :init
-  (global-set-key (kbd "C-c C-g") #'magit))
-
-(use-package forge
-  :ensure t
-  :after magit)
-
 (defun shell-below ()
   (interactive)
   (split-window-below)
@@ -96,8 +87,8 @@
   (interactive)
   (scroll-up (window-half-height)))
 
-(defun scroll-down-half ()         
-  (interactive)                    
+(defun scroll-down-half ()
+  (interactive)
   (scroll-down (window-half-height)))
 
 (global-set-key (kbd "C-v") #'scroll-up-half)
@@ -126,15 +117,6 @@
 
 (add-hook 'compilation-filter-hook
           #'colorize-compilation)
-
-(use-package dap-mode
-  :ensure t
-  :init
-  (dap-auto-configure-mode t)
-  (require 'dap-lldb)
-  (setq dap-lldb-debug-program
-	(shell-command-to-string "/usr/bin/lldb-dap-18"))
-  (require 'dap-dlv-go))
 
 (use-package lice
   :ensure t)
@@ -176,11 +158,6 @@
 	  (lambda ()
 	    (prettify-symbols-mode t)))
 
-(use-package company
-  :ensure t
-  :init
-  (add-hook 'prog-mode-hook #'company-mode))
-
 (use-package go-mode
   :ensure t
   :init
@@ -188,7 +165,8 @@
 	    (lambda ()
 	      (eglot-ensure)
 	      (setq tab-width 4)
-	      (setq indent-tabs-mode t))))
+	      (setq indent-tabs-mode t)
+	      (local-set-key (kbd "C-c C-d") #'xref-find-definitions))))
 
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "bsd")
@@ -235,10 +213,11 @@
    '("04aa1c3ccaee1cc2b93b246c6fbcd597f7e6832a97aaeac7e5891e6863236f9f" "b11edd2e0f97a0a7d5e66a9b82091b44431401ac394478beb44389cf54e6db28" "6fc9e40b4375d9d8d0d9521505849ab4d04220ed470db0b78b700230da0a86c1" "76ddb2e196c6ba8f380c23d169cf2c8f561fd2013ad54b987c516d3cabc00216" default))
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(sublime-themes lice nasm-mode fasm-mode company amx dap-mode diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode)))
+   '(doom-themes sublime-themes lice nasm-mode fasm-mode amx diff-hl editorconfig elixir-mode erlang forge go-mode haskell-mode ido-completing-read+ magit markdown-mode web-mode ido-vertical-mode eldoc-box multiple-cursors rainbow-delimiters rainbow-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:background nil)))))
+(put 'upcase-region 'disabled nil)
