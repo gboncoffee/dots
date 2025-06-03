@@ -32,12 +32,12 @@
         "tabstospaces": true
     },
     "*.yaml": {
-    	"tabsize": 2,
-    	"tabstospaces": true
+        "tabsize": 2,
+        "tabstospaces": true
     },
     "autosu": true,
     "colorcolumn": 80,
-    "colorscheme": "solarized-tc",
+    "colorscheme": "simple",
     "cursorline": false,
     "diffgutter": true,
     "hlsearch": true,
