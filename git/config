@@ -1,6 +1,7 @@
 [user]
 	email = gabrielgbrito@icloud.com
 	name = Gabriel G. de Brito
+	signingkey = gabrielgbrito@icloud.com
 [core]
 	whitespace = error
 [advice]
@@ -14,6 +15,9 @@
 	interHunkContext = 10
 [commit]
 	verbose = true
+	gpgsign = true
+[tag]
+	gpgSign = true
 [push]
 	autoSetupRemote = true
 	followTags = true
