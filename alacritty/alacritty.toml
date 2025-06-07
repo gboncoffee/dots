@@ -4,6 +4,8 @@ dimensions = { columns = 110, lines = 35 }
 
 resize_increments = true
 
+opacity = 0.95
+
 [font]
 normal.family = "Cascadia Code"
 size = 12
