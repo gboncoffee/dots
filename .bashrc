@@ -39,6 +39,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export GPG_TTY=$(tty)
+
 alias make='make -j12'
 
 PS1="\n\[\e[92m\]\h\[\e[m\]:\[\e[94m\]\w\[\e[m\]>"
