@@ -1,14 +1,17 @@
 [window]
 
-dimensions = { columns = 110, lines = 35 }
-
 resize_increments = true
 
-opacity = 0.95
+opacity = 0.90
+
+decorations = "None"
+
+dynamic_padding = true
+padding = { x = 3, y = 3 }
 
 [font]
-normal.family = "Cascadia Code"
-size = 12
+normal.family = "Bitstream Vera Sans Mono"
+size = 13
 
 [selection]
 save_to_clipboard = true
@@ -29,35 +32,31 @@ bindings = [
 { key = "F", mods = "Control|Shift", action = "SearchBackward" },
 ]
 
-# Colors (Tomorrow Night)
+# Colors (Tomorrow Night Bright)
 
 # Default colors
 [colors.primary]
-background = '#1d1f21'
-foreground = '#c5c8c6'
-
-[colors.cursor]
-text = '#1d1f21'
-cursor = '#ffffff'
+background = '#000000'
+foreground = '#eaeaea'
 
 # Normal colors
 [colors.normal]
-black   = '#1d1f21'
-red     = '#cc6666'
-green   = '#b5bd68'
+black   = '#000000'
+red     = '#d54e53'
+green   = '#b9ca4a'
 yellow  = '#e6c547'
-blue    = '#81a2be'
-magenta = '#b294bb'
+blue    = '#7aa6da'
+magenta = '#c397d8'
 cyan    = '#70c0ba'
-white   = '#373b41'
+white   = '#424242'
 
 # Bright colors
 [colors.bright]
 black   = '#666666'
 red     = '#ff3334'
 green   = '#9ec400'
-yellow  = '#f0c674'
-blue    = '#81a2be'
+yellow  = '#e7c547'
+blue    = '#7aa6da'
 magenta = '#b77ee0'
 cyan    = '#54ced6'
-white   = '#282a2e'
+white   = '#2a2a2a'

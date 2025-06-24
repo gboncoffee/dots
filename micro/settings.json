@@ -23,6 +23,18 @@
         "tabsize": 2,
         "tabstospaces": true
     },
+    "*.json": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
+    "*.jsonc": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
+    "*.kdl": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
     "*.lua": {
         "tabsize": 2,
         "tabstospaces": true
@@ -31,12 +43,12 @@
         "tabsize": 4,
         "tabstospaces": true
     },
-    "SConstruct": {
-    	"tabsize": 4,
-    	"tabstospaces": true
-    },
     "*.yaml": {
         "tabsize": 2,
+        "tabstospaces": true
+    },
+    "SConstruct": {
+        "tabsize": 4,
         "tabstospaces": true
     },
     "autosu": true,
@@ -48,7 +60,6 @@
     "hlsearch": true,
     "hltaberrors": true,
     "hltrailingws": true,
-    "matchbraceleft": true,
     "parsecursor": true,
     "savecursor": true,
     "softwrap": true,

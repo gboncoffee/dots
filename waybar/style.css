@@ -1,0 +1,62 @@
+* {
+	border: none;
+	border-radius: 6px;
+	font-family: Noto Sans;
+	font-size: 12pt;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+}
+
+window#waybar {
+	background: transparent;
+	color: #eaeaea;
+}
+
+#window {
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.module {
+	border: solid 2px #666666;
+	background: #000000;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 0;
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+#privacy-item {
+	border: solid 2px #666666;
+	background: #000000;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-bottom: 0;
+}
+
+tooltip {
+	background: #666666;
+}
+tooltip label {
+	color: #eaeaea;
+}
+
+#workspaces {
+	padding: 0;
+}
+
+#workspaces button {
+	background: transparent;
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+#workspaces button.active {
+	color: #eaeaea;
+	background: #7aa6da;
+	border-radius: 3;
+}
