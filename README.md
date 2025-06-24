@@ -56,6 +56,7 @@ computer):
 - swaylock  
 - swww  
 - tela-circle-icon-theme-all  
+- thunderbird  
 - tmux  
 - ttf-bitstream-vera  
 - ttf-dejavu  
