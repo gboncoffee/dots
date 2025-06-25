@@ -25,6 +25,7 @@ computer):
 - htop  
 - imv  
 - kali-themes  
+- libguestfs  
 - libnotify  
 - libreoffice-fresh  
 - logisim-evolution-bin  
