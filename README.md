@@ -79,5 +79,8 @@ computer):
 - yt-dlp  
 
 Other annotations:
-- run `xhost +SI:localuser:root` to use sudo on wayland.
-- use gpg with the `/usr/bin/pinentry-tty` pinentry.
+- Run `xhost +SI:localuser:root` to use `sudo` on wayland.
+- Use gpg with the `/usr/bin/pinentry-tty` pinentry.
+- My setup uses mostly stuff from systemd when available: systemd-network,
+  systemd-resolved, systemd-boot. Still didn't switched to `run0` because
+  `base-devel` depends on `sudo` anyways.
