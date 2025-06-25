@@ -90,6 +90,12 @@ window-rule {
     open-maximized true
 }
 
+window-rule {
+    match app-id="thunderbird"
+    open-on-workspace "chat"
+    open-maximized true
+}
+
 hotkey-overlay {
     skip-at-startup
 }
