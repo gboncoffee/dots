@@ -22,10 +22,13 @@ computer):
 - gsmartcontrol  
 - gst-libav  
 - gst-plugins-good  
+- gvfs-afc  
+- gvfs-gphoto2  
 - htop  
 - imv  
 - kali-themes  
 - libguestfs  
+- libimobiledevice  
 - libnotify  
 - libreoffice-fresh  
 - logisim-evolution-bin  
@@ -66,6 +69,7 @@ computer):
 - ttf-liberation  
 - ttf-linux-libertine  
 - tumbler  
+- usbmuxd  
 - waybar  
 - wget  
 - wireplumber  
