@@ -1,0 +1,27 @@
+font-family = monospace
+font-size = 13
+freetype-load-flags = no-monochrome,no-autohint,no-force-autohint
+gtk-adwaita = false
+
+theme = Tomorrow Night Bright
+background-opacity = 0.9
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+cursor-click-to-move = true
+
+gtk-single-instance = false
+quit-after-last-window-closed = true
+
+window-padding-x = 3
+window-padding-y = 3
+window-padding-balance = true
+window-padding-color = extend
+
+window-decoration = none
+
+clipboard-read = allow
+clipboard-write = allow
+
+clipboard-paste-protection = true

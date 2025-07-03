@@ -120,13 +120,13 @@ spawn-at-startup "quodlibet"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "Kali-Dark"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
 spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "icon-theme" "Tela-circle-dark"
-spawn-at-startup "gsettings" "set" "org.cinnamon.desktop.default-applications.terminal" "exec" "alacritty"
+spawn-at-startup "gsettings" "set" "org.cinnamon.desktop.default-applications.terminal" "exec" "ghostty"
 spawn-at-startup "gsettings" "set" "org.cinnamon.desktop.default-applications.terminal" "exec-arg" "-e"
 
 binds {
     Mod+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "alacritty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "ghostty"; }
     Mod+F hotkey-overlay-title="Open File Manager" { spawn "nemo"; }
     Mod+M hotkey-overlay-title="Open Music Control" { focus-workspace "music"; }
     Mod+A hotkey-overlay-title="Run an Application" { spawn "fuzzel"; }

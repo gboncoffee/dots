@@ -16,6 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export PLAN9=$HOME/src/plan9port
-export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/opt/bin:$HOME/opt/zig:$HOME/opt/odin:$PATH:/usr/local/go/bin:$PLAN9/bin"
+export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/usr/bin:$PATH"
+export TERMINAL=ghostty
 export EDITOR=micro

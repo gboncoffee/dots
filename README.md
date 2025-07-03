@@ -7,7 +7,7 @@ on Micro I install the following plugins:
 Reproducing the setup (the full thing, the riced desktop you can use with much
 less stuff. This is just an annotation so I can remember how to reproduce my
 computer):
-- alacritty  
+- ghostty  
 - edk2-shell  
 - engrampa  
 - fail2ban  
@@ -88,3 +88,9 @@ Other annotations:
 - My setup uses mostly stuff from systemd when available: systemd-network,
   systemd-resolved, systemd-boot. Still didn't switched to `run0` because
   `base-devel` depends on `sudo` anyways.
+- Add:
+  ```
+  [Settings]
+  gtk-hint-font-metrics=true
+  ```
+  To gtk4 `settings.ini` so it actually does hinting.
