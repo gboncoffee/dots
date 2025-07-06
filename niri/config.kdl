@@ -15,12 +15,11 @@ input {
 
 cursor {
     hide-when-typing
-    hide-after-inactive-ms 1000
+    hide-after-inactive-ms 2000
 }
 
 layout {
-    gaps 5
-
+    gaps 0
     default-column-width { proportion 0.5; }
 
     focus-ring {
@@ -40,29 +39,49 @@ layout {
         urgent-color "#d54e53"
     }
 
-    shadow {
-        on
-        softness 30
-
-        spread 5
-
-        offset x=0 y=5
-
-        color "#0007"
-    }
-
     background-color "transparent"
+
+    tab-indicator {
+        gap 0
+        width 8
+        length total-proportion=1.0
+        place-within-column
+    }
 }
 
 overview {
     backdrop-color "#000000"
 }
 
+animations {
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-resize {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+
+    window-open {
+        duration-ms 100
+    }
+    window-close {
+        duration-ms 100
+    }
+}
+
 prefer-no-csd
 screenshot-path "~/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 window-rule {
-    geometry-corner-radius 6
     clip-to-geometry true
 
     draw-border-with-background false
@@ -98,11 +117,6 @@ window-rule {
 
 hotkey-overlay {
     skip-at-startup
-}
-
-layer-rule {
-    match namespace="swww-daemon"
-    place-within-backdrop true
 }
 
 environment {

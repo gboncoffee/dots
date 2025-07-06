@@ -1,10 +1,11 @@
 {
     "reload_style_on_change": true,
     "spacing": 6,
-    "height": 33,
+    "height": 27,
     "layer": "top",
 
     "modules-left": [
+        "custom/menu",
         "niri/workspaces",
         "niri/window"
     ],
@@ -14,8 +15,16 @@
     "modules-right": [
         "privacy",
         "wireplumber",
-        "clock"
+        "clock",
+        "custom/window-size",
+        "custom/close-window"
     ],
+
+    "custom/menu": {
+        "format": "Menu",
+        "tooltip": false,
+        "on-click": "fuzzel"
+    },
 
     "niri/workspaces": {
         "format": "{icon}",
@@ -31,17 +40,18 @@
 
     "niri/window": {
         "separate-outputs": true,
-        "on-click": "fuzzel",
-        "on-click-right": "niri msg action close-window",
-        "on-click-middle": "niri msg action switch-preset-window-width"
+        "icon": true,
     },
 
     "mpris": {
-        "player": "quodlibet",
-        "format": "🎵 {dynamic}",
-        "format-paused": "𝄩 {dynamic}",
-        "format-stopped": "𝅀 idle",
-        "dynamic-order": [ "artist", "title" ]
+        "ignored-players": [ "firefox", "mpv" ],
+        "format": "{status_icon} {dynamic}",
+        "dynamic-order": [ "artist", "title" ],
+        "status-icons": {
+            "playing": "🎶",
+            "paused": "𝄩",
+            "stopped": "𝄩"
+        }
     },
 
     "privacy": {
@@ -69,8 +79,8 @@
     },
 
     "wireplumber": {
-        "format": "🔉 {volume}%",
-        "format-muted": "🔇",
+        "format": "🎧 {volume}%",
+        "format-muted": "🔇 𝄩 ",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     },
 
@@ -78,5 +88,15 @@
         "interval": 30,
         "format": "{:%H:%M %F}",
         "tooltip": false,
+    },
+
+    "custom/window-size": {
+        "format": "📏",
+        "on-click": "niri msg action switch-preset-window-width"
+    },
+
+    "custom/close-window": {
+        "format": "❌",
+        "on-click": "niri msg action close-window"
     }
 }
