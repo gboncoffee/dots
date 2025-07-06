@@ -1,7 +1,7 @@
 [user]
-	email = gabrielgbrito@icloud.com
+	email = me@gboncoffee.dev.br
 	name = Gabriel G. de Brito
-	signingkey = gabrielgbrito@icloud.com
+	signingkey = me@gboncoffee.dev.br
 [core]
 	whitespace = error
 [advice]
