@@ -51,6 +51,10 @@
         "tabsize": 4,
         "tabstospaces": true
     },
+    "*.zig": {
+        "tabsize": 4,
+        "tabstospaces": true
+    },
     "autosu": true,
     "colorcolumn": 80,
     "colorscheme": "simple",
