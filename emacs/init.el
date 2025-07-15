@@ -16,8 +16,8 @@
 	    (display-line-numbers-mode t)
 	    (display-fill-column-indicator-mode t)))
 
-(set-face-attribute 'default nil :font "Bitstream Vera Sans Mono-13")
-(set-frame-font "Bitstream Vera Sans Mono-13" nil t)
+(set-face-attribute 'default nil :font "Hack-13")
+(set-frame-font "Hack-13" nil t)
 
 (setq scroll-step 1)
 (setq scroll-conservatively 100000)
@@ -201,6 +201,19 @@
   (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
   (add-to-list 'auto-mode-alist '("\\.s\\'" . nasm-mode)))
 
+(use-package zig-mode
+  :ensure t)
+
+(use-package lean4-mode
+  :commands lean4-mode
+  :vc (:url "https://github.com/leanprover-community/lean4-mode.git"
+	    :rev :last-release))
+
+(use-package odin-mode
+  :commands odin-mode
+  :vc (:url "https://github.com/mattt-b/odin-mode.git"
+	    :rev :last-release))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -209,6 +222,14 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    '(amx color-theme-sanityinc-tomorrow eldoc-box go-mode ido-completing-read+
-	 ido-vertical-mode lice markdown-mode multiple-cursors nasm-mode
-	 rainbow-delimiters rainbow-mode web-mode)))
+	 ido-vertical-mode lean4-mode lice multiple-cursors nasm-mode odin-mode
+	 rainbow-delimiters rainbow-mode web-mode zig-mode))
+ '(package-vc-selected-packages
+   '((lean4-mode :url "https://github.com/leanprover-community/lean4-mode.git"))))
 (put 'upcase-region 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

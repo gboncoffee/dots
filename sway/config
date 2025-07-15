@@ -1,0 +1,150 @@
+set $mod Mod4
+
+set $left left
+set $down down
+set $up up
+set $right right
+
+set $term ghostty
+set $menu fuzzel
+
+input type:keyboard {
+	xkb_layout us
+	xkb_options "compose:ralt"
+	xkb_numlock enabled
+}
+
+input type:pointer {
+	accel_profile flat
+	pointer_accel 1
+	middle_emulation enabled
+}
+
+seat * {
+	hide_cursor when-typing enable
+}
+
+swaybg_command -
+
+workspace_layout tabbed
+xwayland enable
+
+focus_follows_mouse no
+
+hide_edge_borders smart
+
+floating_modifier $mod normal
+
+for_window [shell="xwayland"] title_format "%title (on %shell)"
+assign [app_id="io.github.quodlibet.QuodLibet"] workspace 4:music
+assign [app_id="discord"] workspace 3:chat
+assign [app_id="thunderbird"] workspace 3:chat
+
+exec "mako"
+exec "swww-daemon"
+exec "quodlibet"
+
+exec gsettings set org.gnome.desktop.interface gtk-theme Kali-Dark
+exec gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+exec gsettings set org.gnome.desktop.interface icon-theme Tela-circle-dark
+exec gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty
+exec gsettings set org.cinnamon.desktop.default-applications.terminal exec-arg -e
+
+bindsym $mod+Return exec $term
+bindsym $mod+f exec nemo
+bindsym $mod+b exec firefox
+bindsym $mod+w kill
+
+bindsym $mod+d exec $menu
+
+bindsym $mod+Shift+c reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym Ctrl+Alt+Delete exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+bindsym $mod+1 workspace 1:work
+bindsym $mod+2 workspace 2:web
+bindsym $mod+3 workspace 3:chat
+bindsym $mod+4 workspace 4:music
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+
+bindsym $mod+Shift+1 move container to workspace 1:work
+bindsym $mod+Shift+2 move container to workspace 2:web
+bindsym $mod+Shift+3 move container to workspace 3:chat
+bindsym $mod+Shift+4 move container to workspace 4:music
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+
+bindsym $mod+Tab layout toggle all
+
+bindsym $mod+Shift+space floating toggle
+
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+bindsym $mod+s focus child
+
+bindsym $mod+p sticky toggle
+
+bindsym $mod+Shift+0 move scratchpad
+bindsym $mod+0 scratchpad show
+
+mode "resize" {
+	bindsym $left resize shrink width 10px
+	bindsym $down resize grow height 10px
+	bindsym $up resize shrink height 10px
+	bindsym $right resize grow width 10px
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+bindsym --locked XF86AudioMute exec ~/.config/sway/audio.sh mute
+bindsym --locked XF86AudioLowerVolume exec ~/.config/sway/audio.sh decrease
+bindsym --locked XF86AudioRaiseVolume exec ~/.config/sway/audio.sh increase
+
+bindsym Print exec grim ~/desktop/$(date -Iseconds).png; exec notify-send "Screenshot taken"
+
+font pango:sans 12
+
+client.focused          #7aa6da #4271ae #eaeaea
+client.focused_inactive #424242 #2a2a2a #eaeaea
+client.unfocused        #2a2a2a #000000 #eaeaea
+client.urgent           #d54e53 #d54e53 #eaeaea
+
+bar {
+	position bottom
+	pango_markup enabled
+
+	status_command i3blocks -c ~/.config/sway/i3blocks.conf
+
+	colors {
+		statusline         #eaeaea
+		background         #000000
+		focused_workspace  #7aa6da #4271ae #eaeaea
+		active_workspace   #424242 #2a2a2a #eaeaea
+		inactive_workspace #2a2a2a #000000 #eaeaea
+		urgent_workspace   #d54e53 #d54e53 #eaeaea
+		binding_mode       #e6c547 #e6c547 #000000
+	}
+}
+
+include /etc/sway/config.d/*
