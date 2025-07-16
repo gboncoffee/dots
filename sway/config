@@ -59,8 +59,9 @@ bindsym $mod+d exec $menu
 
 bindsym $mod+Shift+c reload
 
-# Exit sway (logs you out of your Wayland session)
 bindsym Ctrl+Alt+Delete exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+l exec swaylock -i $(swww query | cut -d',' -f3 | head -1 | cut -d' ' -f5)
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
