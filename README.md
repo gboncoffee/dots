@@ -38,7 +38,6 @@ computer):
 - mate-calc  
 - moreutils  
 - nemo  
-- niri  
 - noto-fonts*  
 - obs-studio  
 - otf-font-awesome  
@@ -57,6 +56,7 @@ computer):
 - sl  
 - smartmontools  
 - sudo  
+- sway  
 - swaylock  
 - swww  
 - tela-circle-icon-theme-all  
@@ -70,7 +70,6 @@ computer):
 - ttf-linux-libertine  
 - tumbler  
 - usbmuxd  
-- waybar  
 - wget  
 - wireplumber  
 - wl-clipboard  
