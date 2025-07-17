@@ -1,10 +1,5 @@
 set $mod Mod4
 
-set $left left
-set $down down
-set $up up
-set $right right
-
 set $term ghostty
 set $menu fuzzel
 
@@ -16,7 +11,7 @@ input type:keyboard {
 
 input type:pointer {
 	accel_profile flat
-	pointer_accel 1
+	pointer_accel 0.5
 	middle_emulation enabled
 }
 
@@ -63,15 +58,25 @@ bindsym Ctrl+Alt+Delete exec swaynag -t warning -m 'You pressed the exit shortcu
 
 bindsym $mod+l exec swaylock -i $(swww query | cut -d',' -f3 | head -1 | cut -d' ' -f5)
 
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
+bindsym $mod+left focus left
+bindsym $mod+down focus down
+bindsym $mod+up focus up
+bindsym $mod+right focus right
+# Same with hjku for 60% keyboards.
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+u focus up
+bindsym $mod+k focus right
 
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+left move left
+bindsym $mod+Shift+down move down
+bindsym $mod+Shift+up move up
+bindsym $mod+Shift+right move right
+# Same with hjku for 60% keyboards.
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+u move up
+bindsym $mod+Shift+k move right
 
 bindsym $mod+1 workspace 1:work
 bindsym $mod+2 workspace 2:web
@@ -108,10 +113,10 @@ bindsym $mod+Shift+0 move scratchpad
 bindsym $mod+0 scratchpad show
 
 mode "resize" {
-	bindsym $left resize shrink width 10px
-	bindsym $down resize grow height 10px
-	bindsym $up resize shrink height 10px
-	bindsym $right resize grow width 10px
+	bindsym left resize shrink width 10px
+	bindsym down resize grow height 10px
+	bindsym up resize shrink height 10px
+	bindsym right resize grow width 10px
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
