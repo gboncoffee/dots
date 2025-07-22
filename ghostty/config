@@ -1,10 +1,11 @@
 font-family = monospace
 font-size = 13
-freetype-load-flags = no-monochrome,no-autohint,no-force-autohint
+freetype-load-flags = no-monochrome
+#freetype-load-flags = no-monochrome,no-autohint,no-force-autohint
 gtk-adwaita = false
 
-theme = Tomorrow Night Bright
-background-opacity = 0.9
+theme = Builtin Solarized Dark
+#background-opacity = 0.9
 
 cursor-style = block
 cursor-style-blink = false
