@@ -27,6 +27,7 @@ computer):
 - gvfs-gphoto2  
 - htop  
 - imv  
+- i3status  
 - libguestfs  
 - libimobiledevice  
 - libnotify  
