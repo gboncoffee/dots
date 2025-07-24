@@ -39,9 +39,9 @@ exec "mako"
 exec "swww-daemon"
 exec "quodlibet"
 
-exec gsettings set org.gnome.desktop.interface gtk-theme Kali-Dark
+exec gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-dark
 exec gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-exec gsettings set org.gnome.desktop.interface icon-theme Tela-circle-dark
+exec gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
 exec gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty
 exec gsettings set org.cinnamon.desktop.default-applications.terminal exec-arg -e
 
@@ -132,10 +132,10 @@ bindsym Shift+Print exec slurp | grim -g - -  | tee ~/desktop/$(date -Iseconds).
 
 font pango:sans 12
 
-client.focused          #7aa6da #4271ae #eaeaea
-client.focused_inactive #424242 #2a2a2a #eaeaea
-client.unfocused        #2a2a2a #000000 #eaeaea
-client.urgent           #d54e53 #d54e53 #eaeaea
+#client.focused          #7aa6da #4271ae #eaeaea
+#client.focused_inactive #424242 #2a2a2a #eaeaea
+#client.unfocused        #2a2a2a #000000 #eaeaea
+#client.urgent           #d54e53 #d54e53 #eaeaea
 
 bar {
 	position bottom
@@ -143,15 +143,15 @@ bar {
 
 	status_command i3status -c ~/.config/sway/i3status.conf
 
-	colors {
-		statusline         #eaeaea
-		background         #000000
-		focused_workspace  #7aa6da #4271ae #eaeaea
-		active_workspace   #424242 #2a2a2a #eaeaea
-		inactive_workspace #2a2a2a #000000 #eaeaea
-		urgent_workspace   #d54e53 #d54e53 #eaeaea
-		binding_mode       #e6c547 #e6c547 #000000
-	}
+	#colors {
+	#	statusline         #eaeaea
+	#	background         #000000
+	#	focused_workspace  #7aa6da #4271ae #eaeaea
+	#	active_workspace   #424242 #2a2a2a #eaeaea
+	#	inactive_workspace #2a2a2a #000000 #eaeaea
+	#	urgent_workspace   #d54e53 #d54e53 #eaeaea
+	#	binding_mode       #e6c547 #e6c547 #000000
+	#}
 }
 
 include /etc/sway/config.d/*

@@ -21,11 +21,11 @@
 
 (setq scroll-step 1)
 (setq scroll-conservatively 100000)
-
-(use-package color-theme-sanityinc-tomorrow
+ 
+(use-package naysayer-theme
   :ensure t
   :init
-  (load-theme 'sanityinc-tomorrow-bright t))
+  (load-theme 'naysayer t))
 
 (use-package rainbow-mode
   :ensure t
@@ -222,8 +222,9 @@
  '(inhibit-startup-screen t)
  '(package-selected-packages
    '(amx color-theme-sanityinc-tomorrow eldoc-box go-mode ido-completing-read+
-	 ido-vertical-mode lean4-mode lice multiple-cursors nasm-mode odin-mode
-	 rainbow-delimiters rainbow-mode web-mode zig-mode))
+	 ido-vertical-mode lean4-mode lice multiple-cursors nasm-mode
+	 naysayer-theme odin-mode rainbow-delimiters rainbow-mode web-mode
+	 zig-mode))
  '(package-vc-selected-packages
    '((lean4-mode :url "https://github.com/leanprover-community/lean4-mode.git"))))
 (put 'upcase-region 'disabled nil)
