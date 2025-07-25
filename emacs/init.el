@@ -221,10 +221,9 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(amx color-theme-sanityinc-tomorrow eldoc-box go-mode ido-completing-read+
-	 ido-vertical-mode lean4-mode lice multiple-cursors nasm-mode
-	 naysayer-theme odin-mode rainbow-delimiters rainbow-mode web-mode
-	 zig-mode))
+   '(amx eldoc-box go-mode ido-completing-read+ ido-vertical-mode lean4-mode lice
+	 multiple-cursors nasm-mode naysayer-theme odin-mode rainbow-delimiters
+	 rainbow-mode web-mode zig-mode))
  '(package-vc-selected-packages
    '((lean4-mode :url "https://github.com/leanprover-community/lean4-mode.git"))))
 (put 'upcase-region 'disabled nil)

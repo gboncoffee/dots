@@ -3,9 +3,6 @@ font-size = 13
 freetype-load-flags = no-monochrome,no-autohint,no-force-autohint
 gtk-adwaita = false
 
-theme = Everforest Dark - Hard
-#background-opacity = 0.9
-
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
@@ -25,3 +22,28 @@ clipboard-read = allow
 clipboard-write = allow
 
 clipboard-paste-protection = true
+
+palette = 0=#062329
+palette = 1=#FD971F
+palette = 2=#A6E22E
+palette = 3=#E6DB74
+palette = 4=#66D9EF
+palette = 5=#AE81FF
+palette = 6=#A1EFE4
+palette = 7=#f0f0f0
+palette = 8=#2a2a2a
+palette = 9=#F92672
+palette = 10=#44b340
+palette = 11=#ffaa00
+palette = 12=#0000ff
+palette = 13=#FD5FF0
+palette = 14=#2a2aff
+palette = 15=#ffffff
+
+background = #062329
+foreground = #d1b897
+cursor-color = #ffffff
+cursor-text = #062329
+selection-background = #0000ff
+selection-foreground = #ffffff
+
