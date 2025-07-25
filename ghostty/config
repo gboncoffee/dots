@@ -23,7 +23,7 @@ clipboard-write = allow
 
 clipboard-paste-protection = true
 
-palette = 0=#062329
+palette = 0=#2a2a2a
 palette = 1=#FD971F
 palette = 2=#A6E22E
 palette = 3=#E6DB74
@@ -31,7 +31,7 @@ palette = 4=#66D9EF
 palette = 5=#AE81FF
 palette = 6=#A1EFE4
 palette = 7=#f0f0f0
-palette = 8=#2a2a2a
+palette = 8=#000000
 palette = 9=#F92672
 palette = 10=#44b340
 palette = 11=#ffaa00
