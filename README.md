@@ -26,6 +26,7 @@ computer):
 - gvfs-gphoto2  
 - htop  
 - imv  
+- inter-font  
 - i3status  
 - libguestfs  
 - libimobiledevice  
