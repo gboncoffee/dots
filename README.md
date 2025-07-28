@@ -11,6 +11,7 @@ computer):
 - edk2-shell  
 - engrampa  
 - fail2ban  
+- farbfeld  
 - ffmpegthumbnailer  
 - firefox  
 - fuzzel  
@@ -65,6 +66,8 @@ computer):
 - tmux  
 - ttf-bitstream-vera  
 - ttf-dejavu  
+- ttf-go-mono-git  
+- ttf-go-sans-git  
 - ttf-hack  
 - ttf-ibm-plex  
 - ttf-liberation  
