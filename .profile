@@ -20,7 +20,5 @@ export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/usr/bin:$PATH"
 export TERMINAL=ghostty
 export EDITOR=micro
 
-export QT_QPA_PLATFORM=wayland
-export QT_QPA_PLATFORMTHEME=gtk3
-export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 export _JAVA_AWT_WM_NONREPARENTING=1
+export GTK_USE_PORTAL=1
