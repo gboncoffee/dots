@@ -1,0 +1,21 @@
+root = true
+
+[{*.{c,cpp,json,jsonc,py,zig},SConstruct}]
+indent_style = space
+indent_size = 4
+
+[*.go]
+indent_style = tab
+indent_size = 4
+
+[*.odin]
+indent_style = tab
+indent_size = 8
+
+[*.{erl,ex,exs,hs,lua,yaml}]
+indent_style = space
+indent_size = 2
+
+[{*.mk,Makefile,makefile}]
+indent_style = tab
+indent_size = 8

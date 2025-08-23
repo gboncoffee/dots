@@ -1,65 +1,10 @@
 {
-    "*.[ex,exs]": {
-        "tabsize": 2,
-        "tabstospaces": true
-    },
-    "*.c": {
-        "commenttype": "/* %s */",
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.cpp": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.erl": {
-        "tabsize": 2,
-        "tabstospaces": true
-    },
-    "*.go": {
-        "tabsize": 4
-    },
-    "*.hs": {
-        "tabsize": 2,
-        "tabstospaces": true
-    },
-    "*.json": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.jsonc": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.kdl": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.lua": {
-        "tabsize": 2,
-        "tabstospaces": true
-    },
-    "*.py": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "*.yaml": {
-        "tabsize": 2,
-        "tabstospaces": true
-    },
-    "*.zig": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
-    "SConstruct": {
-        "tabsize": 4,
-        "tabstospaces": true
-    },
     "autosu": true,
     "colorcolumn": 80,
     "colorscheme": "simple",
     "cursorline": false,
     "diffgutter": true,
+    "ftoptions": false,
     "helpsplit": "vsplit",
     "hlsearch": true,
     "hltaberrors": true,
