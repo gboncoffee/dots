@@ -11,6 +11,7 @@ setup):
 - base-devel
 - bash-completion
 - bear
+- cabal-install
 - cantarell-fonts
 - cava
 - clang
@@ -32,6 +33,7 @@ setup):
 - firefox
 - gdb
 - geogebra-6-bin
+- ghc
 - gimp
 - git
 - github-cli
@@ -46,6 +48,7 @@ setup):
 - gvfs-gphoto2
 - gwenview
 - haruna
+- haskell-language-server
 - htop
 - inter-font
 - kate

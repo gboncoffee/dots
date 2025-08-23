@@ -47,11 +47,11 @@
         "tabsize": 2,
         "tabstospaces": true
     },
-    "SConstruct": {
+    "*.zig": {
         "tabsize": 4,
         "tabstospaces": true
     },
-    "*.zig": {
+    "SConstruct": {
         "tabsize": 4,
         "tabstospaces": true
     },
@@ -64,6 +64,7 @@
     "hlsearch": true,
     "hltaberrors": true,
     "hltrailingws": true,
+    "linter": false,
     "parsecursor": true,
     "savecursor": true,
     "softwrap": true,
