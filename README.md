@@ -6,11 +6,13 @@ on Micro I install the following plugins:
 
 Packages I usually install (annotation so I can remember how to reproduce my
 setup):
+- allegro
 - ark
 - base
 - base-devel
 - bash-completion
 - bear
+- bc
 - cabal-install
 - cantarell-fonts
 - cava
@@ -78,6 +80,7 @@ setup):
 - man-pages
 - mandoc
 - micro
+- mono
 - moreutils
 - networkmanager
 - noto-fonts
@@ -101,6 +104,7 @@ setup):
 - pipewire-v4l2
 - pkgstats
 - plasma-meta
+- postgresql
 - pwgen
 - qbittorrent
 - qemu-full
@@ -129,6 +133,8 @@ setup):
 - valgrind
 - visual-studio-code-bin
 - wget
+- wine
+- wine-mono
 - wireplumber
 - wl-clipboard
 - xdg-utils
