@@ -17,7 +17,7 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/usr/bin:$PATH"
-export TERMINAL=ghostty
+export TERMINAL=konsole
 export EDITOR=micro
 
 export _JAVA_AWT_WM_NONREPARENTING=1
