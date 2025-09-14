@@ -26,7 +26,8 @@ setup):
 - doxygen
 - edk2-shell
 - efibootmgr
-- emacs-wayland
+- elixir
+- erlang
 - fail2ban
 - farbfeld
 - fastfetch
