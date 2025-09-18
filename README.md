@@ -64,7 +64,6 @@ setup):
 - kmines
 - konsole
 - kweather
-- lean
 - less
 - libc++
 - libguestfs
