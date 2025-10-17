@@ -63,6 +63,7 @@ setup):
 - kdenlive
 - kmines
 - konsole
+- kwalletmanager
 - kweather
 - less
 - libc++
