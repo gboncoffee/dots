@@ -1,0 +1,20 @@
+// Project tasks configuration. See https://zed.dev/docs/tasks for documentation.
+//
+// Example:
+[
+	{
+		"label": "make -B",
+		"command": "make -B",
+		"hide": "on_success",
+	},
+	{
+		"label": "make -B debug",
+		"command": "make -B debug",
+		"hide": "on_success",
+	},
+	{
+		"label": "Go build package",
+		"command": "go build .",
+		"hide": "on_success",
+	},
+]
