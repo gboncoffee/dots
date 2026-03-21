@@ -47,7 +47,7 @@
 ;;
 
 (defalias 'yes-or-no-p 'y-or-n-p)
-(setopt use-short-anwsers t)
+(setopt use-short-answers t)
 (windmove-default-keybindings 'meta)
 (setq-default fill-column 80)
 
@@ -162,7 +162,7 @@
 (defun c-configs ()
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
-  (add-hook 'before-save-hook 'clang-format nil t)
+  (add-hook 'before-save-hook #'clang-format nil t)
   ;; I hate c-mode for using C-c.
   (local-set-key (kbd "C-c C-c") #'compile))
 (add-hook 'c-mode-hook #'c-configs)
