@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+    "cursor_shape": "block",
     "icon_theme": "Colored Zed Icons Theme Dark",
     "show_edit_predictions": false,
     "edit_predictions": {
@@ -23,6 +24,11 @@
         "blinking": "off",
     },
     "agent": {
+        "default_model": {
+            "provider": "copilot_chat",
+            "model": "gpt-5-mini",
+            "enable_thinking": false,
+        },
         "play_sound_when_agent_done": true,
         "single_file_review": true,
         "dock": "left",
@@ -101,6 +107,19 @@
             "hard_tabs": false,
             "tab_size": 2,
         },
+        "JSON": {
+            "hard_tabs": false,
+            "tab_size": 4,
+        },
+        "JSONC": {
+            "hard_tabs": false,
+            "tab_size": 4,
+        },
+        "Markdown": {
+            "allow_rewrap": "anywhere",
+            "remove_trailing_whitespace_on_save": false,
+            "formatter": "prettier",
+        },
     },
     "format_on_save": "on",
     "document_symbols": "on",
@@ -110,7 +129,7 @@
     "completions": {
         "words_min_length": 1,
     },
-    "remove_trailing_whitespace_on_save": false,
+    "remove_trailing_whitespace_on_save": true,
     "toolbar": {
         "code_actions": true,
     },
@@ -129,7 +148,7 @@
     "auto_update": false,
     "restore_on_startup": "launchpad",
     "telemetry": {},
-    "base_keymap": "VSCode",
+    "base_keymap": "Emacs",
     "minimap": {
         "show": "never",
     },
