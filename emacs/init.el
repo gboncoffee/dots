@@ -11,7 +11,13 @@
 (scroll-bar-mode 1)
 (blink-cursor-mode 0)
 (setq-default display-line-numbers-width 3)
+(setq-default show-trailing-whitespace t)
+(add-hook 'minibuffer-mode-hook (lambda () (setq show-trailing-whitespace nil)))
 (add-hook 'prog-mode-hook
+	  (lambda ()
+	    (display-line-numbers-mode t)
+	    (display-fill-column-indicator-mode t)))
+(add-hook 'text-mode-hook
 	  (lambda ()
 	    (display-line-numbers-mode t)
 	    (display-fill-column-indicator-mode t)))
@@ -21,11 +27,14 @@
 
 (setq scroll-step 1)
 (setq scroll-conservatively 100000)
- 
+
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :init
-  (load-theme 'sanityinc-tomorrow-night t))
+  (load-theme 'sanityinc-tomorrow-night t)
+  (set-face-attribute 'trailing-whitespace nil
+                      :inherit nil
+                      :background "#cc6666"))
 
 (use-package ido-vertical-mode
   :ensure t
@@ -72,13 +81,10 @@
 (global-set-key (kbd "C-v") #'scroll-up-half)
 (global-set-key (kbd "M-v") #'scroll-down-half)
 
-(global-set-key (kbd "C-c C-c") #'compile)
+(global-set-key (kbd "C-c c") #'compile)
 
 (add-hook 'find-file-hook
 	  (lambda () (setq default-directory command-line-default-directory)))
-
-(add-hook 'shell-mode-hook
-	  (lambda () (company-mode -1)))
 
 ;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
 (require 'ansi-color)
@@ -100,6 +106,9 @@
 (use-package magit-gh
   :ensure t
   :after magit)
+
+(use-package pdf-tools
+  :ensure t)
 
 ;;
 ;; Editing.
@@ -124,7 +133,10 @@
   :init
   (editorconfig-mode t))
 
-(add-hook 'prog-mode-hook (lambda () (etags-regen-mode t)))
+(add-hook 'prog-mode-hook
+	  (lambda ()
+	    (etags-regen-mode t)
+	    (xref-etags-mode t)))
 
 ;;
 ;; Langs.
@@ -140,13 +152,17 @@
   (add-hook 'go-mode-hook
 	    (lambda ()
 	      (setq tab-width 4)
-	      (setq indent-tabs-mode t))))
+	      (setq indent-tabs-mode t)
+	      (add-hook 'before-save-hook #'gofmt-before-save nil t))))
 
+(use-package clang-format
+  :ensure t)
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "linux")
 (defun c-configs ()
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
+  (add-hook 'before-save-hook 'clang-format nil t)
   ;; I hate c-mode for using C-c.
   (local-set-key (kbd "C-c C-c") #'compile))
 (add-hook 'c-mode-hook #'c-configs)
@@ -194,6 +210,15 @@
   :init
   (setq haskell-stylish-on-save t))
 
+(use-package rust-mode
+  :ensure t
+  :init
+  (setq rust-format-on-save t))
+
+;;(add-hook 'LaTeX-mode-hook
+;;	  (lambda ()
+;;	    (setq show-trailing-whitespace t)))
+
 ;;
 ;; Tasks system.
 ;;
@@ -227,10 +252,10 @@
  ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(amx color-theme-sanityinc-tomorrow elixir-mode go-mode haskell-mode
-	 ido-completing-read+ ido-vertical-mode lice magit magit-gh
-	 markdown-mode multiple-cursors nasm-mode odin-mode rainbow-delimiters
-	 rainbow-mode web-mode zig-mode))
+   '(amx clang-format color-theme-sanityinc-tomorrow copilot counsel elixir-mode
+	 go-mode haskell-mode ido-completing-read+ ido-vertical-mode lice
+	 magit-gh markdown-mode multiple-cursors nasm-mode odin-mode pdf-tools
+	 rainbow-delimiters rainbow-mode rust-mode web-mode zig-mode))
  '(package-vc-selected-packages
    '((lean4-mode :url "https://github.com/leanprover-community/lean4-mode.git")))
  '(safe-local-variable-values '((elixir-basic-offset . 2))))
