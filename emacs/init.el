@@ -8,7 +8,7 @@
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(scroll-bar-mode 1)
+(scroll-bar-mode 0)
 (blink-cursor-mode 0)
 (setq-default display-line-numbers-width 3)
 (setq-default show-trailing-whitespace t)
@@ -106,9 +106,6 @@
 (use-package magit-gh
   :ensure t
   :after magit)
-
-(use-package pdf-tools
-  :ensure t)
 
 ;;
 ;; Editing.
@@ -254,10 +251,8 @@
  '(package-selected-packages
    '(amx clang-format color-theme-sanityinc-tomorrow copilot counsel elixir-mode
 	 go-mode haskell-mode ido-completing-read+ ido-vertical-mode lice
-	 magit-gh markdown-mode multiple-cursors nasm-mode odin-mode pdf-tools
+	 magit-gh markdown-mode multiple-cursors nasm-mode odin-mode
 	 rainbow-delimiters rainbow-mode rust-mode web-mode zig-mode))
- '(package-vc-selected-packages
-   '((lean4-mode :url "https://github.com/leanprover-community/lean4-mode.git")))
  '(safe-local-variable-values '((elixir-basic-offset . 2))))
 (put 'upcase-region 'disabled nil)
 (custom-set-faces
