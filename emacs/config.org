@@ -1,0 +1,264 @@
+#+PROPERTY: header-args:emacs-lisp :tangle config.el
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+
+  (package-initialize)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  (require 'use-package)
+
+  (setq use-package-always-ensure t)
+
+  ;;
+  ;; Appearance.
+  ;;
+
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (scroll-bar-mode 0)
+  (blink-cursor-mode 0)
+  (column-number-mode 1)
+  (setq-default display-line-numbers-width 3)
+  (setq-default show-trailing-whitespace t)
+  (setq inhibit-startup-screen t)
+  (savehist-mode 1)
+  (recentf-mode 1)
+  (add-hook 'minibuffer-mode-hook (lambda () (setq show-trailing-whitespace nil)))
+
+  (defun prog-and-text-mode-setup ()
+    (display-line-numbers-mode t)
+    (display-fill-column-indicator-mode t))
+  (add-hook 'prog-mode-hook #'prog-and-text-mode-setup)
+  (add-hook 'text-mode-hook #'prog-and-text-mode-setup)
+
+  (set-face-attribute 'default nil :font "Hack-11")
+  (set-face-attribute 'fixed-pitch nil :font "Hack-11")
+  (set-face-attribute 'variable-pitch nil :font "Noto Sans-14")
+
+  (setq scroll-step 1)
+  (setq scroll-conservatively 100000)
+
+  (use-package all-the-icons)
+  (use-package doom-modeline
+    :init
+    (display-time-mode 1)
+    (doom-modeline-mode 1)
+    :custom
+    (display-time-format "%a %b %e, %H:%M"))
+
+  (use-package doom-themes
+    :custom
+    (doom-themes-enable-bold t)
+    (doom-themes-enable-italic t)
+    :config
+    (load-theme 'doom-tomorrow-night t)
+    (doom-themes-org-config))
+
+  (use-package ido-vertical-mode
+    :config
+    (setq ido-vertical-show-count t)
+    (ido-vertical-mode t))
+
+  ;;
+  ;; Interface.
+  ;;
+
+  (defun open-dir (dir)
+    (interactive (list (read-directory-name "Open directory: " nil nil t)))
+    (let ((dir (file-name-as-directory
+    	      (expand-file-name dir))))
+      (setq-default default-directory dir)
+      (setq default-directory dir)
+      (setenv "PWD" dir)
+      (let ((file-name (concat default-directory ".emacs.el")))
+        (unless (not (file-exists-p file-name))
+    	(load-file file-name)
+    	(message "Loaded custom directory configuration.")))
+      (dired dir)))
+
+  (global-set-key (kbd "C-c o") #'open-dir)
+
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setopt use-short-answers t)
+  (windmove-default-keybindings 'meta)
+  (setq-default fill-column 80)
+
+  (use-package ido-completing-read+
+    :config
+    (ido-mode t)
+    (ido-everywhere t)
+    (ido-ubiquitous-mode t))
+
+  (use-package amx
+    :config
+    (amx-mode t))
+
+  (setq make-backup-files nil)
+
+  (setq-default compile-command "")
+
+  (defun window-half-height ()
+    (max 1 (/ (1- (window-height (selected-window))) 2)))
+
+  (defun scroll-up-half ()
+    (interactive)
+    (scroll-up (window-half-height)))
+
+  (defun scroll-down-half ()
+    (interactive)
+    (scroll-down (window-half-height)))
+
+  (global-set-key (kbd "C-v") #'scroll-up-half)
+  (global-set-key (kbd "M-v") #'scroll-down-half)
+
+  (global-set-key (kbd "C-c c") #'compile)
+
+  ;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
+  (require 'ansi-color)
+  (defun colorize-compilation ()
+    "Colorize from `compilation-filter-start' to `point'."
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region
+       compilation-filter-start (point))))
+
+  (add-hook 'compilation-filter-hook
+            #'colorize-compilation)
+
+  (use-package lice)
+  (use-package magit)
+  (use-package magit-gh
+    :after magit)
+
+  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-delete-by-moving-to-trash t)
+  (setq dired-listing-switches "-D --group-directories-first")
+
+  (use-package copilot-chat)
+
+  ;;
+  ;; Editing.
+  ;;
+
+  (electric-indent-mode t)
+  (electric-pair-mode t)
+  (add-hook 'text-mode-hook
+    	  (lambda ()
+    	    (auto-fill-mode t)))
+  (delete-selection-mode t)
+
+  (use-package multiple-cursors
+    :bind (
+    	 ("C-S-c" . mc/edit-lines)
+    	 ("C->" . #'mc/mark-next-like-this)
+    	 ("C-<" . #'mc/mark-previous-like-this)))
+
+  (use-package editorconfig
+    :config
+    (editorconfig-mode t))
+
+  (with-eval-after-load 'etags
+    (add-hook 'prog-mode-hook
+    	    (lambda ()
+    	      (etags-regen-mode t)
+    	      (xref-etags-mode t))))
+
+
+  ;;
+  ;; Langs.
+  ;;
+
+  (add-hook 'emacs-lisp-mode-hook
+    	  (lambda ()
+    	    (prettify-symbols-mode t)))
+
+  (use-package go-mode
+    :config
+    (add-hook 'go-mode-hook
+    	    (lambda ()
+    	      (setq tab-width 4)
+    	      (setq indent-tabs-mode t)
+    	      (add-hook 'before-save-hook #'gofmt-before-save nil t))))
+
+  (use-package clang-format)
+  (setq-default c-basic-offset 4)
+  (setq-default c-default-style "linux")
+  (defun c-configs ()
+    (setq tab-width 4)
+    (setq indent-tabs-mode nil)
+    (add-hook 'before-save-hook #'clang-format nil t)
+    ;; I hate c-mode for using C-c.
+    (local-set-key (kbd "C-c C-c") #'compile))
+  (add-hook 'c-mode-hook #'c-configs)
+  (add-hook 'c++-mode-hook #'c-configs)
+
+  (setq-default pascal-indent-level 4)
+  (add-hook 'pascal-mode-hook
+    	  (lambda ()
+    	    (setq tab-width 4)
+    	    (setq pascal-indent-level 4)
+    	    (setq pascal-auto-lineup '())
+    	    (setq indent-tabs-mode nil)
+    	    (local-set-key (kbd "C-c C-c") #'compile)))
+
+  (use-package web-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+  (use-package markdown-mode)
+
+  (use-package nasm-mode
+    :config
+    (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
+    (add-to-list 'auto-mode-alist '("\\.s\\'" . nasm-mode)))
+
+  (use-package zig-mode)
+
+  (use-package odin-mode
+    :commands odin-mode
+    :vc (:url "https://github.com/mattt-b/odin-mode.git"
+    	    :rev :last-release))
+
+  (use-package elixir-mode
+    :config
+    (add-hook 'elixir-mode-hook
+    	    (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
+
+  (use-package haskell-mode
+    :config
+    (setq haskell-stylish-on-save t))
+
+  (use-package rust-mode
+    :config
+    (setq rust-format-on-save t))
+
+  ;;
+  ;; Tasks system.
+  ;;
+  (setq-default tasks '())
+  (defvar tasks/history nil)
+  (defun run-task ()
+    (interactive)
+    (let* ((choices (mapcar #'car tasks))
+           (last (car tasks/history))
+           (choice (completing-read
+                    "Task: "
+                    choices
+                    nil t
+                    nil 'tasks/history
+                    last)))
+      (compile
+       (cadr (assoc choice tasks)))))
+  (global-set-key (kbd "C-c C-t") #'run-task)
+  (global-set-key (kbd "C-c t") #'run-task)
+
+  ;; Move custom elsewhere.
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file 'noerror)
+#+END_SRC
