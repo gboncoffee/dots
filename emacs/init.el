@@ -23,6 +23,7 @@
 	    (display-fill-column-indicator-mode t)))
 
 (set-face-attribute 'default nil :font "Hack-11")
+(set-face-attribute 'variable-pitch nil :font "Noto Sans-14")
 (set-frame-font "Hack-11" nil t)
 
 (setq scroll-step 1)
@@ -45,6 +46,18 @@
 ;;
 ;; Interface.
 ;;
+
+(defun open-dir (dir)
+  (interactive (list (read-directory-name "Open directory: " nil nil t)))
+  (let ((dir (file-name-as-directory
+	      (expand-file-name dir))))
+    (setq-default default-directory dir)
+    (setq default-directory dir)
+    (setenv "PWD" dir)
+    (dired dir)
+    (message "New working directory: %s" dir)))
+
+(global-set-key (kbd "C-c o") #'open-dir)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setopt use-short-answers t)
@@ -82,9 +95,6 @@
 (global-set-key (kbd "M-v") #'scroll-down-half)
 
 (global-set-key (kbd "C-c c") #'compile)
-
-(add-hook 'find-file-hook
-	  (lambda () (setq default-directory command-line-default-directory)))
 
 ;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
 (require 'ansi-color)
