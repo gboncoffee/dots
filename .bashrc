@@ -43,12 +43,4 @@ export GPG_TTY=$(tty)
 
 alias make='make -j12'
 
-emacs() {
-    if command -v prime-run >/dev/null 2>&1; then
-	prime-run command emacs "$@"
-    else
-	command emacs "$@"
-    fi
-}
-
 PS1="\n\[\e[32m\]\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]>"
