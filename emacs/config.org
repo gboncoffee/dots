@@ -239,6 +239,15 @@ configuration from a ~.emacs.el~ file there if it exists, and opens dired.
 (global-set-key (kbd "C-c o") #'open-dir)
 #+END_SRC
 
+This makes so Emacs makes the buffer-local working directory actually the
+directory we choose instead of the buffer base directory.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'find-file-hook
+	  (lambda () (setq default-directory
+	              (default-value 'default-directory))))
+#+END_SRC
+
 *** Electric
 
 Electric, auto-fill and selection deletion.
