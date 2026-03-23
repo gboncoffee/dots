@@ -42,5 +42,6 @@ fi
 export GPG_TTY=$(tty)
 
 alias make='make -j12'
+alias emacs='emacsclient -c'
 
 PS1="\n\[\e[32m\]\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]>"

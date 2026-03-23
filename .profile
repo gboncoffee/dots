@@ -18,7 +18,7 @@ fi
 
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/usr/bin:$PATH"
 export TERMINAL=konsole
-export EDITOR=micro
+export EDITOR='emacsclient -c'
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GTK_USE_PORTAL=1
