@@ -298,7 +298,15 @@ The best git UI in the world.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
-(use-package magit-gh
+#+END_SRC
+
+It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete. We need to
+properly setup ~auth~ though.
+
+#+BEGIN_SRC emacs-lisp
+(setq auth-sources '("~/.authinfo"))
+
+(use-package forge
   :after magit)
 #+END_SRC
 
