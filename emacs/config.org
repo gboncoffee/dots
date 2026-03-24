@@ -42,6 +42,12 @@ changes, no startup screen.
 (setq inhibit-startup-screen t)
 #+END_SRC
 
+Prettify symbols.
+
+#+BEGIN_SRC emacs-lisp
+(global-prettify-symbols-mode 1)
+#+END_SRC
+
 *** Theme and modeline
 
 The theme I like is tomorrow. The ~doom-themes~ version is a little better
@@ -62,6 +68,7 @@ make it show the current column number and clock.
   :init
   (setq display-time-default-load-average nil)
   (setq display-time-interval 10)
+  (setq display-time-format "%F %R")
   (display-time-mode 1)
   (column-number-mode 1)
 
@@ -373,14 +380,6 @@ Lice to add licenses.
 #+END_SRC
 
 ** Language specific configuration
-*** Emacs Lisp
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'emacs-lisp-mode-hook
-  	  (lambda ()
-  	    (prettify-symbols-mode t)))
-#+END_SRC
-
 *** Go
 
 #+BEGIN_SRC emacs-lisp
