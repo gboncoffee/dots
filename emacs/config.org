@@ -33,10 +33,10 @@ Unclutter the UI, stop the blinking cursor, don't jump text when the width
 changes, no startup screen.
 
 #+BEGIN_SRC emacs-lisp
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(blink-cursor-mode 0)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode -1)
 
 (setq-default display-line-numbers-width 3)
 (setq inhibit-startup-screen t)
@@ -99,12 +99,10 @@ Rainbow delimiters and rainbow mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
-  :config
-  (rainbow-delimiters-mode t))
+  :hook (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
-  :config
-  (rainbow-mode t))
+  :hook (prog-mode-hook . rainbow-mode))
 #+END_SRC
 
 ** Behaviour
@@ -147,25 +145,26 @@ No default command a keybind, colorize the buffer.
           #'colorize-compilation)
 #+END_SRC
 
-*** IDO
+*** Minibuffer completion
 
-Makes the minibuffer much nicer. IDO vertically, amx, etc.
+Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package ido-vertical-mode
-  :config
-  (setq ido-vertical-show-count t)
-  (ido-vertical-mode t))
+(use-package vertico
+  :init (vertico-mode))
 
-(use-package ido-completing-read+
-  :config
-  (ido-mode t)
-  (ido-everywhere t)
-  (ido-ubiquitous-mode t))
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides
+	'((file (styles basic partial-completion)))))
 
-(use-package amx
-  :config
-  (amx-mode t))
+(use-package consult
+  :after vertico)
+
+(use-package marginalia
+  :init (marginalia-mode))
 #+END_SRC
 
 *** Windows
@@ -238,7 +237,9 @@ configuration from a ~.emacs.el~ file there if it exists, and opens dired.
     (setq default-directory dir)
     (setenv "PWD" dir)
     (let ((file-name (concat default-directory ".emacs.el")))
-      (unless (not (file-exists-p file-name))
+      (when (and (file-exists-p file-name)
+		 (y-or-n-p
+		  (format "Load %s configuration?" default-directory)))
   	(load-file file-name)
   	(message "Loaded custom directory configuration.")))
     (dired dir)))
@@ -385,11 +386,13 @@ Lice to add licenses.
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
   :config
-  (add-hook 'go-mode-hook
-      	    (lambda ()
-      	      (setq tab-width 4)
-      	      (setq indent-tabs-mode t)
-      	      (add-hook 'before-save-hook #'gofmt-before-save nil t))))
+  (add-hook 'go-mode-hook (lambda ()
+			    (setq tab-width 4)
+			    (setq indent-tabs-mode t)
+			    (setq gofmt-args "-s")
+			    (add-hook
+			     'before-save-hook
+			     #'gofmt-before-save nil t))))
 #+END_SRC
 
 *** C/C++
@@ -483,7 +486,16 @@ Lice to add licenses.
 #+END_SRC
 
 ** Org mode
+*** Basic
+Setup ~org-directory~ and ~org-agenda-files~.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/org")
+(setq org-agenda-files (list (expand-file-name "inbox.org" org-directory)))
+#+END_SRC
+
 *** Appearance/Indenting
+Visual line, indent, etc.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook
@@ -493,7 +505,14 @@ Lice to add licenses.
 	    (display-line-numbers-mode -1)))
 #+END_SRC
 
-*** Hide everything.
+Pretty.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org-superstar
+  :hook (org-mode . org-superstar-mode))
+#+END_SRC
+
+Hide everything.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default org-edit-src-content-indentation 0)
@@ -504,12 +523,3 @@ Lice to add licenses.
 (setq-default org-startup-folded 'fold)
 #+END_SRC
 
-*** Bullets
-
-Use prettier bullets.
-
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :after org
-  :hook (org-mode-hook . org-bullets-mode))
-#+END_SRC
