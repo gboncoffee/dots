@@ -126,6 +126,12 @@ Move custom elsewhere.
 (load custom-file 'noerror)
 #+END_SRC
 
+Revert buffers when content changed.
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode 1)
+#+END_SRC
+
 *** Compile mode
 
 No default command a keybind, colorize the buffer.
@@ -145,13 +151,27 @@ No default command a keybind, colorize the buffer.
           #'colorize-compilation)
 #+END_SRC
 
-*** Minibuffer completion
+*** Minibuffer
 
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
 (use-package vertico
   :init (vertico-mode))
+
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+(use-package vertico-mouse
+  :after vertico
+  :ensure nil
+  :init (vertico-mouse-mode 1))
 
 (use-package orderless
   :init
@@ -160,15 +180,11 @@ Makes the minibuffer much nicer.
   (setq completion-category-overrides
 	'((file (styles basic partial-completion)))))
 
-(use-package consult
-  :after vertico)
-
 (use-package marginalia
   :init (marginalia-mode))
 #+END_SRC
 
 *** Windows
-
 Move windows with meta. Makes C-v and M-v to move by half pages instead of
 full ones.
 
@@ -188,6 +204,24 @@ full ones.
 
 (global-set-key (kbd "C-v") #'scroll-up-half)
 (global-set-key (kbd "M-v") #'scroll-down-half)
+#+END_SRC
+
+*** Consult
+Makes it easy to search anything.
+
+#+BEGIN_SRC emacs-lisp
+(use-package consult
+  :after vertico
+  :bind (
+	 ("C-x b" . consult-buffer)
+	 ("M-y" . consult-yank-from-kill-ring)
+	 ("M-g M-g" . consult-goto-line)
+	 ("C-s" . consult-line)
+	 ("C-c /" . consult-grep))
+  :config
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref))
+
 #+END_SRC
 
 ** Editor configuration
