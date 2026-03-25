@@ -219,8 +219,8 @@ Makes it easy to search anything.
 	 ("C-s" . consult-line)
 	 ("C-c /" . consult-grep))
   :config
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref))
+  (setq xref-show-xrefs-function #'consult-xref)
+  (setq xref-show-definitions-function #'consult-xref))
 
 #+END_SRC
 
@@ -331,6 +331,8 @@ So the editor is a little less dumb.
   	    (lambda ()
   	      (etags-regen-mode t)
   	      (xref-etags-mode t))))
+
+(global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
 
 ** Utilities
