@@ -132,6 +132,12 @@ Revert buffers when content changed.
 (global-auto-revert-mode 1)
 #+END_SRC
 
+Disable the audible bell.
+
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
 *** Compile mode
 
 No default command a keybind, colorize the buffer.
@@ -406,6 +412,14 @@ Inspired by Zed tasks. Uses ~compile-mode~. Very neat.
      (cadr (assoc choice tasks)))))
 (global-set-key (kbd "C-c C-t") #'run-task)
 (global-set-key (kbd "C-c t") #'run-task)
+#+END_SRC
+
+*** Vterm
+Vterm is the best VT220/xterm/ECMA-48 terminal emulator for Emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package vterm
+  :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil))))
 #+END_SRC
 
 *** Miscelaneous

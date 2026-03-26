@@ -45,3 +45,10 @@ alias make='make -j12'
 alias emacs='emacsclient -c'
 
 PS1="\n\[\e[32m\]\h\[\e[m\]:\[\e[34m\]\w\[\e[m\]>"
+
+# Makes Emacs' vterm work.
+if [[ "$INSIDE_EMACS" = 'vterm' ]] \
+       && [[ -n ${EMACS_VTERM_PATH} ]] \
+       && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
+    source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
+fi
