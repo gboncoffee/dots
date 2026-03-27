@@ -233,18 +233,15 @@ Makes it easy to search anything.
 ** Editor configuration
 *** Basics
 
-Show trailing whitespaces, but not on the minibuffer of course. Display
-line numbers and fill column in all actual editing modes. Scroll nicely.
-Save history and recent files.
+Show trailing whitespaces, but not on some weird buffers of course.
+Display line numbers and fill column in all actual editing modes. Scroll
+nicely. Save history and recent files.
 
 #+BEGIN_SRC emacs-lisp
-(setq-default show-trailing-whitespace t)
-(add-hook
- 'minibuffer-mode-hook (lambda () (setq show-trailing-whitespace nil)))
-
 (defun prog-and-text-mode-setup ()
   (display-line-numbers-mode t)
-  (display-fill-column-indicator-mode t))
+  (display-fill-column-indicator-mode t)
+  (setq show-trailing-whitespace t))
 (add-hook 'prog-mode-hook #'prog-and-text-mode-setup)
 (add-hook 'text-mode-hook #'prog-and-text-mode-setup)
 
@@ -438,23 +435,17 @@ Lice to add licenses.
   :config
   (add-hook 'go-mode-hook (lambda ()
 			    (setq tab-width 4)
-			    (setq indent-tabs-mode t)
-			    (setq gofmt-args "-s")
-			    (add-hook
-			     'before-save-hook
-			     #'gofmt-before-save nil t))))
+			    (setq indent-tabs-mode t))))
 #+END_SRC
 
 *** C/C++
 
 #+BEGIN_SRC emacs-lisp
-(use-package clang-format)
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "linux")
 (defun c-configs ()
   (setq tab-width 4)
-  (setq indent-tabs-mode nil)
-  (add-hook 'before-save-hook #'clang-format nil t))
+  (setq indent-tabs-mode nil))
 (add-hook 'c-mode-hook #'c-configs)
 (add-hook 'c++-mode-hook #'c-configs)
 #+END_SRC
@@ -513,10 +504,7 @@ Lice to add licenses.
 *** Elixir
 
 #+BEGIN_SRC emacs-lisp
-(use-package elixir-mode
-  :config
-  (add-hook 'elixir-mode-hook
-      	    (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
+(use-package elixir-mode)
 #+END_SRC
 
 *** Haskell
@@ -530,9 +518,29 @@ Lice to add licenses.
 *** Rust
 
 #+BEGIN_SRC emacs-lisp
-(use-package rust-mode
+(use-package rust-mode)
+#+END_SRC
+
+*** Formatters for all the above
+
+#+BEGIN_SRC emacs-lisp
+(use-package format-all
+  :hook
+  (prog-mode-hook . format-all-mode)
+  (text-mode-hook . format-all-mode)
   :config
-  (setq rust-format-on-save t))
+  (setq-default format-all-formatters
+		'(("C" (clang-format))
+		  ("C++" (clang-format))
+		  ("Cuda" (clang-format))
+		  ("Haskell" (stylish-haskell))
+		  ("Go" (gofmt "-s"))
+		  ("Elixir" (mix-format))
+		  ("Emacs Lisp" (emacs-lisp))
+		  ("LaTeX" (latexindent))
+		  ("BibTex" (emacs-bibtex))
+		  ("Rust" (rustfmt))
+		  ("Zig" (zig)))))
 #+END_SRC
 
 ** Org mode
@@ -559,7 +567,7 @@ Pretty.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org-superstar
-  :hook (org-mode . org-superstar-mode))
+  :hook (org-mode-hook . org-superstar-mode))
 #+END_SRC
 
 Hide everything.
