@@ -1,13 +1,10 @@
 #+PROPERTY: header-args:emacs-lisp :tangle config.el
 
 * Gabriel's Emacs configuration
-
 This is my Emacs configuration. Enjoy.
 
 ** Package management configuration
-
-Nowadays, Emacs already comes with ~use-package~. But we still bootstrap it
-here as it costs us nothing and we need to setup it anyways.
+Nowadays, Emacs already comes with ~use-package~. But we still bootstrap it here as it costs us nothing and we need to setup it anyways.
 
 #+BEGIN_SRC emacs-lisp
 (require 'package)
@@ -28,9 +25,7 @@ here as it costs us nothing and we need to setup it anyways.
 
 ** Appearance
 *** Basics
-
-Unclutter the UI, stop the blinking cursor, don't jump text when the width
-changes, no startup screen.
+Unclutter the UI, stop the blinking cursor, don't jump text when the width changes, no startup screen.
 
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
@@ -48,12 +43,30 @@ Prettify symbols.
 (global-prettify-symbols-mode 1)
 #+END_SRC
 
-*** Theme and modeline
+*** Fonts
+Hack and Noto Sans. Use variable pitch for Org mode.
 
-The theme I like is tomorrow. The ~doom-themes~ version is a little better
-and more supported than ~sanityinc~. I have little to no affection to the
-modeline, just use it because it's a little more organized by default. I
-make it show the current column number and clock.
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :family "Hack" :height 110)
+(set-face-attribute 'fixed-pitch nil :family "Hack" :height 110)
+(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 120)
+#+END_SRC
+
+All the icons. I like icons. Don't you like icons?
+
+#+BEGIN_SRC emacs-lisp
+(use-package all-the-icons)
+#+END_SRC
+
+Make some reading modes use variable text.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'help-mode-hook #'variable-pitch-mode)
+(add-hook 'Man-mode-hook #'variable-pitch-mode)
+#+END_SRC
+
+*** Theme and modeline
+The theme I like is tomorrow. The ~doom-themes~ version is a little better and more supported than ~sanityinc~. I have little to no affection to the modeline, just use it because it's a little more organized by default. I make it show the current column number and clock.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -65,6 +78,16 @@ make it show the current column number and clock.
   (doom-themes-org-config))
 
 (use-package doom-modeline
+  :config
+  (dolist (f '(mode-line
+	       mode-line-inactive
+	       doom-modeline
+               doom-modeline-inactive
+               doom-modeline-buffer-file
+               doom-modeline-buffer-path
+               doom-modeline-buffer-major-mode))
+    (when (facep f)
+      (set-face-attribute f nil :inherit 'variable-pitch)))
   :init
   (setq display-time-default-load-average nil)
   (setq display-time-interval 10)
@@ -77,24 +100,7 @@ make it show the current column number and clock.
   (doom-modeline-mode 1))
 #+END_SRC
 
-*** Fonts
-
-Hack and Noto Sans.
-
-#+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :family "Hack" :height 110)
-(set-face-attribute 'fixed-pitch nil :family "Hack" :height 110)
-(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 130)
-#+END_SRC
-
-All the icons. I like icons. Don't you like icons?
-
-#+BEGIN_SRC emacs-lisp
-(use-package all-the-icons)
-#+END_SRC
-
 *** Rainbow
-
 Rainbow delimiters and rainbow mode.
 
 #+BEGIN_SRC emacs-lisp
@@ -107,7 +113,6 @@ Rainbow delimiters and rainbow mode.
 
 ** Behaviour
 *** Basics
-
 Short answers, fill column, don't make backups.
 
 #+BEGIN_SRC emacs-lisp
@@ -139,7 +144,6 @@ Disable the audible bell.
 #+END_SRC
 
 *** Compile mode
-
 No default command a keybind, colorize the buffer.
 
 #+BEGIN_SRC emacs-lisp
@@ -158,7 +162,6 @@ No default command a keybind, colorize the buffer.
 #+END_SRC
 
 *** Minibuffer
-
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
@@ -191,8 +194,7 @@ Makes the minibuffer much nicer.
 #+END_SRC
 
 *** Windows
-Move windows with meta. Makes C-v and M-v to move by half pages instead of
-full ones.
+Move windows with meta. Makes C-v and M-v to move by half pages instead of full ones.
 
 #+BEGIN_SRC emacs-lisp
 (windmove-default-keybindings 'meta)
@@ -232,10 +234,7 @@ Makes it easy to search anything.
 
 ** Editor configuration
 *** Basics
-
-Show trailing whitespaces, but not on some weird buffers of course.
-Display line numbers and fill column in all actual editing modes. Scroll
-nicely. Save history and recent files.
+Show trailing whitespaces, but not on some weird buffers of course. Display line numbers and fill column in all actual editing modes. Scroll nicely. Save history and recent files.
 
 #+BEGIN_SRC emacs-lisp
 (defun prog-and-text-mode-setup ()
@@ -253,7 +252,6 @@ nicely. Save history and recent files.
 #+END_SRC
 
 *** Respect ~.editorconfig~ files.
-
 #+BEGIN_SRC emacs-lisp
 (use-package editorconfig
   :config
@@ -261,9 +259,7 @@ nicely. Save history and recent files.
 #+END_SRC
 
 *** Open dir
-
-Open dir is my IDE-mode. It navigates to a directory, loads custom
-configuration from a ~.emacs.el~ file there if it exists, and opens dired.
+Open dir is my IDE-mode. It navigates to a directory, loads custom configuration from a ~.emacs.el~ file there if it exists, and opens dired.
 
 #+BEGIN_SRC emacs-lisp
 (defun open-dir (dir)
@@ -284,8 +280,7 @@ configuration from a ~.emacs.el~ file there if it exists, and opens dired.
 (global-set-key (kbd "C-c o") #'open-dir)
 #+END_SRC
 
-This makes so Emacs makes the buffer-local working directory actually the
-directory we choose instead of the buffer base directory.
+This makes so Emacs makes the buffer-local working directory actually the directory we choose instead of the buffer base directory.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'find-file-hook
@@ -294,7 +289,6 @@ directory we choose instead of the buffer base directory.
 #+END_SRC
 
 *** Electric
-
 Electric, auto-fill and selection deletion.
 
 #+BEGIN_SRC emacs-lisp
@@ -307,7 +301,6 @@ Electric, auto-fill and selection deletion.
 #+END_SRC
 
 *** Multiple cursors
-
 #+BEGIN_SRC emacs-lisp
 (use-package multiple-cursors
   :bind (
@@ -325,10 +318,11 @@ Fixes org mode.
 #+END_SRC
 
 *** Xrefs
-
 So the editor is a little less dumb.
 
 #+BEGIN_SRC emacs-lisp
+(setq-default tags-revert-without-query 1)
+
 (with-eval-after-load 'etags
   (add-hook 'prog-mode-hook
   	    (lambda ()
@@ -338,17 +332,68 @@ So the editor is a little less dumb.
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
 
+*** Completion
+Corfu enables in-buffer autocomplete popups.
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu
+  :hook
+  (corfu-mode . (lambda ()
+		  (setq-local completion-styles '(basic))
+		  (setq-local completion-category-overrides nil)
+		  (setq-local completion-category-defaults nil)))
+  :custom
+  (corfu-cycle t)
+  :init
+  (setq-default corfu-auto t)
+  (setq-default corfu-auto-delay 0.2)
+  (setq-default corfu-auto-prefix 2)
+  (global-corfu-mode 1)
+  (corfu-history-mode 1)
+  (corfu-echo-mode 1))
+
+(setq-default tab-always-indent 'complete)
+(setq-default text-mode-ispell-word-completion nil)
+
+(use-package nerd-icons-corfu)
+#+END_SRC
+
+Cape adds various completion backends.
+
+#+BEGIN_SRC emacs-lisp
+(use-package cape
+  :config
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
+  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-tex))
+#+END_SRC
+
+*** Yasnippets
+Snippet system. Integrates with the ~corfu/cape~ system with ~capf~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :init
+  (yas-global-mode 1))
+(use-package yasnippet-snippets)
+(use-package yasnippet-capf
+  :after cape
+  :config
+  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+#+END_SRC
+
 ** Utilities
 *** Magit
-
 The best git UI in the world.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
 #+END_SRC
 
-It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete. We need to
-properly setup ~auth~ though.
+It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete. We need to properly setup ~auth~ though.
 
 #+BEGIN_SRC emacs-lisp
 (setq auth-sources '("~/.authinfo"))
@@ -358,7 +403,6 @@ properly setup ~auth~ though.
 #+END_SRC
 
 *** Dired
-
 File management.
 
 #+BEGIN_SRC emacs-lisp
@@ -378,9 +422,7 @@ Enhanced appearance.
 #+END_SRC
 
 *** GitHub Copilot Chat
-
-Vibe coding but I'm forced to always review everything. And it only does
-what I actually want it to do.
+Vibe coding but I'm forced to always review everything. And it only does what I actually want it to do.
 
 #+BEGIN_SRC emacs-lisp
 (use-package copilot-chat
@@ -389,7 +431,6 @@ what I actually want it to do.
 #+END_SRC
 
 *** Task system
-
 Inspired by Zed tasks. Uses ~compile-mode~. Very neat.
 
 #+BEGIN_SRC emacs-lisp
@@ -420,7 +461,6 @@ Vterm is the best VT220/xterm/ECMA-48 terminal emulator for Emacs.
 #+END_SRC
 
 *** Miscelaneous
-
 Lice to add licenses.
 
 #+BEGIN_SRC emacs-lisp
@@ -429,20 +469,34 @@ Lice to add licenses.
 
 ** Language specific configuration
 *** Go
+Basic support.
 
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
-  :config
-  (add-hook 'go-mode-hook (lambda ()
-			    (setq tab-width 4)
-			    (setq indent-tabs-mode t))))
+  :hook
+  (go-mode-hook . (lambda ()
+		    (setq tab-width 4)
+		    (setq indent-tabs-mode t))))
+#+END_SRC
+
+Eldoc.
+
+#+BEGIN_SRC emacs-lisp
+(use-package go-eldoc
+  :hook (go-mode-hook . go-eldoc-setup))
+#+END_SRC
+
+Snippets
+
+#+BEGIN_SRC emacs-lisp
+(use-package go-snippets)
 #+END_SRC
 
 *** C/C++
-
 #+BEGIN_SRC emacs-lisp
 (setq-default c-basic-offset 4)
 (setq-default c-default-style "linux")
+(setq-default c-tab-always-indent 'complete)
 (defun c-configs ()
   (setq tab-width 4)
   (setq indent-tabs-mode nil))
@@ -451,9 +505,9 @@ Lice to add licenses.
 #+END_SRC
 
 *** Pascal
-
 #+BEGIN_SRC emacs-lisp
 (setq-default pascal-indent-level 4)
+(setq-default pascal-tab-always-indent 'complete)
 (add-hook 'pascal-mode-hook
       	  (lambda ()
       	    (setq tab-width 4)
@@ -464,7 +518,6 @@ Lice to add licenses.
 #+END_SRC
 
 *** Web
-
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
   :config
@@ -472,13 +525,11 @@ Lice to add licenses.
 #+END_SRC
 
 *** Markdown
-
 #+BEGIN_SRC emacs-lisp
 (use-package markdown-mode)
 #+END_SRC
 
 *** ASM
-
 #+BEGIN_SRC emacs-lisp
 (use-package nasm-mode
   :config
@@ -487,13 +538,11 @@ Lice to add licenses.
 #+END_SRC
 
 *** Zig
-
 #+BEGIN_SRC emacs-lisp
 (use-package zig-mode)
 #+END_SRC
 
 *** Odin
-
 #+BEGIN_SRC emacs-lisp
 (use-package odin-mode
   :commands odin-mode
@@ -502,27 +551,35 @@ Lice to add licenses.
 #+END_SRC
 
 *** Elixir
-
 #+BEGIN_SRC emacs-lisp
 (use-package elixir-mode)
 #+END_SRC
 
-*** Haskell
+Snippets.
 
+#+BEGIN_SRC emacs-lisp
+(use-package elixir-yasnippets)
+#+END_SRC
+
+*** Haskell
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode
   :config
   (setq haskell-stylish-on-save t))
 #+END_SRC
 
-*** Rust
+Snippets.
 
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-snippets)
+#+END_SRC
+
+*** Rust
 #+BEGIN_SRC emacs-lisp
 (use-package rust-mode)
 #+END_SRC
 
 *** Formatters for all the above
-
 #+BEGIN_SRC emacs-lisp
 (use-package format-all
   :hook
@@ -549,7 +606,8 @@ Setup ~org-directory~ and ~org-agenda-files~.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/org")
-(setq org-agenda-files (list (expand-file-name "inbox.org" org-directory)))
+(setq org-agenda-files
+      (list (expand-file-name "inbox.org" org-directory)))
 #+END_SRC
 
 *** Appearance/Indenting
@@ -560,7 +618,10 @@ Visual line, indent, etc.
 	  (lambda ()
 	    (visual-line-mode 1)
 	    (org-indent-mode)
-	    (display-line-numbers-mode -1)))
+	    (display-line-numbers-mode -1)
+	    (display-fill-column-indicator-mode -1)
+	    (auto-fill-mode -1)
+	    (variable-pitch-mode 1)))
 #+END_SRC
 
 Pretty.
@@ -579,5 +640,27 @@ Hide everything.
 (setq-default org-hide-block-startup t)
 (setq-default org-hide-drawer-startup t)
 (setq-default org-startup-folded 'fold)
+(setq org-hidden-keywords '(title))
+(setq org-superstar-leading-bullet ?\s)
 #+END_SRC
 
+*** Fonts and faces.
+#+BEGIN_SRC emacs-lisp
+(setq org-n-level-faces 4)
+(set-face-attribute 'org-level-1 nil :height 1.5)
+(set-face-attribute 'org-level-2 nil :height 1.35)
+(set-face-attribute 'org-level-3 nil :height 1.2)
+(set-face-attribute 'org-level-4 nil :height 1.0)
+
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (dolist (face '(org-block
+			    org-block-begin-line
+			    org-block-end-line
+			    org-code
+			    org-verbatim
+			    org-meta-line
+			    org-special-keyword))
+	      (when (facep face)
+		(set-face-attribute face nil :inherit 'fixed-pitch)))))
+#+END_SRC
