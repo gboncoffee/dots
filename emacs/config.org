@@ -58,10 +58,11 @@ All the icons. I like icons. Don't you like icons?
 (use-package all-the-icons)
 #+END_SRC
 
-Make some reading modes use variable text.
+Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'help-mode-hook #'variable-pitch-mode)
+(add-hook 'package-menu-mode-hook #'variable-pitch-mode)
 (add-hook 'Man-mode-hook #'variable-pitch-mode)
 #+END_SRC
 
@@ -318,16 +319,20 @@ Fixes org mode.
 #+END_SRC
 
 *** Xrefs
-So the editor is a little less dumb.
+So the editor is a little less dumb. Remove tags from completion-at-point because they need the project directory defined.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default tags-revert-without-query 1)
 
 (with-eval-after-load 'etags
   (add-hook 'prog-mode-hook
-  	    (lambda ()
-  	      (etags-regen-mode t)
-  	      (xref-etags-mode t))))
+	    (lambda ()
+	      (etags-regen-mode t)
+	      (xref-etags-mode t)
+	      (setq-local completion-at-point-functions
+			  (remove
+			   #'tags-completion-at-point-function
+			   completion-at-point-functions)))))
 
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
@@ -458,6 +463,13 @@ Vterm is the best VT220/xterm/ECMA-48 terminal emulator for Emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package vterm
   :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil))))
+#+END_SRC
+
+*** HTTPD
+Sometimes we need a simple web server.
+
+#+BEGIN_SRC emacs-lisp
+(use-package simple-httpd)
 #+END_SRC
 
 *** Miscelaneous
