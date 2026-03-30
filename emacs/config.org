@@ -132,12 +132,6 @@ Move custom elsewhere.
 (load custom-file 'noerror)
 #+END_SRC
 
-Revert buffers when content changed.
-
-#+BEGIN_SRC emacs-lisp
-(global-auto-revert-mode 1)
-#+END_SRC
-
 Disable the audible bell.
 
 #+BEGIN_SRC emacs-lisp
@@ -337,57 +331,14 @@ So the editor is a little less dumb. Remove tags from completion-at-point becaus
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
 
-*** Completion
-Corfu enables in-buffer autocomplete popups.
-
-#+BEGIN_SRC emacs-lisp
-(use-package corfu
-  :hook
-  (corfu-mode . (lambda ()
-		  (setq-local completion-styles '(basic))
-		  (setq-local completion-category-overrides nil)
-		  (setq-local completion-category-defaults nil)))
-  :custom
-  (corfu-cycle t)
-  :init
-  (setq-default corfu-auto t)
-  (setq-default corfu-auto-delay 0.2)
-  (setq-default corfu-auto-prefix 2)
-  (global-corfu-mode 1)
-  (corfu-history-mode 1)
-  (corfu-echo-mode 1))
-
-(setq-default tab-always-indent 'complete)
-(setq-default text-mode-ispell-word-completion nil)
-
-(use-package nerd-icons-corfu)
-#+END_SRC
-
-Cape adds various completion backends.
-
-#+BEGIN_SRC emacs-lisp
-(use-package cape
-  :config
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (add-to-list 'completion-at-point-functions #'cape-elisp-symbol)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
-  (add-to-list 'completion-at-point-functions #'cape-tex))
-#+END_SRC
-
 *** Yasnippets
-Snippet system. Integrates with the ~corfu/cape~ system with ~capf~.
+Snippet system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :init
   (yas-global-mode 1))
 (use-package yasnippet-snippets)
-(use-package yasnippet-capf
-  :after cape
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 #+END_SRC
 
 ** Utilities
@@ -477,6 +428,12 @@ Lice to add licenses.
 
 #+BEGIN_SRC emacs-lisp
 (use-package lice)
+#+END_SRC
+
+Better support for PDF files.
+
+#+BEGIN_SRC emacs-lisp
+(use-package pdf-tools)
 #+END_SRC
 
 ** Language specific configuration
