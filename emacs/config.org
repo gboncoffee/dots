@@ -612,6 +612,11 @@ Snippets.
 		  ("Zig" (zig)))))
 #+END_SRC
 
+*** Minor languages without builtin-support
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode)
+#+END_SRC
+
 ** Org mode
 *** Basic
 Setup ~org-directory~ and ~org-agenda-files~.
