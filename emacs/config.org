@@ -171,10 +171,15 @@ Makes the minibuffer much nicer.
 (use-package helm
   :bind (
 	 ("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files))
+	 ("C-x C-f" . helm-find-files)
+	 ("C-s" . helm-occur)
+	 ("C-x b" . helm-buffers-list)
+	 ("C-x /" . helm-do-grep-ag))
   :init
   (setq completions-detailed t)
-  (helm-mode 1))
+  (helm-mode 1)
+  (helm-ff-icon-mode 1)
+  (helm-popup-tip-mode 1))
 #+END_SRC
 
 *** Windows
