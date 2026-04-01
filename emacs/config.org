@@ -168,23 +168,6 @@ No default command a keybind, colorize the buffer.
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package vertico
-  :init (vertico-mode))
-
-(use-package vertico-directory
-  :after vertico
-  :ensure nil
-  :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("M-DEL" . vertico-directory-delete-word))
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
-
-(use-package vertico-mouse
-  :after vertico
-  :ensure nil
-  :init (vertico-mouse-mode 1))
-
 (use-package orderless
   :init
   (setq completion-styles '(orderless basic))
@@ -195,17 +178,20 @@ Makes the minibuffer much nicer.
 (use-package marginalia
   :init (marginalia-mode))
 
-(use-package consult
-  :after vertico
-  :bind (
-	 ("C-x b" . consult-buffer)
-	 ("M-y" . consult-yank-from-kill-ring)
-	 ("M-g M-g" . consult-goto-line)
-	 ("C-s" . consult-line)
-	 ("C-c /" . consult-grep))
+(ido-mode 1)
+(ido-everywhere 1)
+(use-package ido-completing-read+
+  :init
+  (ido-ubiquitous-mode 1))
+
+(use-package amx
+  :init
+  (amx-mode 1))
+
+(use-package ido-vertical-mode
   :config
-  (setq xref-show-xrefs-function #'consult-xref)
-  (setq xref-show-definitions-function #'consult-xref))
+  (setq ido-vertical-show-count t)
+  (ido-vertical-mode 1))
 #+END_SRC
 
 *** Windows
@@ -228,7 +214,6 @@ Move windows with meta. Makes C-v and M-v to move by half pages instead of full 
 (global-set-key (kbd "C-v") #'scroll-up-half)
 (global-set-key (kbd "M-v") #'scroll-down-half)
 #+END_SRC
-
 
 ** Editor configuration
 *** Basics
@@ -349,7 +334,9 @@ Snippet system.
 The best git UI in the world.
 
 #+BEGIN_SRC emacs-lisp
-(use-package magit)
+(use-package magit
+  :config
+  (setq magit-completing-read-function 'magit-ido-completing-read))
 #+END_SRC
 
 It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete. We need to properly setup ~auth~ though.
