@@ -138,6 +138,14 @@ Disable the audible bell.
 (setq ring-bell-function 'ignore)
 #+END_SRC
 
+**** TODO Fix this
+Disable local variables. For some reason, Emacs would sometimes call ~file-remote-p~ on nil inside of ~hack-local-variables~ and completely break.
+
+#+BEGIN_SRC emacs-lisp
+(setq enable-local-variables nil)
+(setq enable-dir-local-variables nil)
+#+END_SRC
+
 *** Compile mode
 No default command a keybind, colorize the buffer.
 
@@ -168,17 +176,12 @@ Makes the minibuffer much nicer.
   (setopt ivy-use-selectable-prompt t))
 
 (use-package counsel
+  :bind (("C-x /" . counsel-rg))
   :init
   (counsel-mode 1))
 
-(use-package swiper)
-
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides
-	'((file (styles basic partial-completion)))))
+(use-package swiper
+  :bind (("C-s" . swiper)))
 
 (use-package marginalia
   :init (marginalia-mode))
@@ -399,6 +402,19 @@ Sometimes we need a simple web server.
 
 #+BEGIN_SRC emacs-lisp
 (use-package simple-httpd)
+#+END_SRC
+
+*** EMMS
+Emacs MultiMedia System.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emms
+  :init
+  (emms-all)
+  (emms-default-players)
+  (emms-mpris-enable)
+  (setq emms-player-list '(emms-player-mpv))
+  (setq emms-source-file-default-directory "~/music/"))
 #+END_SRC
 
 *** Miscelaneous
