@@ -168,30 +168,13 @@ No default command a keybind, colorize the buffer.
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package orderless
+(use-package helm
+  :bind (
+	 ("M-x" . helm-M-x)
+	 ("C-x C-f" . helm-find-files))
   :init
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides
-	'((file (styles basic partial-completion)))))
-
-(use-package marginalia
-  :init (marginalia-mode))
-
-(ido-mode 1)
-(ido-everywhere 1)
-(use-package ido-completing-read+
-  :init
-  (ido-ubiquitous-mode 1))
-
-(use-package amx
-  :init
-  (amx-mode 1))
-
-(use-package ido-vertical-mode
-  :config
-  (setq ido-vertical-show-count t)
-  (ido-vertical-mode 1))
+  (setq completions-detailed t)
+  (helm-mode 1))
 #+END_SRC
 
 *** Windows
@@ -239,36 +222,6 @@ Show trailing whitespaces, but not on some weird buffers of course. Display line
 (use-package editorconfig
   :config
   (editorconfig-mode t))
-#+END_SRC
-
-*** Open dir
-Open dir is my IDE-mode. It navigates to a directory, loads custom configuration from a ~.emacs.el~ file there if it exists, and opens dired.
-
-#+BEGIN_SRC emacs-lisp
-(defun open-dir (dir)
-  (interactive (list (read-directory-name "Open directory: " nil nil t)))
-  (let ((dir (file-name-as-directory
-  	      (expand-file-name dir))))
-    (setq-default default-directory dir)
-    (setq default-directory dir)
-    (setenv "PWD" dir)
-    (let ((file-name (concat default-directory ".emacs.el")))
-      (when (and (file-exists-p file-name)
-		 (y-or-n-p
-		  (format "Load %s configuration?" default-directory)))
-  	(load-file file-name)
-  	(message "Loaded custom directory configuration.")))
-    (dired dir)))
-
-(global-set-key (kbd "C-c o") #'open-dir)
-#+END_SRC
-
-This makes so Emacs makes the buffer-local working directory actually the directory we choose instead of the buffer base directory.
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'find-file-hook
-	  (lambda () (setq default-directory
-	              (default-value 'default-directory))))
 #+END_SRC
 
 *** Electric
