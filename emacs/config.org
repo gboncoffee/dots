@@ -376,6 +376,8 @@ Emacs MultiMedia System.
 
 #+BEGIN_SRC emacs-lisp
 (use-package emms
+  :bind (("C-c m" . emms-browser)
+	 ("C-c p" . emms-playlist-mode-go))
   :init
   (emms-all)
   (emms-default-players)
