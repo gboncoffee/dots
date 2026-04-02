@@ -597,7 +597,9 @@ Hide everything.
 			    org-code
 			    org-verbatim
 			    org-meta-line
-			    org-special-keyword))
+			    org-special-keyword
+			    org-table
+			    org-table-row))
 	      (when (facep face)
 		(set-face-attribute face nil :inherit 'fixed-pitch)))))
 #+END_SRC
