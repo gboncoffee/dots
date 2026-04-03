@@ -325,13 +325,15 @@ Enhanced appearance.
   :hook (dired-mode . diredfl-mode))
 #+END_SRC
 
-*** GitHub Copilot Chat
+*** Agent shell
 Vibe coding but I'm forced to always review everything. And it only does what I actually want it to do.
 
 #+BEGIN_SRC emacs-lisp
-(use-package copilot-chat
+(use-package agent-shell
+  :bind (("C-c s" . agent-shell-github-start-copilot)
+	 ("C-c a" . agent-shell))
   :config
-  (setq copilot-chat-default-model "gpt-5-mini"))
+  (setq agent-shell-github-default-model-id "gpt-5-mini"))
 #+END_SRC
 
 *** Task system
