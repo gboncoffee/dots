@@ -1,0 +1,43 @@
+IMAPAccount icloud
+Host imap.mail.me.com
+User gabrielgbrito@icloud.com
+PassCmd "gpg -q --for-your-eyes-only -d ~/etc/pass/icloud-mail.gpg"
+TLSType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore icloud-remote
+Account icloud
+
+MaildirStore icloud-local
+Subfolders Verbatim
+Path ~/mail/icloud/
+Inbox ~/mail/icloud/inbox
+
+Channel icloud
+Far :icloud-remote:
+Near :icloud-local:
+Patterns *
+Create Both
+SyncState *
+
+IMAPAccount dinf
+Host mx.inf.ufpr.br
+User ggb23
+PassCmd "gpg -q --for-your-eyes-only -d ~/etc/pass/dinf.gpg"
+TLSType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore dinf-remote
+Account dinf
+
+MaildirStore dinf-local
+Subfolders Verbatim
+Path ~/mail/dinf/
+Inbox ~/mail/dinf/inbox
+
+Channel dinf
+Far :dinf-remote:
+Near :dinf-local:
+Patterns *
+Create Both
+SyncState *

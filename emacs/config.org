@@ -138,6 +138,12 @@ Disable the audible bell.
 (setq ring-bell-function 'ignore)
 #+END_SRC
 
+Setup auth sources.
+
+#+BEGIN_SRC emacs-lisp
+(setq auth-sources '("~/.authinfo.gpg"))
+#+END_SRC
+
 **** TODO Fix this
 Disable local variables. For some reason, Emacs would sometimes call ~file-remote-p~ on nil inside of ~hack-local-variables~ and completely break.
 
@@ -297,11 +303,9 @@ The best git UI in the world.
   (setq magit-completing-read-function 'magit-ido-completing-read))
 #+END_SRC
 
-It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete. We need to properly setup ~auth~ though.
+It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete.
 
 #+BEGIN_SRC emacs-lisp
-(setq auth-sources '("~/.authinfo"))
-
 (use-package forge
   :after magit)
 #+END_SRC
@@ -386,6 +390,62 @@ Emacs MultiMedia System.
   (emms-mpris-enable)
   (setq emms-player-list '(emms-player-mpv))
   (setq emms-source-file-default-directory "~/music/"))
+#+END_SRC
+
+*** Email
+
+For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to be installed system-wide. The ~mbsync~ package sometimes is called ~isync~. For sending, I use ~msmtp~. Also needed to be installed system-wide. It's symlinked to ~sendmail~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package mu4e
+  :ensure nil
+  :bind (("C-c e" . mu4e))
+  :config
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-update-interval 600)
+  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-maildir "~/mail")
+  (setq mu4e-compose-signature "Please no HTML,\n~ Gabriel G. de Brito")
+
+  (setq send-mail-function 'sendmail-send-it)
+  (setq mail-user-agent 'mu4e-user-agent)
+  (set-variable 'read-mail-command 'mu4e)
+  (setq mail-specify-envelope-from t)
+  (setq message-sendmail-envelope-from 'header)
+  (setq mail-envelope-from 'header)
+
+  (setq mu4e-contexts (list
+		       (make-mu4e-context
+			:name "icloud"
+			:match-func
+			(lambda (msg)
+			  (when msg
+			    (string-prefix-p "/icloud" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "me@gboncoffee.dev.br")
+				(user-full-name . "Gabriel de Brito")
+				(mu4e-drafts-folder  . "/icloud/Drafts")
+				(mu4e-sent-folder  . "/icloud/Sent")
+				(mu4e-trash-folder  . "/icloud/Trash")))
+		       (make-mu4e-context
+			:name "dinf"
+			:match-func
+			(lambda (msg)
+			  (when msg
+			    (string-prefix-p "/dinf" (mu4e-message-field msg :maildir))))
+			:vars '((user-mail-address . "ggb23@inf.ufpr.br")
+				(user-full-name . "Gabriel de Brito")
+				(mu4e-drafts-folder  . "/dinf/Drafts")
+				(mu4e-sent-folder  . "/dinf/Sent")
+				(mu4e-trash-folder  . "/dinf/Trash")))))
+
+  (setq mu4e-maildir-shortcuts
+	'(("/icloud/inbox" . ?i)
+	  ("/dinf/inbox" . ?d)))
+
+  (setq mu4e-context-policy 'pick-first)
+
+  (setq mml-secure-openpgp-signers '("ABE72DFCAD2D5333FE3F8912F6C1E4A22E8C1F3D"))
+  (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime))
 #+END_SRC
 
 *** Miscelaneous
