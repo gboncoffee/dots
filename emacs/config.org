@@ -377,19 +377,17 @@ Sometimes we need a simple web server.
 (use-package simple-httpd)
 #+END_SRC
 
-*** EMMS
-Emacs MultiMedia System.
+*** Music
+I've used EMMS before but it kept forgetting my database. Now I use the builtin MPD client, so music is actually played by MPD.
 
 #+BEGIN_SRC emacs-lisp
-(use-package emms
-  :bind (("C-c m" . emms-browser)
-	 ("C-c p" . emms-playlist-mode-go))
-  :init
-  (emms-all)
-  (emms-default-players)
-  (emms-mpris-enable)
-  (setq emms-player-list '(emms-player-mpv))
-  (setq emms-source-file-default-directory "~/music/"))
+(setq mpc-browser-tags '(Artist Album))
+(global-set-key (kbd "C-c m") #'mpc)
+(add-hook 'mpc-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "SPC") #'mpc-select-toggle)
+	    (local-set-key (kbd "a") #'mpc-playlist-add)
+	    (local-set-key (kbd "DEL") #'mpc-playlist-delete)))
 #+END_SRC
 
 *** Email
