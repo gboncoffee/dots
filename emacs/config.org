@@ -153,11 +153,10 @@ Disable local variables. For some reason, Emacs would sometimes call ~file-remot
 #+END_SRC
 
 *** Compile mode
-No default command a keybind, colorize the buffer.
+No default command, colorize the buffer.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default compile-command "")
-(global-set-key (kbd "C-c c") #'compile)
 
 (require 'ansi-color)
 (defun colorize-compilation ()
@@ -168,6 +167,18 @@ No default command a keybind, colorize the buffer.
 
 (add-hook 'compilation-filter-hook
           #'colorize-compilation)
+#+END_SRC
+
+I wrote this package inspired by the Zed text editor tasks. When it's ready, I'll ask to put it in Melpa.
+
+#+BEGIN_SRC emacs-lisp
+(use-package dirtasks
+  :commands dirtasks-mode
+  :bind (("C-c c" . dirtasks-compile))
+  :vc (:url "https://github.com/gboncoffee/dirtasks.el.git"
+      	    :branch "main")
+  :init
+  (dirtasks-mode 1))
 #+END_SRC
 
 *** Minibuffer
@@ -299,9 +310,7 @@ Snippet system.
 The best git UI in the world.
 
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :config
-  (setq magit-completing-read-function 'magit-ido-completing-read))
+(use-package magit)
 #+END_SRC
 
 It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete.
@@ -341,28 +350,6 @@ Vibe coding but I'm forced to always review everything. And it only does what I 
   (setq agent-shell-github-default-model-id "gpt-5-mini"))
 #+END_SRC
 
-*** Task system
-Inspired by Zed tasks. Uses ~compile-mode~. Very neat.
-
-#+BEGIN_SRC emacs-lisp
-(setq-default tasks '())
-(defvar tasks/history nil)
-(defun run-task ()
-  (interactive)
-  (let* ((choices (mapcar #'car tasks))
-         (last (car tasks/history))
-         (choice (completing-read
-                  "Task: "
-                  choices
-                  nil t
-                  nil 'tasks/history
-                  last)))
-    (compile
-     (cadr (assoc choice tasks)))))
-(global-set-key (kbd "C-c C-t") #'run-task)
-(global-set-key (kbd "C-c t") #'run-task)
-#+END_SRC
-
 *** Vterm
 Vterm is the best VT220/xterm/ECMA-48 terminal emulator for Emacs.
 
@@ -388,7 +375,8 @@ I've used EMMS before but it kept forgetting my database. Now I use the builtin 
 	  (lambda ()
 	    (local-set-key (kbd "SPC") #'mpc-select-toggle)
 	    (local-set-key (kbd "a") #'mpc-playlist-add)
-	    (local-set-key (kbd "DEL") #'mpc-playlist-delete)))
+	    (local-set-key (kbd "DEL") #'mpc-playlist-delete)
+	    (variable-pitch-mode 1)))
 #+END_SRC
 
 *** Email
