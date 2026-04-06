@@ -376,6 +376,10 @@ I've used EMMS before but it kept forgetting my database. Now I use the builtin 
 	    (local-set-key (kbd "SPC") #'mpc-select-toggle)
 	    (local-set-key (kbd "a") #'mpc-playlist-add)
 	    (local-set-key (kbd "DEL") #'mpc-playlist-delete)
+	    (local-set-key (kbd "n") #'next-line)
+	    (local-set-key (kbd "p") #'previous-line)
+	    (local-set-key (kbd "P") #'mpc-playlist)
+	    (local-set-key (kbd "TAB") #'other-window)
 	    (variable-pitch-mode 1)))
 #+END_SRC
 
