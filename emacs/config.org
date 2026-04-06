@@ -183,6 +183,7 @@ Makes the minibuffer much nicer.
 	 ("C-x /" . helm-do-grep-ag))
   :init
   (setq completions-detailed t)
+  (setq helm-M-x-reverse-history t)
   (helm-mode 1)
   (helm-ff-icon-mode 1)
   (helm-popup-tip-mode 1))
