@@ -144,6 +144,12 @@ Setup auth sources.
 (setq auth-sources '("~/.authinfo.gpg"))
 #+END_SRC
 
+Emacs has a very low default nesting limit that's commonly exceeded even on builtin functionality like TRAMP.
+
+#+BEGIN_SRC emacs-lisp
+(setq max-lisp-eval-depth 10000)
+#+END_SRC
+
 **** TODO Fix this
 Disable local variables. For some reason, Emacs would sometimes call ~file-remote-p~ on nil inside of ~hack-local-variables~ and completely break.
 
