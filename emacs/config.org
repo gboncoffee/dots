@@ -356,12 +356,11 @@ Vibe coding but I'm forced to always review everything. And it only does what I 
   (setq agent-shell-github-default-model-id "gpt-5-mini"))
 #+END_SRC
 
-*** Vterm
-Vterm is the best VT220/xterm/ECMA-48 terminal emulator for Emacs.
+*** Eat
+Eat is the best terminal emulator for Emacs.
 
 #+BEGIN_SRC emacs-lisp
-(use-package vterm
-  :hook (vterm-mode . (lambda () (setq show-trailing-whitespace nil))))
+(use-package eat)
 #+END_SRC
 
 *** HTTPD
@@ -375,7 +374,7 @@ Sometimes we need a simple web server.
 I've used EMMS before but it kept forgetting my database. Now I use the builtin MPD client, so music is actually played by MPD.
 
 #+BEGIN_SRC emacs-lisp
-(setq mpc-browser-tags '(Artist Album))
+(setq mpc-browser-tags '(Artist Album Playlist))
 (global-set-key (kbd "C-c m") #'mpc)
 (add-hook 'mpc-mode-hook
 	  (lambda ()
