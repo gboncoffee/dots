@@ -23,6 +23,14 @@ Nowadays, Emacs already comes with ~use-package~. But we still bootstrap it here
 (setq use-package-always-ensure t)
 #+END_SRC
 
+Enables support for diminishing modes.
+
+#+BEGIN_SRC emacs-lisp
+(use-package diminish
+  :init
+  (diminish 'visual-line-mode))
+#+END_SRC
+
 ** Appearance
 *** Basics
 Unclutter the UI, stop the blinking cursor, don't jump text when the width changes, no startup screen.
@@ -52,12 +60,6 @@ Hack and Noto Sans. Use variable pitch for Org mode.
 (set-face-attribute 'variable-pitch nil :family "Inter" :height 120)
 #+END_SRC
 
-All the icons. I like icons. Don't you like icons?
-
-#+BEGIN_SRC emacs-lisp
-(use-package all-the-icons)
-#+END_SRC
-
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
 
 #+BEGIN_SRC emacs-lisp
@@ -67,7 +69,7 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 #+END_SRC
 
 *** Theme and modeline
-The theme I like is tomorrow. The ~doom-themes~ version is a little better and more supported than ~sanityinc~. I have little to no affection to the modeline, just use it because it's a little more organized by default. I make it show the current column number and clock.
+The theme I like is tomorrow. The ~doom-themes~ version is a little better and more supported than ~sanityinc~.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -77,28 +79,15 @@ The theme I like is tomorrow. The ~doom-themes~ version is a little better and m
   :config
   (load-theme 'doom-tomorrow-night t)
   (doom-themes-org-config))
+#+END_SRC
 
-(use-package doom-modeline
-  :config
-  (dolist (f '(mode-line
-	       mode-line-inactive
-	       doom-modeline
-               doom-modeline-inactive
-               doom-modeline-buffer-file
-               doom-modeline-buffer-path
-               doom-modeline-buffer-major-mode))
-    (when (facep f)
-      (set-face-attribute f nil :inherit 'variable-pitch)))
-  :init
-  (setq display-time-default-load-average nil)
-  (setq display-time-interval 10)
-  (setq display-time-format "%F %R")
-  (display-time-mode 1)
-  (column-number-mode 1)
+Modeline.
 
-  (setq doom-modeline-icon t)
-  (setq doom-modeline-height 32)
-  (doom-modeline-mode 1))
+#+BEGIN_SRC emacs-lisp
+(setq display-time-interval 20)
+(setq display-time-day-and-date t)
+(setq display-time-24hr-format t)
+(display-time-mode 1)
 #+END_SRC
 
 *** Rainbow
@@ -191,19 +180,30 @@ I wrote this package inspired by the Zed text editor tasks. When it's ready, I'l
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package helm
-  :bind (
-	 ("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)
-	 ("C-s" . helm-occur)
-	 ("C-x b" . helm-buffers-list)
-	 ("C-x /" . helm-do-grep-ag))
+(setq enable-recursive-minibuffers t)
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+(use-package vertico
   :init
-  (setq completions-detailed t)
-  (setq helm-M-x-reverse-history t)
-  (helm-mode 1)
-  (helm-ff-icon-mode 1)
-  (helm-popup-tip-mode 1))
+  (setq completion-styles '(basic substring partial-completion flex))
+  (setq vertico-cycle t)
+  (vertico-mode 1))
+(use-package vertico-directory
+  :after vertico
+  :ensure nil
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+(use-package vertico-mouse
+  :after vertico
+  :ensure nil
+  :init
+  (vertico-mouse-mode 1))
+
+(use-package marginalia
+  :init
+  (marginalia-mode 1))
 #+END_SRC
 
 *** Windows
@@ -301,11 +301,29 @@ So the editor is a little less dumb. Remove tags from completion-at-point becaus
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
 
+*** Searching
+CTRL+F enhances single-buffer searching.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ctrlf
+  :init
+  (setq ctrlf-auto-recenter t))
+#+END_SRC
+
+Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and other niceties.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rg
+  :init
+  (rg-enable-default-bindings))
+#+END_SRC
+
 *** Yasnippets
 Snippet system.
 
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
+  :diminish yas-minor-mode
   :init
   (yas-global-mode 1))
 (use-package yasnippet-snippets)
@@ -338,9 +356,6 @@ File management.
 Enhanced appearance.
 
 #+BEGIN_SRC emacs-lisp
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode))
-
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
 #+END_SRC
@@ -572,6 +587,7 @@ Snippets.
 *** Formatters for all the above
 #+BEGIN_SRC emacs-lisp
 (use-package format-all
+  :diminish format-all-mode
   :hook
   (prog-mode-hook . format-all-mode)
   (text-mode-hook . format-all-mode)
