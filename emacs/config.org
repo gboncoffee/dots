@@ -55,9 +55,9 @@ Prettify symbols.
 Hack and Noto Sans. Use variable pitch for Org mode.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :family "IBM Plex Mono" :height 110 :weight 'medium)
-(set-face-attribute 'fixed-pitch nil :family "IBM Plex Mono" :height 110 :weight 'medium)
-(set-face-attribute 'variable-pitch nil :family "Inter" :height 120)
+(set-face-attribute 'default nil :family "Hack" :height 110)
+(set-face-attribute 'fixed-pitch nil :family "Hack" :height 110)
+(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 130)
 #+END_SRC
 
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
@@ -88,6 +88,12 @@ Modeline.
 (setq display-time-day-and-date t)
 (setq display-time-24hr-format t)
 (display-time-mode 1)
+#+END_SRC
+
+Also make the modeline display with variable fonts.
+
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'mode-line nil :inherit 'variable-pitch)
 #+END_SRC
 
 *** Rainbow
