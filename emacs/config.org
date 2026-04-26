@@ -28,7 +28,8 @@ Enables support for diminishing modes.
 #+BEGIN_SRC emacs-lisp
 (use-package diminish
   :init
-  (diminish 'visual-line-mode))
+  (diminish 'visual-line-mode)
+  (diminish 'abbrev-mode))
 #+END_SRC
 
 ** Appearance
@@ -72,13 +73,9 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 The theme I like is tomorrow. The ~doom-themes~ version is a little better and more supported than ~sanityinc~.
 
 #+BEGIN_SRC emacs-lisp
-(use-package doom-themes
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
+(use-package base16-theme
   :config
-  (load-theme 'doom-tomorrow-night t)
-  (doom-themes-org-config))
+  (load-theme 'base16-espresso t))
 #+END_SRC
 
 Modeline.
@@ -104,6 +101,7 @@ Rainbow delimiters and rainbow mode.
   :hook (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
+  :diminish rainbow-mode
   :hook (prog-mode-hook . rainbow-mode))
 #+END_SRC
 
@@ -590,7 +588,18 @@ Snippets.
 (use-package rust-mode)
 #+END_SRC
 
-*** Formatters for all the above
+*** Verilog
+#+BEGIN_SRC emacs-lisp
+(setq verilog-case-indent 4)
+(setq verilog-cexp-indent 4)
+(setq verilog-indent-level 4)
+(setq verilog-indent-level-module 4)
+(setq verilog-indent-level-directive 4)
+(setq verilog-indent-level-behavioral 4)
+(setq verilog-indent-level-declaration 4)
+#+END_SRC
+
+*** Formatters for (almost) all the above
 #+BEGIN_SRC emacs-lisp
 (use-package format-all
   :diminish format-all-mode
