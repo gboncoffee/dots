@@ -91,6 +91,7 @@ Also make the modeline display with variable fonts.
 
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'mode-line nil :inherit 'variable-pitch)
+(set-face-attribute 'mode-line-inactive nil :inherit 'variable-pitch)
 #+END_SRC
 
 *** Rainbow
