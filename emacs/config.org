@@ -144,14 +144,6 @@ Emacs has a very low default nesting limit that's commonly exceeded even on buil
 (setq max-lisp-eval-depth 10000)
 #+END_SRC
 
-**** TODO Fix this
-Disable local variables. For some reason, Emacs would sometimes call ~file-remote-p~ on nil inside of ~hack-local-variables~ and completely break.
-
-#+BEGIN_SRC emacs-lisp
-(setq enable-local-variables nil)
-(setq enable-dir-local-variables nil)
-#+END_SRC
-
 *** Compile mode
 No default command, colorize the buffer.
 
@@ -167,18 +159,6 @@ No default command, colorize the buffer.
 
 (add-hook 'compilation-filter-hook
           #'colorize-compilation)
-#+END_SRC
-
-I wrote this package inspired by the Zed text editor tasks. When it's ready, I'll ask to put it in Melpa.
-
-#+BEGIN_SRC emacs-lisp
-(use-package dirtasks
-  :commands dirtasks-mode
-  :bind (("C-c c" . dirtasks-compile))
-  :vc (:url "https://github.com/gboncoffee/dirtasks.el.git"
-      	    :branch "main")
-  :init
-  (dirtasks-mode 1))
 #+END_SRC
 
 *** Minibuffer
@@ -288,20 +268,12 @@ Fixes org mode.
 #+END_SRC
 
 *** Xrefs
-So the editor is a little less dumb. Remove tags from completion-at-point because they need the project directory defined.
+So the editor is a little less dumb.
 
 #+BEGIN_SRC emacs-lisp
-(setq-default tags-revert-without-query 1)
-
-(with-eval-after-load 'etags
-  (add-hook 'prog-mode-hook
-	    (lambda ()
-	      (etags-regen-mode t)
-	      (xref-etags-mode t)
-	      (setq-local completion-at-point-functions
-			  (remove
-			   #'tags-completion-at-point-function
-			   completion-at-point-functions)))))
+(use-package dumb-jump
+  :custom (dumb-jump-prefer-searcher 'rg)
+  :hook (xref-backend-functions . dumb-jump-xref-activate))
 
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
@@ -312,7 +284,8 @@ CTRL+F enhances single-buffer searching.
 #+BEGIN_SRC emacs-lisp
 (use-package ctrlf
   :init
-  (setq ctrlf-auto-recenter t))
+  (setq ctrlf-auto-recenter t)
+  (ctrlf-mode 1))
 #+END_SRC
 
 Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and other niceties.
@@ -332,6 +305,23 @@ Snippet system.
   :init
   (yas-global-mode 1))
 (use-package yasnippet-snippets)
+#+END_SRC
+
+*** Project
+Project configurations.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-confirm-babel-evaluate nil)
+(use-package ob-compile)
+(use-package project-tasks
+  :after ob-compile
+  :commands (project-tasks)
+  :init
+  (add-to-list 'project-switch-commands '(project-tasks "tasks") t)
+  :custom (project-tasks-files '("tasks.org"))
+  :config
+  (add-to-list 'marginalia-prompt-categories '("select task" . project-task))
+  :bind (("C-c c" . project-tasks)))
 #+END_SRC
 
 ** Utilities
@@ -363,17 +353,6 @@ Enhanced appearance.
 #+BEGIN_SRC emacs-lisp
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
-#+END_SRC
-
-*** Agent shell
-Vibe coding but I'm forced to always review everything. And it only does what I actually want it to do.
-
-#+BEGIN_SRC emacs-lisp
-(use-package agent-shell
-  :bind (("C-c s" . agent-shell-github-start-copilot)
-	 ("C-c a" . agent-shell))
-  :config
-  (setq agent-shell-github-default-model-id "gpt-5-mini"))
 #+END_SRC
 
 *** Eat
