@@ -292,6 +292,7 @@ Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and o
 
 #+BEGIN_SRC emacs-lisp
 (use-package rg
+  :bind (("C-c /" . rg))
   :init
   (rg-enable-default-bindings))
 #+END_SRC
@@ -311,17 +312,10 @@ Snippet system.
 Project configurations.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-confirm-babel-evaluate nil)
-(use-package ob-compile)
-(use-package project-tasks
-  :after ob-compile
-  :commands (project-tasks)
-  :init
-  (add-to-list 'project-switch-commands '(project-tasks "tasks") t)
-  :custom (project-tasks-files '("tasks.org"))
-  :config
-  (add-to-list 'marginalia-prompt-categories '("select task" . project-task))
-  :bind (("C-c c" . project-tasks)))
+(use-package project
+  :ensure nil
+  :bind (("C-c c" . project-compile)
+	 ("C-c r" . project-async-shell-command)))
 #+END_SRC
 
 ** Utilities
@@ -443,6 +437,17 @@ For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to b
   (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime))
 #+END_SRC
 
+*** GPTel
+LLM client.
+
+#+BEGIN_SRC emacs-lisp
+(use-package gptel
+  :init
+  (setq gptel-default-mode #'org-mode)
+  (setq gptel-model 'gpt-5-mini)
+  (setq gptel-backend (gptel-make-gh-copilot "Copilot")))
+#+END_SRC
+
 *** Miscelaneous
 Lice to add licenses.
 
@@ -454,6 +459,15 @@ Better support for PDF files.
 
 #+BEGIN_SRC emacs-lisp
 (use-package pdf-tools)
+#+END_SRC
+
+Better separation of shell commands.
+
+#+BEGIN_SRC emacs-lisp
+(use-package shell-command-x
+  :diminish shell-command-x
+  :init
+  (shell-command-x-mode 1))
 #+END_SRC
 
 ** Language specific configuration
@@ -548,6 +562,12 @@ Snippets.
 
 #+BEGIN_SRC emacs-lisp
 (use-package elixir-yasnippets)
+#+END_SRC
+
+Inferior mode.
+
+#+BEGIN_SRC emacs-lisp
+(use-package inf-elixir)
 #+END_SRC
 
 *** Haskell
