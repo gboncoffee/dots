@@ -70,12 +70,13 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 #+END_SRC
 
 *** Theme and modeline
-The theme I like is tomorrow. The ~doom-themes~ version is a little better and more supported than ~sanityinc~.
+The theme I like is Tomorrow.
 
 #+BEGIN_SRC emacs-lisp
 (use-package base16-theme
   :config
-  (load-theme 'base16-espresso t))
+  (setq-default base16-theme-highlight-mode-line t)
+  (load-theme 'base16-tomorrow-night t))
 #+END_SRC
 
 Modeline.
@@ -550,7 +551,13 @@ Snippets
 (use-package odin-mode
   :commands odin-mode
   :vc (:url "https://github.com/mattt-b/odin-mode.git"
-      	    :rev :last-release))
+      	    :rev :last-release)
+  :hook (odin-mode . (lambda ()
+		       (setq-local indent-tabs-mode t)
+		       (indent-tabs-mode 1)
+		       (setq-local tab-width 8)
+		       (setq-local js-indent-level 8)
+		       (setq-local fill-column 100))))
 #+END_SRC
 
 *** Elixir
@@ -619,6 +626,13 @@ Snippets.
 		  ("BibTex" (emacs-bibtex))
 		  ("Rust" (rustfmt))
 		  ("Zig" (zig)))))
+
+(use-package reformatter
+  :init
+  (reformatter-define odin-format
+    :program "odinfmt"
+    :args '("-stdin"))
+  (add-hook 'odin-mode-hook #'odin-format-on-save-mode))
 #+END_SRC
 
 *** Minor languages without builtin-support
@@ -657,9 +671,10 @@ Pretty.
   :hook (org-mode-hook . org-superstar-mode))
 #+END_SRC
 
-Hide everything.
+Hide and fontify everything.
 
 #+BEGIN_SRC emacs-lisp
+(setq org-highlight-latex-and-related '(latex script))
 (setq-default org-edit-src-content-indentation 0)
 (setq-default org-hide-macro-markers t)
 (setq-default org-hide-emphasis-markers t)
