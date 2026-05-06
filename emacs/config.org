@@ -274,7 +274,8 @@ So the editor is a little less dumb.
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
   :custom (dumb-jump-prefer-searcher 'rg)
-  :hook (xref-backend-functions . dumb-jump-xref-activate))
+  :init
+  (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
 #+END_SRC
