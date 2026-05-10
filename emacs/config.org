@@ -518,8 +518,7 @@ Snippets
       	    (setq tab-width 4)
       	    (setq pascal-indent-level 4)
       	    (setq pascal-auto-lineup '())
-      	    (setq indent-tabs-mode nil)
-      	    (local-set-key (kbd "C-c C-c") #'compile)))
+      	    (setq indent-tabs-mode nil)))
 #+END_SRC
 
 *** Web
@@ -605,6 +604,10 @@ Snippets.
 (setq verilog-indent-level-directive 4)
 (setq verilog-indent-level-behavioral 4)
 (setq verilog-indent-level-declaration 4)
+(add-hook 'verilog-mode-hook
+	  (lambda ()
+	    (indent-tabs-mode 0)
+	    (setq-local tab-width 4)))
 #+END_SRC
 
 *** Formatters for (almost) all the above
