@@ -274,7 +274,11 @@ So the editor is a little less dumb.
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
   :custom (dumb-jump-prefer-searcher 'rg)
-  :init
+  :hook (prog-mode . (lambda ()
+		       (add-to-list
+			'xref-backend-functions
+			#'dumb-jump-xref-activate)))
+  :config
   (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
@@ -575,6 +579,11 @@ Inferior mode.
 
 #+BEGIN_SRC emacs-lisp
 (use-package inf-elixir)
+#+END_SRC
+
+*** Erlang
+#+BEGIN_SRC emacs-lisp
+(use-package erlang)
 #+END_SRC
 
 *** Haskell
