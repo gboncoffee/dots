@@ -145,6 +145,19 @@ Emacs has a very low default nesting limit that's commonly exceeded even on buil
 (setq max-lisp-eval-depth 10000)
 #+END_SRC
 
+So, this is dumb. Emacs uses GTK to interact with the clipboard, and it offers legacy encoding for the Wayland clipboard, and while EVERY SINGLE APPLICATION I USE correctly chooses UTF-8 over the legacy types, Chromium prefers the fallback ones, and thus pasting tries to convert to Latin-1 and completely breaks. TRILLION DOLLAR COMPANY BY THE WAY AND THERE'S NO WAY TO SOLVE IT IN CHROMIUM. This forces Emacs to bypass GTK clipboard handling and only advertise UTF-8, thus avoiding this CHROMIUM ISSUE BECAUSE GOOGLE FOR SOME REASON LIVES IN THE PAST AND DOESN'T THINK UTF-8 SHOULD BE THE DEFAULT NOWADAYS.
+
+#+BEGIN_SRC emacs-lisp
+(setq x-select-request-type '(UTF8_STRING))
+(setq interprogram-cut-function
+      (lambda (text &optional push)
+        (let ((process-connection-type nil))
+          (let ((proc (start-process "wl-copy" nil "wl-copy"
+                                     "--type" "text/plain;charset=utf-8")))
+            (process-send-string proc text)
+            (process-send-eof proc)))))
+#+END_SRC
+
 *** Compile mode
 No default command, colorize the buffer.
 
