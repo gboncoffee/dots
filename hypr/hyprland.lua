@@ -51,6 +51,7 @@ hl.bind("SUPER + e", hl.dsp.exec_cmd("emacsclient -c -a emacs"))
 hl.bind("SUPER + b", hl.dsp.exec_cmd("chromium"))
 hl.bind("SUPER + s", hl.dsp.exec_cmd("prime-run steam"))
 hl.bind("SUPER + a", hl.dsp.exec_cmd("hyprlauncher"))
+hl.bind("SUPER + RETURN", hl.dsp.exec_cmd("ghostty"))
 
 hl.bind("SUPER + Tab", hl.dsp.layout("rollnext"))
 hl.bind("SUPER + SHIFT + Tab", hl.dsp.layout("rollprev"))
