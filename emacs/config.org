@@ -606,17 +606,24 @@ Snippets.
 
 *** Verilog
 #+BEGIN_SRC emacs-lisp
-(setq verilog-case-indent 4)
-(setq verilog-cexp-indent 4)
-(setq verilog-indent-level 4)
-(setq verilog-indent-level-module 4)
-(setq verilog-indent-level-directive 4)
-(setq verilog-indent-level-behavioral 4)
-(setq verilog-indent-level-declaration 4)
+(setq verilog-case-indent 2)
+(setq verilog-cexp-indent 2)
+(setq verilog-indent-level 2)
+(setq verilog-indent-level-module 2)
+(setq verilog-indent-level-directive 2)
+(setq verilog-indent-level-behavioral 2)
+(setq verilog-indent-level-declaration 2)
+(setq verilog-auto-lineup nil)
+(setq verilog-indent-lists nil)
 (add-hook 'verilog-mode-hook
 	  (lambda ()
 	    (indent-tabs-mode 0)
-	    (setq-local tab-width 4)))
+	    (setq-local tab-width 2)))
+#+END_SRC
+
+*** Lua
+#+BEGIN_SRC emacs-lisp
+(use-package lua-mode)
 #+END_SRC
 
 *** Formatters for (almost) all the above
@@ -638,7 +645,9 @@ Snippets.
 		  ("LaTeX" (latexindent))
 		  ("BibTex" (emacs-bibtex))
 		  ("Rust" (rustfmt))
-		  ("Zig" (zig)))))
+		  ("Zig" (zig))
+		  ("Verilog" (verible))
+		  ("SystemVerilog" (verible)))))
 
 (use-package reformatter
   :init
