@@ -34,7 +34,7 @@ Enables support for diminishing modes.
 
 ** Appearance
 *** Basics
-Unclutter the UI, stop the blinking cursor, don't jump text when the width changes, no startup screen.
+Unclutter the UI, stop the blinking cursor, no startup screen.
 
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
@@ -42,7 +42,6 @@ Unclutter the UI, stop the blinking cursor, don't jump text when the width chang
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
 
-(setq-default display-line-numbers-width 3)
 (setq inhibit-startup-screen t)
 #+END_SRC
 
@@ -73,10 +72,17 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 The theme I like is Tomorrow.
 
 #+BEGIN_SRC emacs-lisp
-(use-package base16-theme
+(use-package doom-themes
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
   :config
-  (setq-default base16-theme-highlight-mode-line t)
-  (load-theme 'base16-tomorrow-night t))
+  (load-theme 'doom-tomorrow-night t)
+  (doom-themes-org-config)
+  (set-face-background 'mode-line-inactive "#c5c8c6")
+  (set-face-background 'mode-line-active "#c5c8c6")
+  (set-face-foreground 'mode-line-inactive "#757878")
+  (set-face-foreground 'mode-line-active "#0f1011"))
 #+END_SRC
 
 Modeline.
@@ -86,6 +92,7 @@ Modeline.
 (setq display-time-day-and-date t)
 (setq display-time-24hr-format t)
 (display-time-mode 1)
+(column-number-mode 1)
 #+END_SRC
 
 Also make the modeline display with variable fonts.
@@ -232,7 +239,6 @@ Show trailing whitespaces, but not on some weird buffers of course. Display line
 
 #+BEGIN_SRC emacs-lisp
 (defun prog-and-text-mode-setup ()
-  (display-line-numbers-mode t)
   (display-fill-column-indicator-mode t)
   (setq show-trailing-whitespace t))
 (add-hook 'prog-mode-hook #'prog-and-text-mode-setup)
@@ -693,7 +699,6 @@ Visual line, indent, etc.
 	  (lambda ()
 	    (visual-line-mode 1)
 	    (org-indent-mode)
-	    (display-line-numbers-mode -1)
 	    (display-fill-column-indicator-mode -1)
 	    (auto-fill-mode -1)
 	    (variable-pitch-mode 1)))
