@@ -60,6 +60,13 @@ hl.bind("SUPER + Down", hl.dsp.focus({ direction = "down" }))
 hl.bind("SUPER + Left", hl.dsp.focus({ direction = "left" }))
 hl.bind("SUPER + Right", hl.dsp.focus({ direction = "right" }))
 
+hl.bind("SUPER + SHIFT + Up", hl.dsp.window.move({ direction = "up" }))
+hl.bind("SUPER + SHIFT + Down", hl.dsp.window.move({ direction = "down" }))
+hl.bind("SUPER + SHIFT + Left", hl.dsp.window.move({ direction = "left" }))
+hl.bind("SUPER + SHIFT + Right", hl.dsp.window.move({ direction = "right" }))
+
+hl.bind("SUPER + w", hl.dsp.window.close())
+
 hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
 hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
 hl.bind("SUPER + 1", hl.dsp.focus({ workspace = 1 }))
@@ -71,6 +78,23 @@ hl.bind("SUPER + f", hl.dsp.window.float())
 
 hl.bind("Print", hl.dsp.exec_cmd("grim"))
 hl.bind("SUPER + l", hl.dsp.exec_cmd("hyprlock"))
+
+hl.bind("XF86AudioRaiseVolume",
+  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+"),
+  { repeating = true }
+)
+hl.bind("XF86AudioLowerVolume",
+  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"),
+  { repeating = true }
+)
+hl.bind("SUPER + F10",
+  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+"),
+  { repeating = true }
+)
+hl.bind("SUPER + F9",
+  hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"),
+  { repeating = true }
+)
 
 -- Binds for my programmable keyboard.
 hl.bind(
