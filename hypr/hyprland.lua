@@ -7,17 +7,10 @@ hl.env("GTK_THEME", "Adwaita-dark")
 
 hl.config({
     general = {
-      border_size = 2,
-      gaps_in = 4,
-      gaps_out = 8,
-      float_gaps = 8,
+      gaps_in = 0,
+      gaps_out = 0,
+      border_size = 0,
       layout = "master",
-      col = {
-        inactive_border = "#b294bb",
-        active_border = "#b5bd68",
-        nogroup_border = "#cc6666",
-        nogroup_border_active = "#f0c674",
-      },
       resize_on_border = true,
     },
     animations = {
@@ -47,6 +40,12 @@ hl.config({
     },
 })
 
+hl.window_rule({
+    name = "default-floating",
+    match = { title = ".*" },
+    float = true,
+})
+
 hl.bind("SUPER + e", hl.dsp.exec_cmd("emacsclient -c -a emacs"))
 hl.bind("SUPER + b", hl.dsp.exec_cmd("chromium"))
 hl.bind("SUPER + s", hl.dsp.exec_cmd("prime-run steam"))
@@ -67,8 +66,12 @@ hl.bind("SUPER + SHIFT + Right", hl.dsp.window.move({ direction = "right" }))
 
 hl.bind("SUPER + w", hl.dsp.window.close())
 
-hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({ workspace = 1 }))
-hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({ workspace = 2 }))
+hl.bind("SUPER + SHIFT + 1", hl.dsp.window.move({
+    workspace = 1, follow = false
+}))
+hl.bind("SUPER + SHIFT + 2", hl.dsp.window.move({
+    workspace = 2, follow = false
+}))
 hl.bind("SUPER + 1", hl.dsp.focus({ workspace = 1 }))
 hl.bind("SUPER + 2", hl.dsp.focus({ workspace = 2 }))
 
@@ -85,6 +88,18 @@ hl.bind("XF86AudioRaiseVolume",
 )
 hl.bind("XF86AudioLowerVolume",
   hl.dsp.exec_cmd("wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"),
+  { repeating = true }
+)
+hl.bind("SUPER + F6",
+  hl.dsp.exec_cmd("mpc toggle"),
+  { repeating = true }
+)
+hl.bind("SUPER + F7",
+  hl.dsp.exec_cmd("mpc prev"),
+  { repeating = true }
+)
+hl.bind("SUPER + F8",
+  hl.dsp.exec_cmd("mpc next"),
   { repeating = true }
 )
 hl.bind("SUPER + F10",
