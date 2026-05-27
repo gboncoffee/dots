@@ -1,4 +1,4 @@
-theme = Tomorrow Night
+theme = Tomorrow Night Blue
 
 font-family = Hack
 font-size = 12
@@ -9,3 +9,5 @@ cursor-style = block
 cursor-style-blink = false
 
 shell-integration-features = no-cursor
+
+term = xterm-256color
