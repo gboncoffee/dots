@@ -1,7 +1,7 @@
 theme = Tomorrow Night Blue
 
 font-family = Hack
-font-size = 12
+font-size = 13
 font-feature = -frac
 freetype-load-flags = no-monochrome,force-autohint
 
