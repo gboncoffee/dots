@@ -57,7 +57,7 @@ Hack and Noto Sans. Use variable pitch for Org mode.
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :family "Hack" :height 110)
 (set-face-attribute 'fixed-pitch nil :family "Hack" :height 110)
-(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 130)
+(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 120)
 #+END_SRC
 
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
@@ -78,11 +78,7 @@ The theme I like is Tomorrow.
   (doom-themes-enable-italic t)
   :config
   (load-theme 'doom-tomorrow-night t)
-  (doom-themes-org-config)
-  (set-face-background 'mode-line-inactive "#c5c8c6")
-  (set-face-background 'mode-line-active "#c5c8c6")
-  (set-face-foreground 'mode-line-inactive "#757878")
-  (set-face-foreground 'mode-line-active "#0f1011"))
+  (doom-themes-org-config))
 #+END_SRC
 
 Modeline.
@@ -643,6 +639,11 @@ Snippets.
 *** Lua
 #+BEGIN_SRC emacs-lisp
 (use-package lua-mode)
+#+END_SRC
+
+*** Common Lisp
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.cl?\\'" . lisp-mode))
 #+END_SRC
 
 *** Formatters for (almost) all the above
