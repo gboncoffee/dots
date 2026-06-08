@@ -748,3 +748,8 @@ Hide and fontify everything.
 	      (when (facep face)
 		(set-face-attribute face nil :inherit 'fixed-pitch)))))
 #+END_SRC
+
+*** Beamer
+#+BEGIN_SRC emacs-lisp
+(use-package ox-beamer-lecture)
+#+END_SRC
