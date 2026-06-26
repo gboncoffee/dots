@@ -385,21 +385,11 @@ Sometimes we need a simple web server.
 #+END_SRC
 
 *** Music
-I've used EMMS before but it kept forgetting my database. Now I use the builtin MPD client, so music is actually played by MPD.
+Mingus is the only sane way to play music, because EMMS is broken software (it keeps forggeting the database), and any other MPD client has many issues.
 
 #+BEGIN_SRC emacs-lisp
-(setq mpc-browser-tags '(Artist Album Playlist))
-(global-set-key (kbd "C-c m") #'mpc)
-(add-hook 'mpc-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "SPC") #'mpc-select-toggle)
-	    (local-set-key (kbd "a") #'mpc-playlist-add)
-	    (local-set-key (kbd "DEL") #'mpc-playlist-delete)
-	    (local-set-key (kbd "n") #'next-line)
-	    (local-set-key (kbd "p") #'previous-line)
-	    (local-set-key (kbd "P") #'mpc-playlist)
-	    (local-set-key (kbd "TAB") #'other-window)
-	    (variable-pitch-mode 1)))
+(use-package mingus
+  :bind (("C-c m" . mingus)))
 #+END_SRC
 
 *** Email
@@ -456,17 +446,6 @@ For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to b
 
   (setq mml-secure-openpgp-signers '("ABE72DFCAD2D5333FE3F8912F6C1E4A22E8C1F3D"))
   (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime))
-#+END_SRC
-
-*** GPTel
-LLM client.
-
-#+BEGIN_SRC emacs-lisp
-(use-package gptel
-  :init
-  (setq gptel-default-mode #'org-mode)
-  (setq gptel-model 'gpt-5-mini)
-  (setq gptel-backend (gptel-make-gh-copilot "Copilot")))
 #+END_SRC
 
 *** Miscelaneous
@@ -643,7 +622,7 @@ Snippets.
 
 *** Common Lisp
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.cl?\\'" . lisp-mode))
+(add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
 #+END_SRC
 
 *** Formatters for (almost) all the above
