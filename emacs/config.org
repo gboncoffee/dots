@@ -385,11 +385,16 @@ Sometimes we need a simple web server.
 #+END_SRC
 
 *** Music
-Mingus is the only sane way to play music, because EMMS is broken software (it keeps forggeting the database), and any other MPD client has many issues.
-
 #+BEGIN_SRC emacs-lisp
-(use-package mingus
-  :bind (("C-c m" . mingus)))
+(use-package emms
+  :bind (("C-c m" . emms-browser)
+	 ("C-c M" . emms))
+  :init
+  (emms-all)
+  (setq emms-player-list '(emms-player-mpd))
+  (setq emms-info-functions '(emms-info-mpd))
+  (setq emms-volume-change-functions '(emms-volume-mpd-change))
+  (emms-player-mpd-connect))
 #+END_SRC
 
 *** Email
