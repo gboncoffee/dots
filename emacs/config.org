@@ -360,7 +360,7 @@ File management.
 #+BEGIN_SRC emacs-lisp
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-delete-by-moving-to-trash t)
-(setq dired-listing-switches "-aD --group-directories-first")
+(setq dired-listing-switches "-lahD --group-directories-first")
 #+END_SRC
 
 Enhanced appearance.
