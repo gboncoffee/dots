@@ -39,6 +39,10 @@
     </property>
     <property name="plugin-6" type="string" value="systray">
       <property name="square-icons" type="bool" value="true"/>
+      <property name="known-items" type="array">
+        <value type="string" value="qBittorrent"/>
+        <value type="string" value="steam"/>
+      </property>
     </property>
     <property name="plugin-7" type="string" value="separator">
       <property name="style" type="uint" value="0"/>
@@ -72,6 +76,9 @@
       <property name="show-button-title" type="bool" value="true"/>
       <property name="button-title" type="string" value="Menu"/>
       <property name="recent" type="array">
+        <value type="string" value="org.qbittorrent.qBittorrent.desktop"/>
+        <value type="string" value="qt6ct.desktop"/>
+        <value type="string" value="qt5ct.desktop"/>
         <value type="string" value="htop.desktop"/>
         <value type="string" value="xfce4-taskmanager.desktop"/>
       </property>

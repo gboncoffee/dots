@@ -2,7 +2,7 @@
 mpd_host=localhost
 mpd_port=6600
 mpd_password=
-show_frame=true
+show_frame=false
 client_appl=SETME
 streaming_appl=
 tooltip_format=Volume: %vol%% - Mpd %status%%newline%%artist% - %album% -/- (#%track%) %title%
