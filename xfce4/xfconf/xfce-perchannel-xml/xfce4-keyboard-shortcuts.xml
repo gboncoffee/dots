@@ -43,6 +43,16 @@
       <property name="&lt;Super&gt;Return" type="string" value="exo-open --launch TerminalEmulator"/>
       <property name="&lt;Super&gt;b" type="string" value="exo-open --launch WebBrowser"/>
       <property name="&lt;Super&gt;e" type="string" value="emacsclient -c"/>
+      <property name="&lt;Super&gt;F10" type="string" value="wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+"/>
+      <property name="&lt;Super&gt;F9" type="string" value="wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"/>
+      <property name="&lt;Super&gt;F6" type="string" value="mpc toggle"/>
+      <property name="&lt;Super&gt;F7" type="string" value="mpc prev"/>
+      <property name="&lt;Super&gt;F8" type="string" value="mpc next"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;&lt;Super&gt;0" type="string" value="wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;&lt;Super&gt;1" type="string" value="wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;&lt;Super&gt;3" type="string" value="mpc toggle"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;&lt;Super&gt;5" type="string" value="mpc prev"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;&lt;Super&gt;6" type="string" value="mpc next"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
