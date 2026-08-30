@@ -22,3 +22,9 @@ export EDITOR='emacsclient -c'
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 export GTK_USE_PORTAL=1
+
+export QSYS_ROOTDIR="/home/gabriel/usr/altera/altera_lite25/quartus/sopc_builder/bin"
+
+export CHROMIUM_FLAGS="--password-store=basic"
+
+export QT_QPA_PLATFORMTHEME=qt6ct
