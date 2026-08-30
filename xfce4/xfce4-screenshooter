@@ -1,12 +1,12 @@
-app=none
+app=ristretto
 custom_action_command=none
 last_user=
 last_extension=png
 show_in_folder=false
 screenshot_dir=file:///home/gabriel/pictures
-action=1
+action=2
 delay=0
-region=3
+region=1
 show_mouse=1
 show_border=1
 
