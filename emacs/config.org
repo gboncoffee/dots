@@ -355,14 +355,17 @@ File management.
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-delete-by-moving-to-trash t)
 (setq dired-listing-switches "-lahD --group-directories-first")
-(dired-async-mode 1)
+(use-package async
+  :init
+  (dired-async-mode 1))
 #+END_SRC
 
 Enhanced appearance.
 
 #+BEGIN_SRC emacs-lisp
 (use-package diredfl
-  :hook (dired-mode . diredfl-mode))
+  :init
+  (diredfl-global-mode 1))
 #+END_SRC
 
 *** Eat
