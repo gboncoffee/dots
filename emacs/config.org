@@ -260,23 +260,6 @@ Electric, auto-fill and selection deletion.
 (delete-selection-mode t)
 #+END_SRC
 
-*** Multiple cursors
-#+BEGIN_SRC emacs-lisp
-(use-package multiple-cursors
-  :bind (
-  	 ("C-S-c" . mc/edit-lines)
-  	 ("C->" . #'mc/mark-next-like-this)
-  	 ("C-<" . #'mc/mark-previous-like-this)))
-#+END_SRC
-
-Fixes org mode.
-
-#+BEGIN_SRC emacs-lisp
-(with-eval-after-load 'multiple-cursors
-  (dolist (cmd '(org-self-insert-command org-delete-backward-char))
-    (add-to-list 'mc/cmds-to-run-for-all cmd)))
-#+END_SRC
-
 *** Xrefs
 So the editor is a little less dumb.
 
