@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="UTF-8"?>
 
 <channel name="xfce4-terminal" version="1.0">
-  <property name="font-name" type="string" value="Hack 12"/>
+  <property name="font-name" type="string" value="Liberation Mono 12"/>
   <property name="color-foreground" type="string" value="#ffffff"/>
   <property name="color-background" type="string" value="#000000"/>
   <property name="color-background-vary" type="bool" value="false"/>
@@ -20,4 +20,5 @@
   <property name="text-blink-mode" type="string" value="TERMINAL_TEXT_BLINK_MODE_NEVER"/>
   <property name="shortcuts-no-mnemonics" type="bool" value="true"/>
   <property name="shortcuts-no-menukey" type="bool" value="true"/>
+  <property name="font-use-system" type="bool" value="false"/>
 </channel>

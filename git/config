@@ -6,8 +6,6 @@
 	whitespace = error
 [advice]
 	addEmptyPathspec = false
-[init]
-	defaultBranch = main
 [status]
 	showStash = true
 [diff]

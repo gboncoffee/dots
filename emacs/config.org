@@ -59,12 +59,12 @@ Prettify symbols.
 #+END_SRC
 
 *** Fonts
-Noto Sans and Hack. Use variable pitch for Org mode.
+Liberation. Use variable pitch for Org mode.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :family "Hack" :height 110)
-(set-face-attribute 'fixed-pitch nil :family "Hack" :height 110)
-(set-face-attribute 'variable-pitch nil :family "Noto Sans" :height 110)
+(set-face-attribute 'default nil :family "Liberation Mono" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "Liberation Mono" :height 120)
+(set-face-attribute 'variable-pitch nil :family "Liberation Sans" :height 120)
 #+END_SRC
 
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
@@ -338,6 +338,7 @@ File management.
 (setq dired-kill-when-opening-new-dired-buffer t)
 (setq dired-delete-by-moving-to-trash t)
 (setq dired-listing-switches "-lahD --group-directories-first")
+(setq dired-dwim-target t)
 (use-package async
   :init
   (dired-async-mode 1))
@@ -689,6 +690,43 @@ Hide and fontify everything.
 (setq-default org-startup-folded 'fold)
 (setq org-hidden-keywords '(title))
 (setq org-superstar-leading-bullet ?\s)
+#+END_SRC
+
+Function to count the amount of ~.~ characters in the current line, because I write poetry and like to use it to separate syllables.
+
+#+BEGIN_SRC emacs-lisp
+(defun count-dots-in-line ()
+  "Count the amount of . characters in the current line"
+  (interactive)
+  (save-excursion
+    (let* ((start (line-beginning-position))
+           (end   (line-end-position))
+           (count (count-matches "\\." start end)))
+      (message "%d" count))))
+#+END_SRC
+
+Another function to remove them.
+
+#+BEGIN_SRC emacs-lisp
+(defun remove-dots-in-line ()
+  "Remove all . characters from the current line."
+  (interactive)
+  (save-excursion
+    (let ((start (line-beginning-position))
+          (end (line-end-position)))
+      (goto-char start)
+      (while (search-forward "." end t)
+        (replace-match "" nil t)
+        ;; The line became shorter, so keep END in sync.
+        (setq end (1- end))))))
+#+END_SRC
+
+Bind them in Org mode.
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c f") #'count-dots-in-line)
+  (define-key org-mode-map (kbd "C-c d") #'remove-dots-in-line))
 #+END_SRC
 
 *** Fonts and faces.
