@@ -76,7 +76,7 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 #+END_SRC
 
 *** Theme and modeline
-The theme I like is Tomorrow.
+I quite like tomorrow but nowadays I want to use something darker. Doom doesn't have tomorrow bright, and the sanityinc version I don't quite like.
 
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
@@ -84,7 +84,7 @@ The theme I like is Tomorrow.
   (doom-themes-enable-bold t)
   (doom-themes-enable-italic t)
   :config
-  (load-theme 'doom-tomorrow-night t)
+  (load-theme 'doom-ir-black t)
   (doom-themes-org-config))
 #+END_SRC
 
