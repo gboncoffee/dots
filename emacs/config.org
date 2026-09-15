@@ -277,15 +277,6 @@ So the editor is a little less dumb.
 #+END_SRC
 
 *** Searching
-CTRL+F enhances single-buffer searching.
-
-#+BEGIN_SRC emacs-lisp
-(use-package ctrlf
-  :init
-  (setq ctrlf-auto-recenter t)
-  (ctrlf-mode 1))
-#+END_SRC
-
 Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and other niceties.
 
 #+BEGIN_SRC emacs-lisp
@@ -293,17 +284,6 @@ Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and o
   :bind (("C-c /" . rg))
   :init
   (rg-enable-default-bindings))
-#+END_SRC
-
-*** Yasnippets
-Snippet system.
-
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :init
-  (yas-global-mode 1))
-(use-package yasnippet-snippets)
 #+END_SRC
 
 *** Project
@@ -374,9 +354,9 @@ Sometimes we need a simple web server.
   :init
   (emms-all)
   (setq emms-player-list '(emms-player-mpd))
-  (setq emms-info-functions '(emms-info-mpd))
   (setq emms-volume-change-functions '(emms-volume-mpd-change))
-  (emms-player-mpd-connect))
+  (emms-player-mpd-connect)
+  (emms-mode-line-mode -1))
 #+END_SRC
 
 *** Email
