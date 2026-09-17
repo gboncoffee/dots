@@ -62,9 +62,9 @@ Prettify symbols.
 Liberation. Use variable pitch for Org mode.
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'default nil :family "Liberation Mono" :height 120)
-(set-face-attribute 'fixed-pitch nil :family "Liberation Mono" :height 120)
-(set-face-attribute 'variable-pitch nil :family "Liberation Sans" :height 120)
+(set-face-attribute 'default nil :family "Liberation Mono" :height 140)
+(set-face-attribute 'fixed-pitch nil :family "Liberation Mono" :height 140)
+(set-face-attribute 'variable-pitch nil :family "Liberation Sans" :height 140)
 #+END_SRC
 
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
@@ -79,13 +79,7 @@ Make some reading modes use variable text. Help mode variable pitch is only enab
 I quite like tomorrow but nowadays I want to use something darker. Doom doesn't have tomorrow bright, and the sanityinc version I don't quite like.
 
 #+BEGIN_SRC emacs-lisp
-(use-package doom-themes
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
-  :config
-  (load-theme 'doom-ir-black t)
-  (doom-themes-org-config))
+(load-theme 'modus-vivendi t)
 #+END_SRC
 
 Modeline.
@@ -105,16 +99,14 @@ Also make the modeline display with variable fonts.
 (set-face-attribute 'mode-line-inactive nil :inherit 'variable-pitch)
 #+END_SRC
 
-*** Rainbow
-Rainbow delimiters and rainbow mode.
+*** Olivetti
+Olivetti mode makes text balanced in relation to the window margins, so it occuppies the center instead of being left-aligned.
 
 #+BEGIN_SRC emacs-lisp
-(use-package rainbow-delimiters
-  :hook (prog-mode-hook . rainbow-delimiters-mode))
-
-(use-package rainbow-mode
-  :diminish rainbow-mode
-  :hook (prog-mode-hook . rainbow-mode))
+(use-package olivetti
+  :init
+  (add-hook 'prog-mode-hook #'olivetti-mode)
+  (add-hook 'text-mode-hook #'olivetti-mode))
 #+END_SRC
 
 ** Behaviour
