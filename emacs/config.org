@@ -1,13 +1,31 @@
-#+PROPERTY: header-args:emacs-lisp :tangle config.el
+# -*- after-save-hook: (org-babel-tangle) -*-
+#+PROPERTY: header-args:emacs-lisp :exports code :results none :tangle init.el
 
 * Gabriel's Emacs configuration
 This is my Emacs configuration. Enjoy.
+
+Most of the setup is tangled to the file ~init.el~ itself. Some things are tangled to ~early-init.el~ instead to improve startup time.
 
 ** Lexical binding
 Supresses the annoying error message.
 
 #+BEGIN_SRC emacs-lisp
 ;;; -*- lexical-binding: t; -*-
+#+END_SRC
+
+Also for ~early-init.el~.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+;;; -*- lexical-binding: t; -*-
+#+END_SRC
+
+** Garbage collection
+Disables garbage collection while loading configuration, and re-enables it right afterwards.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 50 1024 1024))))
 #+END_SRC
 
 ** Package management configuration
@@ -43,7 +61,7 @@ Enables support for diminishing modes.
 *** Basics
 Unclutter the UI, stop the blinking cursor, no startup screen.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -59,9 +77,9 @@ Prettify symbols.
 #+END_SRC
 
 *** Fonts
-Liberation. Use variable pitch for Org mode.
+Liberation.
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
 (set-face-attribute 'default nil :family "Liberation Mono" :height 140)
 (set-face-attribute 'fixed-pitch nil :family "Liberation Mono" :height 140)
 (set-face-attribute 'variable-pitch nil :family "Liberation Sans" :height 140)
@@ -70,16 +88,22 @@ Liberation. Use variable pitch for Org mode.
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'help-mode-hook #'variable-pitch-mode)
-(add-hook 'package-menu-mode-hook #'variable-pitch-mode)
-(add-hook 'Man-mode-hook #'variable-pitch-mode)
+;;(add-hook 'help-mode-hook #'variable-pitch-mode)
+;;(add-hook 'package-menu-mode-hook #'variable-pitch-mode)
+;;(add-hook 'Man-mode-hook #'variable-pitch-mode)
 #+END_SRC
 
 *** Theme and modeline
-I quite like tomorrow but nowadays I want to use something darker. Doom doesn't have tomorrow bright, and the sanityinc version I don't quite like.
+Modus Vivendi is great: very dark, very readable, and the best: builtin.
 
-#+BEGIN_SRC emacs-lisp
-(load-theme 'modus-vivendi t)
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(setq modus-themes-italic-constructs t)
+(setq modus-themes-mixed-fonts t)
+(setq modus-themes-headings
+      '((1 . (1.5))
+        (2 . (1.3))
+	(3 . (1.1))))
+(load-theme 'modus-vivendi)
 #+END_SRC
 
 Modeline.
@@ -90,13 +114,6 @@ Modeline.
 (setq display-time-24hr-format t)
 (display-time-mode 1)
 (column-number-mode 1)
-#+END_SRC
-
-Also make the modeline display with variable fonts.
-
-#+BEGIN_SRC emacs-lisp
-(set-face-attribute 'mode-line nil :inherit 'variable-pitch)
-(set-face-attribute 'mode-line-inactive nil :inherit 'variable-pitch)
 #+END_SRC
 
 *** Olivetti
@@ -352,7 +369,6 @@ Sometimes we need a simple web server.
 #+END_SRC
 
 *** Email
-
 For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to be installed system-wide. The ~mbsync~ package sometimes is called ~isync~. For sending, I use ~msmtp~. Also needed to be installed system-wide. It's symlinked to ~sendmail~.
 
 #+BEGIN_SRC emacs-lisp
@@ -408,12 +424,6 @@ For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to b
 #+END_SRC
 
 *** Miscelaneous
-Lice to add licenses.
-
-#+BEGIN_SRC emacs-lisp
-(use-package lice)
-#+END_SRC
-
 Better support for PDF files.
 
 #+BEGIN_SRC emacs-lisp
@@ -446,12 +456,6 @@ Eldoc.
 #+BEGIN_SRC emacs-lisp
 (use-package go-eldoc
   :hook (go-mode-hook . go-eldoc-setup))
-#+END_SRC
-
-Snippets
-
-#+BEGIN_SRC emacs-lisp
-(use-package go-snippets)
 #+END_SRC
 
 *** C/C++
@@ -522,12 +526,6 @@ Snippets
 (use-package elixir-mode)
 #+END_SRC
 
-Snippets.
-
-#+BEGIN_SRC emacs-lisp
-(use-package elixir-yasnippets)
-#+END_SRC
-
 Inferior mode.
 
 #+BEGIN_SRC emacs-lisp
@@ -544,12 +542,6 @@ Inferior mode.
 (use-package haskell-mode
   :config
   (setq haskell-stylish-on-save t))
-#+END_SRC
-
-Snippets.
-
-#+BEGIN_SRC emacs-lisp
-(use-package haskell-snippets)
 #+END_SRC
 
 *** Rust
@@ -639,8 +631,8 @@ Visual line, indent, etc.
 	    (visual-line-mode 1)
 	    (org-indent-mode)
 	    (display-fill-column-indicator-mode -1)
-	    (auto-fill-mode -1)
-	    (variable-pitch-mode 1)))
+	    (variable-pitch-mode 1)
+	    (auto-fill-mode -1)))
 #+END_SRC
 
 Pretty.
@@ -699,29 +691,6 @@ Bind them in Org mode.
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-c f") #'count-dots-in-line)
   (define-key org-mode-map (kbd "C-c d") #'remove-dots-in-line))
-#+END_SRC
-
-*** Fonts and faces.
-#+BEGIN_SRC emacs-lisp
-(setq org-n-level-faces 4)
-(set-face-attribute 'org-level-1 nil :height 1.5)
-(set-face-attribute 'org-level-2 nil :height 1.35)
-(set-face-attribute 'org-level-3 nil :height 1.2)
-(set-face-attribute 'org-level-4 nil :height 1.0)
-
-(add-hook 'org-mode-hook
-	  (lambda ()
-	    (dolist (face '(org-block
-			    org-block-begin-line
-			    org-block-end-line
-			    org-code
-			    org-verbatim
-			    org-meta-line
-			    org-special-keyword
-			    org-table
-			    org-table-row))
-	      (when (facep face)
-		(set-face-attribute face nil :inherit 'fixed-pitch)))))
 #+END_SRC
 
 *** Beamer
