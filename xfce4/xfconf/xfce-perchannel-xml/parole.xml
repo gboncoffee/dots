@@ -5,12 +5,14 @@
     <property name="font" type="string" value="Sans Bold 20"/>
   </property>
   <property name="window" type="empty">
-    <property name="maximized" type="bool" value="false"/>
+    <property name="maximized" type="bool" value="true"/>
+    <property name="width" type="int" value="1920"/>
+    <property name="height" type="int" value="1029"/>
   </property>
   <property name="audio" type="empty">
-    <property name="volume" type="int" value="50"/>
+    <property name="volume" type="int" value="100"/>
   </property>
   <property name="folders" type="empty">
-    <property name="last-used-media" type="string" value="/home/gabriel"/>
+    <property name="last-used-media" type="string" value="/home/gabriel/videos"/>
   </property>
 </channel>

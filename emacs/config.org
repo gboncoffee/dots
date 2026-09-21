@@ -28,6 +28,21 @@ Disables garbage collection while loading configuration, and re-enables it right
           (lambda () (setq gc-cons-threshold (* 50 1024 1024))))
 #+END_SRC
 
+Inhibits startup, splash, etc.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
+(setq inhibit-startup-buffer-menu t)
+#+END_SRC
+
+Increases native compilation optimization.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(setq native-comp-speed 3)
+#+END_SRC
+
 ** Package management configuration
 Nowadays, Emacs already comes with ~use-package~. But we still bootstrap it here as it costs us nothing and we need to setup it anyways.
 
@@ -59,15 +74,13 @@ Enables support for diminishing modes.
 
 ** Appearance
 *** Basics
-Unclutter the UI, stop the blinking cursor, no startup screen.
+Unclutter the UI and stop the blinking cursor.
 
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
-
-(setq inhibit-startup-screen t)
 #+END_SRC
 
 Prettify symbols.
@@ -76,34 +89,36 @@ Prettify symbols.
 (global-prettify-symbols-mode 1)
 #+END_SRC
 
-*** Fonts
-Liberation.
+*** Theme, fonts and modeline
+Modus Vivendi is great: very dark, very readable, and the best: builtin. We need to be aware it resets the fonts we use.
 
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-(set-face-attribute 'default nil :family "Liberation Mono" :height 140)
-(set-face-attribute 'fixed-pitch nil :family "Liberation Mono" :height 140)
-(set-face-attribute 'variable-pitch nil :family "Liberation Sans" :height 140)
-#+END_SRC
-
-Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
-
-#+BEGIN_SRC emacs-lisp
-;;(add-hook 'help-mode-hook #'variable-pitch-mode)
-;;(add-hook 'package-menu-mode-hook #'variable-pitch-mode)
-;;(add-hook 'Man-mode-hook #'variable-pitch-mode)
-#+END_SRC
-
-*** Theme and modeline
-Modus Vivendi is great: very dark, very readable, and the best: builtin.
-
-#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(require-theme 'modus-themes)
 (setq modus-themes-italic-constructs t)
 (setq modus-themes-mixed-fonts t)
 (setq modus-themes-headings
       '((1 . (1.5))
         (2 . (1.3))
 	(3 . (1.1))))
-(load-theme 'modus-vivendi)
+(setq modus-themes-variable-pitch-ui t)
+(add-hook
+ 'modus-themes-after-load-theme-hook
+ (lambda ()
+   (set-face-attribute 'default nil :family
+		       "Source Code Pro" :height 130)
+   (set-face-attribute 'fixed-pitch nil :family
+		       "Source Code Pro" :height 130)
+   (set-face-attribute 'variable-pitch nil :family
+		       "Inter Display" :height 130)))
+(modus-themes-load-theme 'modus-vivendi)
+#+END_SRC
+
+Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'help-mode-hook #'variable-pitch-mode)
+(add-hook 'package-menu-mode-hook #'variable-pitch-mode)
+(add-hook 'Man-mode-hook #'variable-pitch-mode)
 #+END_SRC
 
 Modeline.
@@ -121,9 +136,7 @@ Olivetti mode makes text balanced in relation to the window margins, so it occup
 
 #+BEGIN_SRC emacs-lisp
 (use-package olivetti
-  :init
-  (add-hook 'prog-mode-hook #'olivetti-mode)
-  (add-hook 'text-mode-hook #'olivetti-mode))
+  :hook (prog-mode text-mode))
 #+END_SRC
 
 ** Behaviour
@@ -185,13 +198,13 @@ No default command, colorize the buffer.
 Makes the minibuffer much nicer.
 
 #+BEGIN_SRC emacs-lisp
-(setq enable-recursive-minibuffers t)
-(setq read-extended-command-predicate #'command-completion-default-include-p)
 (use-package vertico
-  :init
-  (setq completion-styles '(basic substring partial-completion flex))
-  (setq vertico-cycle t)
-  (vertico-mode 1))
+  :custom
+  (enable-recursive-minibuffers t)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (completion-styles '(basic substring partial-completion flex))
+  (vertico-cycle t)
+  :hook after-init)
 (use-package vertico-directory
   :after vertico
   :ensure nil
@@ -203,12 +216,9 @@ Makes the minibuffer much nicer.
 (use-package vertico-mouse
   :after vertico
   :ensure nil
-  :init
-  (vertico-mouse-mode 1))
-
+  :hook after-init)
 (use-package marginalia
-  :init
-  (marginalia-mode 1))
+  :hook after-init)
 #+END_SRC
 
 *** Windows
@@ -253,8 +263,7 @@ Show trailing whitespaces, but not on some weird buffers of course. Display line
 *** Respect ~.editorconfig~ files.
 #+BEGIN_SRC emacs-lisp
 (use-package editorconfig
-  :config
-  (editorconfig-mode t))
+  :hook after-init)
 #+END_SRC
 
 *** Electric
@@ -275,14 +284,11 @@ So the editor is a little less dumb.
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
   :custom (dumb-jump-prefer-searcher 'rg)
+  :bind ("C-c 2" . xref-find-references-and-replace)
   :hook (prog-mode . (lambda ()
 		       (add-to-list
 			'xref-backend-functions
-			#'dumb-jump-xref-activate)))
-  :config
-  (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate))
-
-(global-set-key (kbd "C-c 2") #'xref-find-references-and-replace)
+			#'dumb-jump-xref-activate))))
 #+END_SRC
 
 *** Searching
@@ -291,7 +297,7 @@ Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and o
 #+BEGIN_SRC emacs-lisp
 (use-package rg
   :bind (("C-c /" . rg))
-  :init
+  :config
   (rg-enable-default-bindings))
 #+END_SRC
 
@@ -310,7 +316,9 @@ Project configurations.
 The best git UI in the world.
 
 #+BEGIN_SRC emacs-lisp
-(use-package magit)
+(use-package magit
+  :bind (("C-x g" . magit-status))
+  :commands (magit-status magit-dispatch magit-file-dispatch))
 #+END_SRC
 
 It's better to use ~forge~ than ~magit-gh~. ~forge~ is very complete.
@@ -329,41 +337,43 @@ File management.
 (setq dired-listing-switches "-lahD --group-directories-first")
 (setq dired-dwim-target t)
 (use-package async
-  :init
-  (dired-async-mode 1))
+  :hook (after-init . dired-async-mode))
 #+END_SRC
 
 Enhanced appearance.
 
 #+BEGIN_SRC emacs-lisp
 (use-package diredfl
-  :init
-  (diredfl-global-mode 1))
+  :hook (after-init . diredfl-global-mode))
 #+END_SRC
 
 *** Eat
 Eat is the best terminal emulator for Emacs.
 
 #+BEGIN_SRC emacs-lisp
-(use-package eat)
+(use-package eat
+  :commands (eat eat-other-window))
 #+END_SRC
 
 *** HTTPD
 Sometimes we need a simple web server.
 
 #+BEGIN_SRC emacs-lisp
-(use-package simple-httpd)
+(use-package simple-httpd
+  :commands (httpd-serve-directory httpd-start httpd-stop))
 #+END_SRC
 
 *** Music
 #+BEGIN_SRC emacs-lisp
 (use-package emms
+  :commands (emms emms-browser)
   :bind (("C-c m" . emms-browser)
 	 ("C-c M" . emms))
-  :init
+  :custom
+  (emms-player-list '(emms-player-mpd))
+  (emms-volume-change-functions '(emms-volume-mpd-change))
+  :config
   (emms-all)
-  (setq emms-player-list '(emms-player-mpd))
-  (setq emms-volume-change-functions '(emms-volume-mpd-change))
   (emms-player-mpd-connect)
   (emms-mode-line-mode -1))
 #+END_SRC
@@ -381,44 +391,41 @@ For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to b
   (setq mu4e-get-mail-command "mbsync -a")
   (setq mu4e-maildir "~/mail")
   (setq mu4e-compose-signature "Please no HTML,\n~ Gabriel G. de Brito")
-
   (setq send-mail-function 'sendmail-send-it)
   (setq mail-user-agent 'mu4e-user-agent)
-  (set-variable 'read-mail-command 'mu4e)
+  (setq read-mail-command 'mu4e)
   (setq mail-specify-envelope-from t)
   (setq message-sendmail-envelope-from 'header)
   (setq mail-envelope-from 'header)
-
   (setq mu4e-contexts (list
-		       (make-mu4e-context
-			:name "icloud"
-			:match-func
-			(lambda (msg)
-			  (when msg
-			    (string-prefix-p "/icloud" (mu4e-message-field msg :maildir))))
-			:vars '((user-mail-address . "me@gboncoffee.dev.br")
-				(user-full-name . "Gabriel de Brito")
-				(mu4e-drafts-folder  . "/icloud/Drafts")
-				(mu4e-sent-folder  . "/icloud/Sent")
-				(mu4e-trash-folder  . "/icloud/Trash")))
-		       (make-mu4e-context
-			:name "dinf"
-			:match-func
-			(lambda (msg)
-			  (when msg
-			    (string-prefix-p "/dinf" (mu4e-message-field msg :maildir))))
-			:vars '((user-mail-address . "ggb23@inf.ufpr.br")
-				(user-full-name . "Gabriel de Brito")
-				(mu4e-drafts-folder  . "/dinf/Drafts")
-				(mu4e-sent-folder  . "/dinf/Sent")
-				(mu4e-trash-folder  . "/dinf/Trash")))))
-
+		  (make-mu4e-context
+		   :name "icloud"
+		   :match-func
+		   (lambda (msg)
+		     (when msg
+		       (string-prefix-p
+			"/icloud" (mu4e-message-field msg :maildir))))
+		   :vars '((user-mail-address . "me@gboncoffee.dev.br")
+			   (user-full-name . "Gabriel de Brito")
+			   (mu4e-drafts-folder  . "/icloud/Drafts")
+			   (mu4e-sent-folder  . "/icloud/Sent")
+			   (mu4e-trash-folder  . "/icloud/Trash")))
+		  (make-mu4e-context
+		   :name "dinf"
+		   :match-func
+		   (lambda (msg)
+		     (when msg
+		       (string-prefix-p
+			"/dinf" (mu4e-message-field msg :maildir))))
+		   :vars '((user-mail-address . "ggb23@inf.ufpr.br")
+			   (user-full-name . "Gabriel de Brito")
+			   (mu4e-drafts-folder  . "/dinf/Drafts")
+			   (mu4e-sent-folder  . "/dinf/Sent")
+			   (mu4e-trash-folder  . "/dinf/Trash")))))
   (setq mu4e-maildir-shortcuts
-	'(("/icloud/inbox" . ?i)
-	  ("/dinf/inbox" . ?d)))
-
+   '(("/icloud/inbox" . ?i)
+     ("/dinf/inbox" . ?d)))
   (setq mu4e-context-policy 'pick-first)
-
   (setq mml-secure-openpgp-signers '("ABE72DFCAD2D5333FE3F8912F6C1E4A22E8C1F3D"))
   (add-hook 'message-send-hook 'mml-secure-message-sign-pgpmime))
 #+END_SRC
@@ -427,7 +434,8 @@ For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to b
 Better support for PDF files.
 
 #+BEGIN_SRC emacs-lisp
-(use-package pdf-tools)
+(use-package pdf-tools
+  :mode ("\\.pdf\\'" . pdf-view-mode))
 #+END_SRC
 
 Better separation of shell commands.
@@ -435,8 +443,7 @@ Better separation of shell commands.
 #+BEGIN_SRC emacs-lisp
 (use-package shell-command-x
   :diminish shell-command-x
-  :init
-  (shell-command-x-mode 1))
+  :hook after-init)
 #+END_SRC
 
 ** Language specific configuration
@@ -445,29 +452,36 @@ Basic support.
 
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
+  :mode "\\.go\\'"
   :hook
-  (go-mode-hook . (lambda ()
-		    (setq tab-width 4)
-		    (setq indent-tabs-mode t))))
+  (go-mode . (lambda ()
+	       (setq tab-width 4)
+	       (setq indent-tabs-mode t))))
 #+END_SRC
 
 Eldoc.
 
 #+BEGIN_SRC emacs-lisp
 (use-package go-eldoc
-  :hook (go-mode-hook . go-eldoc-setup))
+  :after go-mode
+  :hook (go-mode . go-eldoc-setup))
 #+END_SRC
 
 *** C/C++
+Use ~simpc-mode~ because native Emacs C/C++ modes are terribly slow.
+
 #+BEGIN_SRC emacs-lisp
-(setq-default c-basic-offset 4)
-(setq-default c-default-style "linux")
-(setq-default c-tab-always-indent 'complete)
-(defun c-configs ()
-  (setq tab-width 4)
-  (setq indent-tabs-mode nil))
-(add-hook 'c-mode-hook #'c-configs)
-(add-hook 'c++-mode-hook #'c-configs)
+(use-package simpc-mode
+  :mode "\\.[hc]\\(pp\\)?\\'"
+  :commands simpc-mode
+  :vc (:url "https://github.com/rexim/simpc-mode" :rev :newest)
+  :hook (simpc-mode . (lambda ()
+			(setq tab-width 4)
+			(setq indent-tabs-mode nil)))
+  :custom
+  (c-basic-offset 4)
+  (c-default-style "linux")
+  (c-tab-always-indent 'complete))
 #+END_SRC
 
 *** Pascal
@@ -485,31 +499,31 @@ Eldoc.
 *** Web
 #+BEGIN_SRC emacs-lisp
 (use-package web-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+  :mode "\\.html?\\'")
 #+END_SRC
 
 *** Markdown
 #+BEGIN_SRC emacs-lisp
-(use-package markdown-mode)
+(use-package markdown-mode
+  :mode "\\.md\\'")
 #+END_SRC
 
 *** ASM
 #+BEGIN_SRC emacs-lisp
 (use-package nasm-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.asm\\'" . nasm-mode))
-  (add-to-list 'auto-mode-alist '("\\.s\\'" . nasm-mode)))
+  :mode ("\\.asm\\'" "\\.s\\'"))
 #+END_SRC
 
 *** Zig
 #+BEGIN_SRC emacs-lisp
-(use-package zig-mode)
+(use-package zig-mode
+  :mode "\\.zig\\'")
 #+END_SRC
 
 *** Odin
 #+BEGIN_SRC emacs-lisp
 (use-package odin-mode
+  :mode "\\.odin\\'"
   :commands odin-mode
   :vc (:url "https://github.com/mattt-b/odin-mode.git"
       	    :rev :last-release)
@@ -523,30 +537,36 @@ Eldoc.
 
 *** Elixir
 #+BEGIN_SRC emacs-lisp
-(use-package elixir-mode)
+(use-package elixir-mode
+  :mode ("\\.ex\\'" "\\.exs\\'"))
 #+END_SRC
 
 Inferior mode.
 
 #+BEGIN_SRC emacs-lisp
-(use-package inf-elixir)
+(use-package inf-elixir
+  :after elixir-mode
+  :hook (elixir-mode . inf-elixir-minor-mode))
 #+END_SRC
 
 *** Erlang
 #+BEGIN_SRC emacs-lisp
-(use-package erlang)
+(use-package erlang
+  :mode "\\.erl\\'")
 #+END_SRC
 
 *** Haskell
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode
-  :config
-  (setq haskell-stylish-on-save t))
+  :mode "\\.hs\\'"
+  :custom
+  (haskell-stylish-on-save t))
 #+END_SRC
 
 *** Rust
 #+BEGIN_SRC emacs-lisp
-(use-package rust-mode)
+(use-package rust-mode
+  :mode "\\.rs\\'")
 #+END_SRC
 
 *** Verilog
@@ -568,7 +588,8 @@ Inferior mode.
 
 *** Lua
 #+BEGIN_SRC emacs-lisp
-(use-package lua-mode)
+(use-package lua-mode
+  :mode "\\.lua\\'")
 #+END_SRC
 
 *** Common Lisp
@@ -581,35 +602,36 @@ Inferior mode.
 (use-package format-all
   :diminish format-all-mode
   :hook
-  (prog-mode-hook . format-all-mode)
-  (text-mode-hook . format-all-mode)
-  :config
-  (setq-default format-all-formatters
-		'(("C" (clang-format))
-		  ("C++" (clang-format))
-		  ("Cuda" (clang-format))
-		  ("Haskell" (stylish-haskell))
-		  ("Go" (gofmt "-s"))
-		  ("Elixir" (mix-format))
-		  ("Emacs Lisp" (emacs-lisp))
-		  ("LaTeX" (latexindent))
-		  ("BibTex" (emacs-bibtex))
-		  ("Rust" (rustfmt))
-		  ("Zig" (zig))
-		  ("Verilog" (verible))
-		  ("SystemVerilog" (verible)))))
+  (prog-mode . format-all-mode)
+  (text-mode . format-all-mode)
+  :custom
+  (format-all-formatters
+   '(("Haskell" (stylish-haskell))
+     ("Go" (gofmt "-s"))
+     ("Elixir" (mix-format))
+     ("Emacs Lisp" (emacs-lisp))
+     ("LaTeX" (latexindent))
+     ("BibTex" (emacs-bibtex))
+     ("Rust" (rustfmt))
+     ("Zig" (zig))
+     ("Verilog" (verible))
+     ("SystemVerilog" (verible)))))
 
 (use-package reformatter
   :init
   (reformatter-define odin-format
     :program "odinfmt"
     :args '("-stdin"))
-  (add-hook 'odin-mode-hook #'odin-format-on-save-mode))
+  (add-hook 'odin-mode-hook #'odin-format-on-save-mode)
+  (reformatter-define clang-format
+    :program "clang-format")
+  (add-hook 'simpc-mode-hook #'clang-format-on-save-mode))
 #+END_SRC
 
 *** Minor languages without builtin-support
 #+BEGIN_SRC emacs-lisp
-(use-package yaml-mode)
+(use-package yaml-mode
+  :mode "\\.yaml\\'")
 #+END_SRC
 
 ** Org mode
@@ -639,7 +661,7 @@ Pretty.
 
 #+BEGIN_SRC emacs-lisp
 (use-package org-superstar
-  :hook (org-mode-hook . org-superstar-mode))
+  :hook (org-mode . org-superstar-mode))
 #+END_SRC
 
 Hide and fontify everything.
@@ -695,5 +717,6 @@ Bind them in Org mode.
 
 *** Beamer
 #+BEGIN_SRC emacs-lisp
-(use-package ox-beamer-lecture)
+(use-package ox-beamer-lecture
+  :defer t)
 #+END_SRC
