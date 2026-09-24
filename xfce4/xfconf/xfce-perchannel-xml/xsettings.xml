@@ -24,7 +24,7 @@
     <property name="CanChangeAccels" type="empty"/>
     <property name="ColorPalette" type="empty"/>
     <property name="FontName" type="string" value="Inter Display 11"/>
-    <property name="MonospaceFontName" type="string" value="Source Code Pro 13"/>
+    <property name="MonospaceFontName" type="string" value="Liberation Mono 13"/>
     <property name="IconSizes" type="empty"/>
     <property name="KeyThemeName" type="empty"/>
     <property name="MenuImages" type="empty"/>

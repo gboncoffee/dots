@@ -105,9 +105,9 @@ Modus Vivendi is great: very dark, very readable, and the best: builtin. We need
  'modus-themes-after-load-theme-hook
  (lambda ()
    (set-face-attribute 'default nil :family
-		       "Source Code Pro" :height 130)
+		       "Liberation Mono" :height 130)
    (set-face-attribute 'fixed-pitch nil :family
-		       "Source Code Pro" :height 130)
+		       "Liberation Mono" :height 130)
    (set-face-attribute 'variable-pitch nil :family
 		       "Inter Display" :height 130)))
 (modus-themes-load-theme 'modus-vivendi)

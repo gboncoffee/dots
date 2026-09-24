@@ -78,11 +78,11 @@
       <property name="show-button-title" type="bool" value="true"/>
       <property name="button-title" type="string" value="Menu"/>
       <property name="recent" type="array">
-        <value type="string" value="thunar.desktop"/>
-        <value type="string" value="org.vinegarhq.Sober.desktop"/>
         <value type="string" value="qt5ct.desktop"/>
-        <value type="string" value="org.pulseaudio.pavucontrol.desktop"/>
         <value type="string" value="qt6ct.desktop"/>
+        <value type="string" value="org.vinegarhq.Sober.desktop"/>
+        <value type="string" value="thunar.desktop"/>
+        <value type="string" value="org.pulseaudio.pavucontrol.desktop"/>
         <value type="string" value="com.obsproject.Studio.desktop"/>
         <value type="string" value="org.qbittorrent.qBittorrent.desktop"/>
         <value type="string" value="htop.desktop"/>
