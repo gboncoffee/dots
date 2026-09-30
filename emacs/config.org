@@ -195,30 +195,24 @@ No default command, colorize the buffer.
 #+END_SRC
 
 *** Minibuffer
-Makes the minibuffer much nicer.
+Configures the builtin minibuffer completion so it's nicer.
 
 #+BEGIN_SRC emacs-lisp
-(use-package vertico
-  :custom
-  (enable-recursive-minibuffers t)
-  (read-extended-command-predicate #'command-completion-default-include-p)
-  (completion-styles '(basic substring partial-completion flex))
-  (vertico-cycle t)
-  :hook after-init)
-(use-package vertico-directory
-  :after vertico
-  :ensure nil
-  :bind (:map vertico-map
-              ("RET" . vertico-directory-enter)
-              ("DEL" . vertico-directory-delete-char)
-              ("M-DEL" . vertico-directory-delete-word))
-  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
-(use-package vertico-mouse
-  :after vertico
-  :ensure nil
-  :hook after-init)
-(use-package marginalia
-  :hook after-init)
+(setq completion-show-help nil)
+(setq completion-show-inline-help nil)
+(setq completions-detailed t)
+(setq completions-format 'one-column)
+(setq completions-max-height 20)
+(setq completions-sort 'historical)
+(setq completion-auto-help t)
+(setq completion-auto-select nil)
+(setq minibuffer-visible-completions t)
+(setq completion-eager-display t)
+(setq completion-eager-update t)
+
+(define-key minibuffer-local-map (kbd "C-n") #'minibuffer-next-completion)
+(define-key minibuffer-local-map
+	    (kbd "C-p") #'minibuffer-previous-completion)
 #+END_SRC
 
 *** Windows
