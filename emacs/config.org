@@ -131,14 +131,6 @@ Modeline.
 (column-number-mode 1)
 #+END_SRC
 
-*** Olivetti
-Olivetti mode makes text balanced in relation to the window margins, so it occuppies the center instead of being left-aligned.
-
-#+BEGIN_SRC emacs-lisp
-(use-package olivetti
-  :hook (prog-mode text-mode))
-#+END_SRC
-
 ** Behaviour
 *** Basics
 Short answers, fill column, don't make backups.
@@ -234,6 +226,14 @@ Move windows with meta. Makes C-v and M-v to move by half pages instead of full 
 
 (global-set-key (kbd "C-v") #'scroll-up-half)
 (global-set-key (kbd "M-v") #'scroll-down-half)
+#+END_SRC
+
+Prefer using frames instead of windows.
+
+#+BEGIN_SRC emacs-lisp
+(use-package frames-only-mode
+  :hook (after-init . frames-only-mode)
+  :config (frames-only-mode-remap-common-window-split-keybindings))
 #+END_SRC
 
 ** Editor configuration
