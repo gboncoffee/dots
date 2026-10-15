@@ -105,12 +105,14 @@ Modus Vivendi is great: very dark, very readable, and the best: builtin. We need
  'modus-themes-after-load-theme-hook
  (lambda ()
    (set-face-attribute 'default nil :family
-		       "Liberation Mono" :height 130)
+		       "DejaVu Sans Mono" :height 110)
    (set-face-attribute 'fixed-pitch nil :family
-		       "Liberation Mono" :height 130)
+		       "DejaVu Sans Mono" :height 110)
    (set-face-attribute 'variable-pitch nil :family
-		       "Inter Display" :height 130)))
-(modus-themes-load-theme 'modus-vivendi)
+		       "Ubuntu" :height 120)))
+(if (fboundp 'modus-themes-load-theme)
+    (modus-themes-load-theme 'modus-vivendi)
+  (modus-themes-load-vivendi))
 #+END_SRC
 
 Make some reading modes use variable text. Help mode variable pitch is only enabled in actual help buffers, because various modes use the help mode and they usually don't look good with variable pitch.
@@ -195,12 +197,13 @@ Configures the builtin minibuffer completion so it's nicer.
 (setq completions-detailed t)
 (setq completions-format 'one-column)
 (setq completions-max-height 20)
-(setq completions-sort 'historical)
+(setq completions-sort
+      (if (fboundp 'minibuffer-sort-by-history)
+          'historical
+        'alphabetical))
 (setq completion-auto-help t)
 (setq completion-auto-select nil)
 (setq minibuffer-visible-completions t)
-(setq completion-eager-display t)
-(setq completion-eager-update t)
 
 (define-key minibuffer-local-map (kbd "C-n") #'minibuffer-next-completion)
 (define-key minibuffer-local-map
@@ -302,6 +305,12 @@ Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and o
 (global-set-key (kbd "<f6>") #'async-shell-command)
 #+END_SRC
 
+*** Tree Sitter
+#+BEGIN_SRC emacs-lisp
+(use-package treesit-auto
+  :custom (treesit-auto-install 'prompt)
+  :hook (after-init . global-treesit-auto-mode))
+#+END_SRC
 ** Utilities
 *** Magit
 The best git UI in the world.
@@ -459,20 +468,17 @@ Eldoc.
 #+END_SRC
 
 *** C/C++
-Use ~simpc-mode~ because native Emacs C/C++ modes are terribly slow.
-
 #+BEGIN_SRC emacs-lisp
-(use-package simpc-mode
-  :mode "\\.[hc]\\(pp\\)?\\'"
-  :commands simpc-mode
-  :vc (:url "https://github.com/rexim/simpc-mode" :rev :newest)
-  :hook (simpc-mode . (lambda ()
-			(setq tab-width 4)
-			(setq indent-tabs-mode nil)))
-  :custom
-  (c-basic-offset 4)
-  (c-default-style "linux")
-  (c-tab-always-indent 'complete))
+(setq c-basic-offset 4)
+(setq c-default-style "linux")
+(setq c-tab-always-indent 'complete)
+(defun c-configs ()
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil))
+(add-hook 'c-mode-hook #'c-configs)
+(add-hook 'cpp-mode-hook #'c-configs)
+(add-hook 'c-ts-mode-hook #'c-configs)
+(add-hook 'cpp-ts-mode-hook #'c-configs)
 #+END_SRC
 
 *** Pascal
@@ -516,8 +522,7 @@ Use ~simpc-mode~ because native Emacs C/C++ modes are terribly slow.
 (use-package odin-mode
   :mode "\\.odin\\'"
   :commands odin-mode
-  :vc (:url "https://github.com/mattt-b/odin-mode.git"
-      	    :rev :last-release)
+  :ensure nil
   :hook (odin-mode . (lambda ()
 		       (setq-local indent-tabs-mode t)
 		       (indent-tabs-mode 1)
@@ -577,6 +582,16 @@ Inferior mode.
 	    (setq-local tab-width 2)))
 #+END_SRC
 
+Fix tree sitter.
+
+#+BEGIN_SRC emacs-lisp
+(setq
+ treesit-load-name-override-list
+ '((verilog "libtree-sitter-verilog" "tree_sitter_systemverilog")
+   (systemverilog "libtree-sitter-verilog" "tree_sitter_systemverilog")))
+
+#+END_SRC
+
 *** Lua
 #+BEGIN_SRC emacs-lisp
 (use-package lua-mode
@@ -616,7 +631,10 @@ Inferior mode.
   (add-hook 'odin-mode-hook #'odin-format-on-save-mode)
   (reformatter-define clang-format
     :program "clang-format")
-  (add-hook 'simpc-mode-hook #'clang-format-on-save-mode))
+  (add-hook 'c-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'c-ts-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'cpp-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'cpp-ts-mode-hook #'clang-format-on-save-mode))
 #+END_SRC
 
 *** Minor languages without builtin-support
@@ -662,8 +680,8 @@ Hide and fontify everything.
 (setq-default org-edit-src-content-indentation 0)
 (setq-default org-hide-macro-markers t)
 (setq-default org-hide-emphasis-markers t)
-(setq-default org-hide-block-startup t)
-(setq-default org-hide-drawer-startup t)
+(setq-default org-cycle-hide-block-startup t)
+(setq-default org-cycle-hide-drawer-startup t)
 (setq-default org-startup-folded 'fold)
 (setq org-hidden-keywords '(title))
 (setq org-superstar-leading-bullet ?\s)
