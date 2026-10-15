@@ -363,21 +363,6 @@ Sometimes we need a simple web server.
   :commands (httpd-serve-directory httpd-start httpd-stop))
 #+END_SRC
 
-*** Music
-#+BEGIN_SRC emacs-lisp
-(use-package emms
-  :commands (emms emms-browser)
-  :bind (("C-c m" . emms-browser)
-	 ("C-c M" . emms))
-  :custom
-  (emms-player-list '(emms-player-mpd))
-  (emms-volume-change-functions '(emms-volume-mpd-change))
-  :config
-  (emms-all)
-  (emms-player-mpd-connect)
-  (emms-mode-line-mode -1))
-#+END_SRC
-
 *** Email
 For reading, I use ~mu4e~. The messages are fetched via ~mbsync~. Both need to be installed system-wide. The ~mbsync~ package sometimes is called ~isync~. For sending, I use ~msmtp~. Also needed to be installed system-wide. It's symlinked to ~sendmail~.
 
