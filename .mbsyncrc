@@ -1,8 +1,8 @@
 IMAPAccount icloud
 Host imap.mail.me.com
 User gabrielgbrito@icloud.com
-PassCmd "gpg -q --for-your-eyes-only -d ~/etc/pass/icloud-mail.gpg"
-TLSType IMAPS
+PassCmd "cat ~/etc/pass/icloud-mail"
+SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore icloud-remote
@@ -23,8 +23,8 @@ SyncState *
 IMAPAccount dinf
 Host mx.inf.ufpr.br
 User ggb23
-PassCmd "gpg -q --for-your-eyes-only -d ~/etc/pass/dinf.gpg"
-TLSType IMAPS
+PassCmd "cat ~/etc/pass/dinf"
+SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore dinf-remote
