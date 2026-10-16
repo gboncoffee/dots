@@ -51,3 +51,6 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]] \
        && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
     source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
 fi
+
+# Nix (single-user)
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
