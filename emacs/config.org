@@ -569,24 +569,6 @@ Inferior mode.
 
 *** Formatters for (almost) all the above
 #+BEGIN_SRC emacs-lisp
-(use-package format-all
-  :diminish format-all-mode
-  :hook
-  (prog-mode . format-all-mode)
-  (text-mode . format-all-mode)
-  :custom
-  (format-all-formatters
-   '(("Haskell" (stylish-haskell))
-     ("Go" (gofmt "-s"))
-     ("Elixir" (mix-format))
-     ("Emacs Lisp" (emacs-lisp))
-     ("LaTeX" (latexindent))
-     ("BibTex" (emacs-bibtex))
-     ("Rust" (rustfmt))
-     ("Zig" (zig))
-     ("Verilog" (verible))
-     ("SystemVerilog" (verible)))))
-
 (use-package reformatter
   :init
   (reformatter-define odin-format
@@ -595,7 +577,37 @@ Inferior mode.
   (add-hook 'odin-mode-hook #'odin-format-on-save-mode)
   (reformatter-define clang-format
     :program "clang-format")
-  (add-hook 'simpc-mode-hook #'clang-format-on-save-mode))
+  (add-hook 'c-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'cpp-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'c-ts-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'cpp-ts-mode-hook #'clang-format-on-save-mode)
+  (reformatter-define go-format
+    :program "gofmt")
+  (add-hook 'go-mode-hook #'go-format-on-save-mode)
+  (add-hook 'go-ts-mode-hook #'go-format-on-save-mode)
+  (reformatter-define elixir-format
+    :program "mix"
+    :args '("format" "-"))
+  (add-hook 'elixir-mode-hook #'elixir-format-on-save-mode)
+  (add-hook 'elixir-ts-mode-hook #'elixir-format-on-save-mode)
+  (reformatter-define latex-format
+    :program "latexindent")
+  (add-hook 'latex-mode-hook #'latex-format-on-save-mode)
+  (add-hook 'latex-ts-mode-hook #'latex-format-on-save-mode)
+  (reformatter-define rust-format
+    :program "rustfmt")
+  (add-hook 'rust-mode-hook #'rust-format-on-save-mode)
+  (add-hook 'rust-ts-mode-hook #'rust-format-on-save-mode)
+  (reformatter-define verilog-format
+    :program "verible-verilog-format"
+    :args '("-"))
+  (add-hook 'verilog-mode-hook #'verilog-format-on-save-mode)
+  (add-hook 'verilog-ts-mode-hook #'verilog-format-on-save-mode)
+  (reformatter-define zig-format
+    :program "zig"
+    :args '("fmt" "--stdin"))
+  (add-hook 'zig-mode-hook #'zig-format-on-save-mode)
+  (add-hook 'zig-ts-mode-hook #'zig-format-on-save-mode))
 #+END_SRC
 
 *** Minor languages without builtin-support
