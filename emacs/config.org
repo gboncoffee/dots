@@ -570,7 +570,7 @@ Inferior mode.
 *** Formatters for (almost) all the above
 #+BEGIN_SRC emacs-lisp
 (use-package reformatter
-  :init
+  :config
   (reformatter-define odin-format
     :program "odinfmt"
     :args '("-stdin"))
@@ -580,7 +580,7 @@ Inferior mode.
   (add-hook 'c-mode-hook #'clang-format-on-save-mode)
   (add-hook 'cpp-mode-hook #'clang-format-on-save-mode)
   (add-hook 'c-ts-mode-hook #'clang-format-on-save-mode)
-  (add-hook 'cpp-ts-mode-hook #'clang-format-on-save-mode)
+  (add-hook 'c++-ts-mode-hook #'clang-format-on-save-mode)
   (reformatter-define go-format
     :program "gofmt")
   (add-hook 'go-mode-hook #'go-format-on-save-mode)
