@@ -134,9 +134,12 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]] \
     source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
 fi
 
+if [ -d "$HOME/.guix-profile" ]; then
+    GUIX_PROFILE="/home/gabriel/.guix-profile"
+    . "$GUIX_PROFILE/etc/profile"
+    unset GUIX_PROFILE
+fi
+
 export GPG_TTY=$(tty)
 
 alias make='make -j$(nproc)'
-
-# Nix (single-user)
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi

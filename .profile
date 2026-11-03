@@ -16,8 +16,9 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
+export GUIX_GTK3_PATH="$HOME/.guix-profile/lib/gtk-3.0${GUIX_GTK3_PATH:+:$GUIX_GTK3_PATH}"
+
+export XDG_DATA_DIRS="$HOME/.guix-profile/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/usr/bin:$PATH"
 export EDITOR='emacs'
-
-if [ -e /home/gabriel/.nix-profile/etc/profile.d/nix.sh ]; then . /home/gabriel/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-export XDG_DATA_DIRS="$HOME/.nix-profile/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"

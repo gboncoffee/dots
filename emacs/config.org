@@ -278,8 +278,8 @@ So the editor is a little less dumb.
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
   :custom (dumb-jump-prefer-searcher 'rg)
-  :bind (("<f2>" . xref-find-references-and-replace)
-	 ("<f1>" . xref-find-references))
+  :bind (("<f1>" . xref-find-definitions-other-window)
+	 ("<f9>" . xref-find-references))
   :hook (prog-mode . (lambda ()
 		       (add-to-list
 			'xref-backend-functions
@@ -291,13 +291,15 @@ Ripgrep is fast. Also, the package automatically configures ~wgrep~ for us and o
 
 #+BEGIN_SRC emacs-lisp
 (use-package rg
-  :bind (("<f7>" . rg))
+  :bind (("<f7>" . rg)
+	 ("<f8>" . rg-literal))
   :config
   (rg-enable-default-bindings))
 #+END_SRC
 
 *** Bindings
 #+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<f2>") #'query-replace)
 (global-set-key (kbd "<f5>") #'compile)
 (global-set-key (kbd "<f6>") #'async-shell-command)
 #+END_SRC
