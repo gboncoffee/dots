@@ -437,14 +437,6 @@ Basic support.
 	       (setq indent-tabs-mode t))))
 #+END_SRC
 
-Eldoc.
-
-#+BEGIN_SRC emacs-lisp
-(use-package go-eldoc
-  :after go-mode
-  :hook (go-mode . go-eldoc-setup))
-#+END_SRC
-
 *** C/C++
 #+BEGIN_SRC emacs-lisp
 (defun c-configs ()
