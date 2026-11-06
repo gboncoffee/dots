@@ -19,6 +19,12 @@ Also for ~early-init.el~.
 ;;; -*- lexical-binding: t; -*-
 #+END_SRC
 
+Just supress it for whatever other package that's not supressing it themselves.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+#+END_SRC
+
 ** Garbage collection
 Disables garbage collection while loading configuration, and re-enables it right afterwards.
 
@@ -105,11 +111,11 @@ Modus Vivendi is great: very dark, very readable, and the best: builtin. We need
  'modus-themes-after-load-theme-hook
  (lambda ()
    (set-face-attribute 'default nil :family
-		       "DejaVu Sans Mono" :height 110)
+		       "Monospace" :height 120)
    (set-face-attribute 'fixed-pitch nil :family
-		       "DejaVu Sans Mono" :height 110)
+		       "Monospace" :height 120)
    (set-face-attribute 'variable-pitch nil :family
-		       "Ubuntu" :height 130)))
+		       "Sans" :height 130)))
 (modus-themes-load-theme 'modus-vivendi)
 #+END_SRC
 
@@ -425,6 +431,13 @@ Better separation of shell commands.
 #+END_SRC
 
 ** Language specific configuration
+First let's make all languages use treesitter by default.
+
+#+BEGIN_SRC emacs-lisp
+(setopt treesit-enabled-modes t)
+(setopt treesit-auto-install-grammar 'ask)
+#+END_SRC
+
 *** Go
 Basic support.
 
