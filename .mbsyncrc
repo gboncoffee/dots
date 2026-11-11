@@ -2,7 +2,7 @@ IMAPAccount icloud
 Host imap.mail.me.com
 User gabrielgbrito@icloud.com
 PassCmd "cat ~/etc/pass/icloud-mail"
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore icloud-remote
@@ -24,7 +24,7 @@ IMAPAccount dinf
 Host mx.inf.ufpr.br
 User ggb23
 PassCmd "cat ~/etc/pass/dinf"
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore dinf-remote

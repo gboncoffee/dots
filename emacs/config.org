@@ -95,6 +95,13 @@ Prettify symbols.
 (global-prettify-symbols-mode 1)
 #+END_SRC
 
+Make the frames open a little bigger.
+
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
+(add-to-list 'default-frame-alist '(width . 85))
+(add-to-list 'default-frame-alist '(height . 35))
+#+END_SRC
+
 *** Theme, fonts and modeline
 Modus Vivendi is great: very dark, very readable, and the best: builtin. We need to be aware it resets the fonts we use.
 
@@ -598,7 +605,8 @@ Inferior mode.
   (add-hook 'elixir-mode-hook #'elixir-format-on-save-mode)
   (add-hook 'elixir-ts-mode-hook #'elixir-format-on-save-mode)
   (reformatter-define latex-format
-    :program "latexindent")
+    :program "latexindent"
+    :args '("-y=defaultIndent:'  '"))
   (add-hook 'latex-mode-hook #'latex-format-on-save-mode)
   (add-hook 'latex-ts-mode-hook #'latex-format-on-save-mode)
   (reformatter-define rust-format
