@@ -118,11 +118,11 @@ Modus Vivendi is great: very dark, very readable, and the best: builtin. We need
  'modus-themes-after-load-theme-hook
  (lambda ()
    (set-face-attribute 'default nil :family
-		       "Monospace" :height 120)
+		       "Adwaita Mono" :height 120)
    (set-face-attribute 'fixed-pitch nil :family
-		       "Monospace" :height 120)
+		       "Adwaita Mono" :height 120)
    (set-face-attribute 'variable-pitch nil :family
-		       "Sans" :height 130)))
+		       "Adwaita Sans" :height 130)))
 (modus-themes-load-theme 'modus-vivendi)
 #+END_SRC
 
